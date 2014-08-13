@@ -9,6 +9,9 @@ GEM
     eventmachine (1.0.3)
     hike (1.2.3)
     htmlentities (4.3.2)
+    mail (2.6.1)
+      mime-types (>= 1.16, < 3)
+    mime-types (2.3)
     multi_json (1.10.1)
     rack (1.5.2)
     rack-livereload (0.3.15)
@@ -51,6 +54,7 @@ PLATFORMS
 DEPENDENCIES
   dotenv
   htmlentities
+  mail
   rack-livereload
   sass
   sinatra

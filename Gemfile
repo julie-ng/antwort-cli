@@ -6,6 +6,7 @@ gem 'sinatra-contrib'
 gem 'sinatra-partial'
 gem 'dotenv'
 gem 'htmlentities'
+gem 'mail'
 
 # Assets
 gem 'sass'
