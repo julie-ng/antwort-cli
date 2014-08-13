@@ -18,14 +18,24 @@ class Antwort < Sinatra::Base
     array
   end
 
+  def self.is_dir?(base_dir, file)
+    File.directory?(settings.views + base_dir + file)
+  end
+
   def self.mount_files_as_routes(filenames_array, base_dir='/')
     filenames_array.each do |file|
       base_name = file.split('.').first
       route = base_dir + base_name
-      puts "route: #{route}, base_dir: #{base_dir}"
-      get route do
-        erb base_name.to_sym
+
+      if is_dir? base_dir, file
+        puts "do recursive on #{file}"
+      else
+        puts "route: #{route}, base_dir: #{base_dir}"
+        get route do
+          erb base_name.to_sym
+        end
       end
+
     end
   end
 
