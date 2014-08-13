@@ -4,14 +4,28 @@ require 'tilt'
 require 'premailer'
 
 module Antwort
-  module Builder
+  class Builder
 
-    @dir = File.dirname(__FILE__)
-    @@tmp_dir =  File.expand_path('./tmp')
+    # @@dir = File.dirname(__FILE__)
+    @@build_dir =  File.expand_path('./build')
+
+
+    def initialize(attrs={})
+      puts "Initalizing Builder..."
+
+      @hash          = SecureRandom.hex(6)
+      @template_name = attrs[:template]
+      @template_dir  = "#{@@build_dir}/#{@template_name}-#{@hash}"
+    end
+
+
+    def build
+
+
+    end
 
     def build_template(template_name)
-      hash = SecureRandom.hex(6)
-      template_dir = "#{@@tmp_dir}/#{template_name}-#{hash}"
+
       Dir.mkdir template_dir
 
       puts "-- Building #{template_name}-#{hash} --"
@@ -51,17 +65,21 @@ module Antwort
       create_file(styles, template_name, 'css', dir)
     end
 
-    def create_file(content, name='design', ext='html', dir)
-      file = File.new("#{dir}/#{name}.#{ext}", "w")
-      file.puts(content)
-      file.close
-      file
-    end
 
-    # Todo - render markup
-    def partial(foo)
-      puts "partial: #{foo}"
-    end
+
+    private
+
+      def create_file(content, name='design', ext='html', path)
+        file = File.new("#{path}/#{name}.#{ext}", "w")
+        file.puts(content)
+        file.close
+        file
+      end
+
+    # # Todo - render markup
+    # def partial(foo)
+    #   puts "partial: #{foo}"
+    # end
 
   end
 end
