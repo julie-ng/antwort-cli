@@ -6,80 +6,73 @@ require 'premailer'
 module Antwort
   class Builder
 
-    # @@dir = File.dirname(__FILE__)
-    @@build_dir =  File.expand_path('./build')
-
+    @@asset_server = '/assets/' #ENV['ASSET_URL'] || "foo"
+    @@source_dir  = File.expand_path('./source/emails')
+    @@build_dir   = File.expand_path('./build')
+    @@layout_file = @@source_dir + '/layout.erb'
 
     def initialize(attrs={})
-      puts "Initalizing Builder..."
-
       @hash          = SecureRandom.hex(6)
       @template_name = attrs[:template]
       @template_dir  = "#{@@build_dir}/#{@template_name}-#{@hash}"
     end
 
-
     def build
-
-
-    end
-
-    def build_template(template_name)
-
-      Dir.mkdir template_dir
-
-      puts "-- Building #{template_name}-#{hash} --"
-      puts ""
-
-      create_css_file template_name, template_dir
-      markup = create_html_file template_name, template_dir
-      create_output_file markup, template_dir
-    end
-
-    def create_output_file(html_file, template_dir)
-      premailer = Premailer.new(html_file.path, :warn_level => Premailer::Warnings::SAFE)
-      markup = replace_asset_url premailer.to_inline_css
-      create_file(markup, 'output', 'html', template_dir)
-    end
-
-    def replace_asset_url(markup='')
-      url = ENV['ASSET_URL']
-      replaced = "<img src=\"#{url}/assets/"
-      output = markup.gsub('<img src="/assets/', replaced)
-      output
-    end
-
-    def create_html_file(template_name, dir)
-      context = Object.new
-      attrs = {template: template_name}
-      layout = Tilt::ERBTemplate.new("views/layouts/layout.erb")
-      output = layout.render(context, attrs) {
-        Tilt::ERBTemplate.new("views/#{template_name}.html.erb").render(context, attrs)
-      }
-      output = output.gsub("/assets/#{template_name}/styles.css", "#{template_name}.css")
-      create_file(output, template_name, 'html', dir)
-    end
-
-    def create_css_file(template_name, dir)
-      styles = Tilt::ScssTemplate.new("assets/css/#{template_name}/styles.scss").render
-      create_file(styles, template_name, 'css', dir)
+      puts "Building #{@template_name}, id: #{@hash}..."
+      Dir.mkdir @template_dir
+      @html = build_html
+      puts @html.inspect
+      @css  = build_css
+      inline_template
+      puts "Fin!"
     end
 
 
+      # So we don't get error...
+      def erb(foo)
+        puts foo
+      end
 
     private
 
-      def create_file(content, name='design', ext='html', path)
-        file = File.new("#{path}/#{name}.#{ext}", "w")
+      def build_css
+        content = Tilt::ScssTemplate.new("source/assets/css/#{@template_name}/styles.scss").render
+        create_file(content: content, name: @template_name, ext: 'css')
+      end
+
+      def build_html
+        context = Object.new
+        attrs = {template: @template_name}
+        layout = Tilt::ERBTemplate.new(@@layout_file)
+        output = layout.render(context, attrs) {
+          Tilt::ERBTemplate.new("#{@@source_dir}/#{@template_name}.html.erb").render(context, attrs)
+        }
+        output = output.gsub("/assets/#{@template_name}/styles.css", "#{@template_name}.css") # Replace absolute with relative path
+        create_file(content: output, name: @template_name, ext: 'html')
+      end
+
+      def create_file(attrs)
+        content = attrs[:content]
+        name    = attrs[:name]
+        ext     = attrs[:ext]
+
+        file = File.new("#{@template_dir}/#{name}.#{ext}", "w")
         file.puts(content)
         file.close
         file
       end
 
-    # # Todo - render markup
-    # def partial(foo)
-    #   puts "partial: #{foo}"
-    # end
+      def inline_template
+        premailer = Premailer.new(@html.path, :warn_level => Premailer::Warnings::SAFE)
+        inlined   = premailer.to_inline_css
+        inlined   = use_asset_server(inlined)
+        create_file(content: inlined, name: 'build', ext: 'html')
+      end
 
+      def use_asset_server(markup='')
+        replaced = "<img src=\"#{@@asset_server}/assets/"
+        output = markup.gsub('<img src="/assets/', replaced)
+        output
+      end
   end
 end
