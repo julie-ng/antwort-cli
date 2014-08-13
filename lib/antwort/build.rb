@@ -2,11 +2,9 @@ require 'fileutils'
 require 'securerandom'
 require 'tilt'
 require 'premailer'
-# require 'dotenv'
-# Dotenv.load
 
 module Antwort
-  class Builder
+  module Builder
 
     @dir = File.dirname(__FILE__)
     @@tmp_dir =  File.expand_path('./tmp')

@@ -1,7 +1,5 @@
-# require './../antwort/build.rb'
-# include EmailBuilder
-
-puts File.dirname(__FILE__)
+require File.expand_path('../../', __FILE__) + '/antwort/build'
+include Antwort::Builder
 
 desc 'Builds Markup from template'
 task :build do

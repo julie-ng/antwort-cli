@@ -1,3 +1,3 @@
 require './lib/antwort'
 
-Dir.glob('lib/tasks/*.rake').each { |r| import r }
+Dir.glob('./lib/tasks/*.rake').each { |r| import r }

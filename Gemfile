@@ -7,6 +7,7 @@ gem 'sinatra-partial'
 gem 'dotenv'
 gem 'htmlentities'
 gem 'mail'
+gem 'premailer'
 
 # Assets
 gem 'sass'
