@@ -2,12 +2,15 @@ require 'sinatra/base'
 
 module Antwort
   class Server < Sinatra::Base
-    Tilt.register Tilt::ERBTemplate, 'html.erb'
 
     configure do
-      set :root, File.expand_path('../../../', __FILE__)
-      set :views, settings.root + '/source/emails'
+      enable :logging
+      set :root, File.expand_path('../../../', __FILE__) + '/source'
+      set :views, settings.root + '/emails'
     end
+
+    register Sinatra::Assets
+    Tilt.register Tilt::ERBTemplate, 'html.erb'
 
     # puts "root: #{settings.root}"
     # puts "views: #{settings.views}"
@@ -32,7 +35,8 @@ module Antwort
           # puts "do recursive on #{file}"
         else
           # puts "route: #{route}, base_dir: #{base_dir}"
-          get route do
+          get "#{route}/?" do
+            @template = route
             erb base_name.to_sym
           end
         end
