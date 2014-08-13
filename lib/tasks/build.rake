@@ -1,7 +1,11 @@
-require File.expand_path('../../', __FILE__) + '/antwort/build'
-include Antwort::Builder
 
-desc 'Builds Markup from template'
+desc 'Builds Markup from template (required: template=template_name})'
 task :build do
-  build_template ENV['template']
+  puts "build"
+
+
+  foo = Antwort::Builder.new({template: 'foo'})
+
+  # build_template ENV['template']
 end
+
