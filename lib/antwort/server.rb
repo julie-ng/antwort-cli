@@ -29,9 +29,9 @@ module Antwort
         route = base_dir + base_name
 
         if is_dir? base_dir, file
-          puts "do recursive on #{file}"
+          # puts "do recursive on #{file}"
         else
-          puts "route: #{route}, base_dir: #{base_dir}"
+          # puts "route: #{route}, base_dir: #{base_dir}"
           get route do
             erb base_name.to_sym
           end
@@ -42,6 +42,5 @@ module Antwort
 
     mount_files_as_routes get_files_list(settings.views)
 
-    run! if app_file == $0
   end
 end
