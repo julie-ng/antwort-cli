@@ -14,12 +14,14 @@ module Antwort
     def initialize(attrs={})
       @hash          = SecureRandom.hex(6)
       @template_name = attrs[:template]
-      @template_dir  = "#{@@build_dir}/#{@template_name}-#{@hash}"
+      @template_dir  = "#{@@build_dir}/#{@template_name}" #-#{@hash}"
     end
 
     def build
       puts "Building #{@template_name}, id: #{@hash}..."
-      Dir.mkdir @template_dir
+      unless Dir.exists? @template_dir
+        Dir.mkdir @template_dir
+      end
       @html = build_html
       puts @html.inspect
       @css  = build_css
