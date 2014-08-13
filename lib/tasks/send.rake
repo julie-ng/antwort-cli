@@ -1,6 +1,4 @@
 require 'mail'
-require 'dotenv'
-Dotenv.load
 
 desc 'Sends email via SMTP by id={hash_id} (optional: subject={subject_line})'
 task :send do
