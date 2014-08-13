@@ -1,6 +1,4 @@
 require 'sinatra/base'
-require 'dotenv'
-Dotenv.load
 
 module Antwort
   class Server < Sinatra::Base
