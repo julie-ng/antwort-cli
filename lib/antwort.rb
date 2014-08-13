@@ -11,19 +11,26 @@ class Antwort < Sinatra::Base
   # puts "root: #{settings.root}"
   # puts "views: #{settings.views}"
 
-  base_dir = '/'
-  Dir.entries(settings.views).each do |file|
-    unless file == '.' || file == '..'
+  def self.get_files_list(dir_name)
+    array = Dir.entries(dir_name)
+    array.delete('.')
+    array.delete('..')
+    array
+  end
 
-      route = base_dir + file.split('.').first
+  def self.mount_files_as_routes(filenames_array, base_dir='/')
+    filenames_array.each do |file|
+      base_name = file.split('.').first
+      route = base_dir + base_name
       puts "route: #{route}, base_dir: #{base_dir}"
-
       get route do
-        erb file.gsub('.html.erb', '').to_sym
+        erb base_name.to_sym
       end
     end
   end
 
+
+  mount_files_as_routes get_files_list(settings.views)
 
   run! if app_file == $0
 end
