@@ -1,0 +1,8 @@
+<img src="<%= source %>"
+ border="0"
+ alt="<%= alt %>"
+<%= " width=\"#{width}\"" if defined? width %>
+<%= " height=\"#{height}\"" if defined? height %>
+ hspace="0" vspace="0" style="max-width:100%; <%= " #{styles}" if defined? styles %>"
+<%= " class=\"#{klass}\"" if defined? klass %>
+>

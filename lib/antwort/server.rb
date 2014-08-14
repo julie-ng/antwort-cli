@@ -4,18 +4,19 @@ require "sinatra/content_for"
 
 module Antwort
   class Server < Sinatra::Base
+    Tilt.register Tilt::ERBTemplate, 'html.erb'
+    register Sinatra::Partial
+    register Sinatra::Assets
+    helpers Sinatra::ContentFor
+    include Antwort::MarkupHelpers
 
     configure do
       enable :logging
       set :root, File.expand_path('../../../', __FILE__) + '/source'
       set :views, settings.root
       set :templates_dir, settings.root + '/emails'
+      set :partial_template_engine, :erb
     end
-
-    Tilt.register Tilt::ERBTemplate, 'html.erb' # why is this not working???
-    register Sinatra::Assets
-    register Sinatra::Partial
-    helpers Sinatra::ContentFor
 
     get '/' do
       pages = Dir.entries(settings.templates_dir)
