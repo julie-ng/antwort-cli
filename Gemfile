@@ -8,8 +8,8 @@ gem 'dotenv'
 gem 'htmlentities'
 gem 'mail'
 gem 'nokogiri'
-# gem 'premailer'
-# gem 'inline-style'
+gem 'premailer'
+gem 'inline-style'
 gem 'roadie'
 
 
