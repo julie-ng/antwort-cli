@@ -1,6 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/partial'
-require "sinatra/content_for"
+require 'sinatra/content_for'
 
 module Antwort
   class Server < Sinatra::Base
