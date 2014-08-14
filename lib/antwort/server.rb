@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'tilt'
 
 module Antwort
   class Server < Sinatra::Base
@@ -7,20 +8,15 @@ module Antwort
       enable :logging
       set :root, File.expand_path('../../../', __FILE__) + '/source'
       set :views, settings.root + '/emails'
+      set :templates_dir, settings.root + '/emails'
+      # set :template_ext, 'html.erb'
     end
 
     register Sinatra::Assets
     Tilt.register Tilt::ERBTemplate, 'html.erb'
 
-    # puts "root: #{settings.root}"
-    # puts "views: #{settings.views}"
-
-    def self.get_files_list(dir_name)
-      array = Dir.entries(dir_name)
-      array.delete('.')
-      array.delete('..')
-      array
-    end
+    puts "root: #{settings.root}"
+    puts "views: #{settings.views}"
 
     get '/' do
       @pages = Dir.entries(settings.templates_dir).delete('.')
@@ -29,9 +25,9 @@ module Antwort
 
     get '/:template/?' do
       template = params[:template]
-      if File.file? settings.templates_dir + '/' + template + '.' + settings.template_ext
+      if File.file? settings.views + '/' + template + '.html.erb'
         puts "Template exists"
-        erb :"#{settings.templates_dir}/#{template}"
+        erb template.to_sym #:"#{settings.templates_dir}/#{template}"
       else
         status 404
       end
