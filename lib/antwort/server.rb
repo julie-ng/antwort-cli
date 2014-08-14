@@ -22,29 +22,25 @@ module Antwort
       array
     end
 
-    def self.is_dir?(base_dir, file)
-      File.directory?(settings.views + base_dir + file)
+    get '/' do
+      @pages = Dir.entries(settings.templates_dir).delete('.')
+      erb :index, layout: false
     end
 
-    def self.mount_files_as_routes(filenames_array, base_dir='/')
-      filenames_array.each do |file|
-        base_name = file.split('.').first
-        route = base_dir + base_name
-
-        if is_dir? base_dir, file
-          # puts "do recursive on #{file}"
-        else
-          # puts "route: #{route}, base_dir: #{base_dir}"
-          get "#{route}/?" do
-            @template = route
-            erb base_name.to_sym
-          end
-        end
-
+    get '/:template/?' do
+      template = params[:template]
+      if File.file? settings.templates_dir + '/' + template + '.' + settings.template_ext
+        puts "Template exists"
+        erb :"#{settings.templates_dir}/#{template}"
+      else
+        status 404
       end
     end
 
-    mount_files_as_routes get_files_list(settings.views)
+    not_found do
+      puts "Template does not exist"
+      erb :'404'
+    end
 
   end
 end
