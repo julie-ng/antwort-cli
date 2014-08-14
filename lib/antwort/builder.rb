@@ -23,22 +23,14 @@ module Antwort
         Dir.mkdir @template_dir
       end
       @html = build_html
-      puts @html.inspect
       @css  = build_css
       inline_template
-      puts "Fin!"
     end
-
-
-      # So we don't get error...
-      def erb(foo)
-        puts foo
-      end
 
     private
 
       def build_css
-        content = Tilt::ScssTemplate.new("source/assets/css/#{@template_name}/styles.scss").render
+        content = Tilt::ScssTemplate.new("source/assets/css/#{@template_name}/main.scss").render
         create_file(content: content, name: @template_name, ext: 'css')
       end
 
@@ -49,7 +41,7 @@ module Antwort
         output = layout.render(context, attrs) {
           Tilt::ERBTemplate.new("#{@@source_dir}/#{@template_name}.html.erb").render(context, attrs)
         }
-        output = output.gsub("/assets/#{@template_name}/styles.css", "#{@template_name}.css") # Replace absolute with relative path
+        output = output.gsub("/assets/styles.css", "#{@template_name}.css") # Replace absolute with relative path
         create_file(content: output, name: @template_name, ext: 'html')
       end
 
