@@ -1,7 +1,6 @@
 require 'fileutils'
 require 'tilt'
-require 'premailer'
-require 'inline-style'
+require 'roadie'
 
 require 'dotenv'
 Dotenv.load
@@ -53,13 +52,12 @@ module Antwort
       end
 
       def inline_css
-        # premailer = Premailer.new(@html.path, :warn_level => Premailer::Warnings::SAFE)
-        # inlined   = premailer.to_inline_css
-        # inlined   = use_asset_server(inlined)
-        # css_path = "#{@template_dir}"
-        # puts "css_path: #{css_path}"
         markup  = File.read(@html.path)
-        inlined = InlineStyle.process(markup, stylesheets_path: @template_dir)
+        document = Roadie::Document.new(markup)
+        document.asset_providers = [
+          Roadie::FilesystemProvider.new(@template_dir),
+        ]
+        inlined = document.transform
         create_file(content: inlined, name: 'build', ext: 'html')
       end
 
