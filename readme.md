@@ -91,3 +91,13 @@ Start the development server with the following command
     rake server
 
 Then open `http://localhost:4567/` in your browser to view your emails. A listing of all available email templates will be automatically generated for you.
+
+
+### Use as gem
+
+- add Thor to create/copy templaate files and directories for new template
+- turn antwort user on github into organization
+- create user with read access
+- add tokens to this user
+
+
