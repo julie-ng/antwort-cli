@@ -17,6 +17,7 @@ module Antwort
       set :views, settings.root
       set :templates_dir, settings.root + '/emails'
       set :partial_template_engine, :erb
+      enable :partial_underscores
       set :port, 9494
     end
 
@@ -35,8 +36,8 @@ module Antwort
       data_file = settings.root + '/data/' + @template + '.yml'
       @data     = YAML.load_file(data_file) if File.file? data_file
 
-      if File.file? settings.templates_dir + '/' + @template + '.html.erb'
-        erb :"emails/#{@template}", layout: :'views/layout'
+      if File.file? settings.templates_dir + '/' + @template + '/index.html.erb'
+        erb :"emails/#{@template}/index", layout: :'views/layout'
       else
         status 404
       end
