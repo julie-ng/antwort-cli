@@ -1,7 +1,9 @@
 module Antwort
   module MarkupHelpers
     def image_tag(path, options={})
-      options[:source] = '/assets/' << path
+      @template ||= ''
+      subdir = path.split('/').first == 'shared' ? '' :  @template + '/'
+      options[:source] = '/assets/' + subdir + path
       options[:alt] ||= ''
       content = partial :'views/markup/image_tag', locals: options
       content.gsub(/\n/, '')
