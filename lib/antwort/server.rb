@@ -30,6 +30,10 @@ module Antwort
 
     get '/template/:template/?' do
       @template = params[:template]
+
+      data_file = settings.root + '/data/' + @template + '.yml'
+      @data     = YAML.load_file(data_file) if File.file? data_file
+
       if File.file? settings.templates_dir + '/' + @template + '.html.erb'
         erb :"emails/#{@template}", layout: :'views/layout'
       else
