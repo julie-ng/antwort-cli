@@ -8,7 +8,7 @@ module Antwort
 end
 
 require 'antwort/builder'
-require 'antwort/assets_extension'
+require 'antwort/server/assets'
 require 'antwort/server'
 require 'antwort/version'
 require 'dotenv'
