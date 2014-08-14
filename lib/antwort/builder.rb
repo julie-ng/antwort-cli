@@ -1,6 +1,7 @@
 require 'fileutils'
 require 'tilt'
 require 'premailer'
+require 'inline-style'
 
 require 'dotenv'
 Dotenv.load
@@ -39,20 +40,26 @@ module Antwort
         css_file = "source/assets/css/#{@template_name}/main.scss"
         if File.file? css_file
           content = Tilt::ScssTemplate.new(css_file).render
-          create_file(content: content, name: @template_name, ext: 'css')
+          create_file(content: content, name: 'styles', ext: 'css')
         else
           puts "Build failed. CSS for #{@template_name} not found." # continues anyway
         end
       end
 
       def build_html(content)
+        puts "template_name: #{@template_name}"
+        content = content.gsub("/assets/#{@template_name}/styles.css", 'styles.css')
         @html = create_file(content: content, name: @template_name, ext: 'html')
       end
 
       def inline_css
-        premailer = Premailer.new(@html.path, :warn_level => Premailer::Warnings::SAFE)
-        inlined   = premailer.to_inline_css
-        inlined   = use_asset_server(inlined)
+        # premailer = Premailer.new(@html.path, :warn_level => Premailer::Warnings::SAFE)
+        # inlined   = premailer.to_inline_css
+        # inlined   = use_asset_server(inlined)
+        # css_path = "#{@template_dir}"
+        # puts "css_path: #{css_path}"
+        markup  = File.read(@html.path)
+        inlined = InlineStyle.process(markup, stylesheets_path: @template_dir)
         create_file(content: inlined, name: 'build', ext: 'html')
       end
 

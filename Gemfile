@@ -9,6 +9,8 @@ gem 'htmlentities'
 gem 'mail'
 gem 'nokogiri'
 gem 'premailer'
+gem 'inline-style'
+
 
 # Assets
 gem 'sass'
