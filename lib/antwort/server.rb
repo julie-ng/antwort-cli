@@ -1,5 +1,4 @@
 require 'sinatra/base'
-require 'tilt'
 
 module Antwort
   class Server < Sinatra::Base
@@ -7,35 +6,31 @@ module Antwort
     configure do
       enable :logging
       set :root, File.expand_path('../../../', __FILE__) + '/source'
-      set :views, settings.root + '/emails'
+      set :views, settings.root
       set :templates_dir, settings.root + '/emails'
-      # set :template_ext, 'html.erb'
     end
 
+    Tilt.register Tilt::ERBTemplate, 'html.erb' # why is this not working???
     register Sinatra::Assets
-    Tilt.register Tilt::ERBTemplate, 'html.erb'
-
-    puts "root: #{settings.root}"
-    puts "views: #{settings.views}"
 
     get '/' do
-      @pages = Dir.entries(settings.templates_dir).delete('.')
-      erb :index, layout: false
+      pages = Dir.entries(settings.templates_dir)
+      pages.delete_if {|page| page.to_s[0] == '.' }
+      @pages = pages.map { |page| page.split('.').first }
+      erb :'views/index', layout: false
     end
 
-    get '/:template/?' do
-      template = params[:template]
-      if File.file? settings.views + '/' + template + '.html.erb'
-        puts "Template exists"
-        erb template.to_sym #:"#{settings.templates_dir}/#{template}"
+    get '/template/:template/?' do
+      @template = params[:template]
+      if File.file? settings.templates_dir + '/' + @template + '.html.erb'
+        erb :"emails/#{@template}", layout: :'views/layout'
       else
         status 404
       end
     end
 
     not_found do
-      puts "Template does not exist"
-      erb :'404'
+      erb :'views/404'
     end
 
   end

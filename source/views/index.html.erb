@@ -1,0 +1,13 @@
+<h1>Welcome to the email generator:</h1>
+
+<h3>Available Templates</h3>
+
+<ul>
+  <% @pages.each do |page| %>
+  <li>
+    <a href="template/<%= page %>">
+      <%= page %>
+    </a>
+  </li>
+  <% end %>
+</ul>
