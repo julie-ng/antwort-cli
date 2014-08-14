@@ -8,8 +8,6 @@ Date: 14 August 2014
 - Use `image_tag` helper
 - Use 'content_for :header_css'
 
-
-
 ## Features
 
 - local development server for live preview of markup
