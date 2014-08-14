@@ -6,7 +6,6 @@ module Antwort
   class Server < Sinatra::Base
     Tilt.register Tilt::ERBTemplate, 'html.erb'
     register Sinatra::Partial
-    register Sinatra::Assets
     helpers Sinatra::ContentFor
     include Antwort::MarkupHelpers
 
@@ -17,6 +16,8 @@ module Antwort
       set :templates_dir, settings.root + '/emails'
       set :partial_template_engine, :erb
     end
+
+    register Sinatra::Assets # must come after we set root
 
     get '/' do
       pages = Dir.entries(settings.templates_dir)
