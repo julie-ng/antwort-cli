@@ -17,6 +17,7 @@ module Antwort
       set :views, settings.root
       set :templates_dir, settings.root + '/emails'
       set :partial_template_engine, :erb
+      set :port, 9494
     end
 
     register Sinatra::Assets # must come after we set root

@@ -90,7 +90,7 @@ Start the development server with the following command
 
     rake server
 
-Then open `http://localhost:4567/` in your browser to view your emails. A listing of all available email templates will be automatically generated for you.
+Then open `http://localhost:9292/` in your browser to view your emails. A listing of all available email templates will be automatically generated for you.
 
 
 ### Use as gem
