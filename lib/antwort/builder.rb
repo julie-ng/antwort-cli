@@ -12,8 +12,6 @@ module Antwort
 
     def initialize(attrs={})
       @asset_server = ENV['ASSET_SERVER'] || '/assets/'
-
-      puts "Asset server: #{@asset_server}"
       @app ||= Antwort::Server.new
       @request ||= Rack::MockRequest.new(@app)
 
