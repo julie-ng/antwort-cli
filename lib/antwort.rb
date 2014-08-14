@@ -1,15 +1,11 @@
-
-# Setup load paths
-libdir = File.expand_path(File.dirname(__FILE__))
-$LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
-
 # Namespace
 module Antwort
 end
 
-require 'antwort/builder'
-require 'antwort/server/assets'
-require 'antwort/server'
-require 'antwort/version'
+require_relative 'antwort/builder'
+require_relative 'antwort/server/assets'
+require_relative 'antwort/server'
+require_relative 'antwort/version'
+
 require 'dotenv'
 Dotenv.load
