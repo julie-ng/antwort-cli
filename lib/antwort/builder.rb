@@ -1,48 +1,61 @@
 require 'fileutils'
-require 'securerandom'
 require 'tilt'
 require 'premailer'
+
+require 'dotenv'
+Dotenv.load
 
 module Antwort
   class Builder
 
-    @@asset_server = '/assets/' #ENV['ASSET_URL'] || "foo"
-    @@source_dir  = File.expand_path('./source/emails')
     @@build_dir   = File.expand_path('./build')
-    @@layout_file = @@source_dir + '/layout.erb'
 
     def initialize(attrs={})
-      @hash          = SecureRandom.hex(6)
+      @asset_server = ENV['ASSET_SERVER'] || '/assets/'
+
+      puts "Asset server: #{@asset_server}"
+      @app ||= Antwort::Server.new
+      @request ||= Rack::MockRequest.new(@app)
+
+      @id            = create_id
       @template_name = attrs[:template]
-      @template_dir  = "#{@@build_dir}/#{@template_name}" #-#{@hash}"
+      @template_dir  = "#{@@build_dir}/#{@template_name}-#{@id}"
     end
 
     def build
-      puts "Building #{@template_name}, id: #{@hash}..."
-      unless Dir.exists? @template_dir
+      request = @request.get("/template/#{@template_name}")
+      if request.status == 200
         Dir.mkdir @template_dir
+        build_css
+        build_html(request.body)
+        inline_css
+        puts "Build #{@id} successful."
+      else
+        puts "Build failed. Template #{@template_name} not found."
       end
-      @html = build_html
-      @css  = build_css
-      inline_template
     end
 
     private
 
       def build_css
-        content = Tilt::ScssTemplate.new("source/assets/css/#{@template_name}/main.scss").render
-        create_file(content: content, name: @template_name, ext: 'css')
+        css_file = "source/assets/css/#{@template_name}/main.scss"
+        if File.file? css_file
+          content = Tilt::ScssTemplate.new(css_file).render
+          create_file(content: content, name: @template_name, ext: 'css')
+        else
+          puts "Build failed. CSS for #{@template_name} not found." # continues anyway
+        end
       end
 
-      def build_html
-        context = Object.new
-        attrs = {template: @template_name}
-        layout = Tilt::ERBTemplate.new(@@layout_file)
-        output = layout.render(context, attrs) {
-          Tilt::ERBTemplate.new("#{@@source_dir}/#{@template_name}.html.erb").render(context, attrs)
-        }
-        output = output.gsub("/assets/styles.css", "#{@template_name}.css") # Replace absolute with relative path
-        create_file(content: output, name: @template_name, ext: 'html')
+      def build_html(content)
+        @html = create_file(content: content, name: @template_name, ext: 'html')
+      end
+
+      def inline_css
+        premailer = Premailer.new(@html.path, :warn_level => Premailer::Warnings::SAFE)
+        inlined   = premailer.to_inline_css
+        inlined   = use_asset_server(inlined)
+        create_file(content: inlined, name: 'build', ext: 'html')
       end
 
       def create_file(attrs)
@@ -56,15 +69,16 @@ module Antwort
         file
       end
 
-      def inline_template
-        premailer = Premailer.new(@html.path, :warn_level => Premailer::Warnings::SAFE)
-        inlined   = premailer.to_inline_css
-        inlined   = use_asset_server(inlined)
-        create_file(content: inlined, name: 'build', ext: 'html')
+      # Creates id based on current time stamp
+      # e.g. 2014-08-14 15:50:25 +0200
+      # becomes 20140814155025
+      def create_id
+        stamp = Time.now.to_s
+        stamp.split(' ')[0..1].join.gsub(/(-|:)/,'')
       end
 
       def use_asset_server(markup='')
-        replaced = "<img src=\"#{@@asset_server}/assets/"
+        replaced = "<img src=\"#{@asset_server}/assets/"
         output = markup.gsub('<img src="/assets/', replaced)
         output
       end
