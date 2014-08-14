@@ -9,6 +9,7 @@
     <title><%= "Newsletter" %></title>
     <style type="text/css">
       <%= erb :'assets/css/reset.css' %>
+      <%= yield_content :header_css %>
     </style>
 
     <link rel="stylesheet" type="text/css" href="/assets/<%= @template %>/styles.css">
@@ -35,5 +36,6 @@
   </tr>
 </table>
 <!--/100% wrapper-->
+
 </body>
 </html>
