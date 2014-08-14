@@ -1,9 +1,11 @@
 require 'sinatra/base'
 require 'sinatra/partial'
 require 'sinatra/content_for'
+require 'rack-livereload'
 
 module Antwort
   class Server < Sinatra::Base
+    use Rack::LiveReload
     Tilt.register Tilt::ERBTemplate, 'html.erb'
     register Sinatra::Partial
     helpers Sinatra::ContentFor
