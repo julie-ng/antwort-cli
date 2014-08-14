@@ -1,4 +1,6 @@
 require 'sinatra/base'
+require 'sinatra/partial'
+require "sinatra/content_for"
 
 module Antwort
   class Server < Sinatra::Base
@@ -12,6 +14,8 @@ module Antwort
 
     Tilt.register Tilt::ERBTemplate, 'html.erb' # why is this not working???
     register Sinatra::Assets
+    register Sinatra::Partial
+    helpers Sinatra::ContentFor
 
     get '/' do
       pages = Dir.entries(settings.templates_dir)
