@@ -93,21 +93,13 @@ module Antwort
       end
 
       def remove_livereload(markup='')
-        puts "remove_livereload"
-js = <<LIVERELOAD
-  <script type="text/javascript">
-    WEB_SOCKET_SWF_LOCATION = "/__rack/WebSocketMain.swf";
-
-  </script>
-  <script type="text/javascript" src="/__rack/swfobject.js"></script>
-  <script type="text/javascript" src="/__rack/web_socket.js"></script>
-
-<script type="text/javascript">
-  RACK_LIVERELOAD_PORT = 35729;
-</script>
-<script type="text/javascript" src="http://localhost:35729/livereload.js?"></script>
-LIVERELOAD
-        content = markup.gsub(js, '')
+        content = markup.gsub('<script type="text/javascript">', '')
+        content = content.gsub('</script>', '')
+        content = content.gsub('RACK_LIVERELOAD_PORT = 35729;', '')
+        content = content.gsub('<script type="text/javascript" src="http://localhost:35729/livereload.js?">', '')
+        content = content.gsub('<script type="text/javascript" src="/__rack/web_socket.js">', '')
+        content = content.gsub('<script type="text/javascript" src="/__rack/swfobject.js">', '')
+        content = content.gsub('WEB_SOCKET_SWF_LOCATION = "/__rack/WebSocketMain.swf";', '')
         content
       end
   end
