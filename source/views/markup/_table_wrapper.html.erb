@@ -1,0 +1,7 @@
+<table border="0" width="<%= width %>" cellborder="0" cellspacing="0"<%= " class=\"#{table_classes}\"" if defined? table_classes %><%= " style=\"#{table_styles}\"" if defined? table_styles %>>
+  <tr>
+    <td align="<%= cell_align %>" valign="<%= cell_valign %>"<%= " class=\"#{cell_classes}\"" if defined? cell_classes %><%= " style=\"#{cell_styles}\"" if defined? cell_styles %>>
+      <%= content %>
+    </td>
+  </tr>
+</table>
