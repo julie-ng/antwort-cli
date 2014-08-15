@@ -57,8 +57,14 @@ module Antwort
         document.asset_providers = [
           Roadie::FilesystemProvider.new(@template_dir),
         ]
-        inlined = document.transform
+        inlined = cleanup_markup(document.transform)
         create_file(content: inlined, name: 'build', ext: 'html')
+      end
+
+      def cleanup_markup(markup)
+        content = use_asset_server(markup)
+        content = remove_livereload(content)
+        content
       end
 
       def create_file(attrs)
@@ -81,9 +87,28 @@ module Antwort
       end
 
       def use_asset_server(markup='')
-        replaced = "<img src=\"#{@asset_server}/assets/"
+        replaced = "<img src=\"#{@asset_server}/"
         output = markup.gsub('<img src="/assets/', replaced)
         output
+      end
+
+      def remove_livereload(markup='')
+        puts "remove_livereload"
+js = <<LIVERELOAD
+  <script type="text/javascript">
+    WEB_SOCKET_SWF_LOCATION = "/__rack/WebSocketMain.swf";
+
+  </script>
+  <script type="text/javascript" src="/__rack/swfobject.js"></script>
+  <script type="text/javascript" src="/__rack/web_socket.js"></script>
+
+<script type="text/javascript">
+  RACK_LIVERELOAD_PORT = 35729;
+</script>
+<script type="text/javascript" src="http://localhost:35729/livereload.js?"></script>
+LIVERELOAD
+        content = markup.gsub(js, '')
+        content
       end
   end
 end
