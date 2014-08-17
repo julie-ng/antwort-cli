@@ -1,0 +1,54 @@
+
+// General resets
+
+body {
+  margin:0;
+  padding:0;
+  -ms-text-size-adjust:100%;
+  -webkit-text-size-adjust:100%;
+}
+
+table {
+  border-spacing:0;
+}
+
+table td {
+  border-collapse:collapse;
+}
+
+// Normalize Outlook.com styles
+
+.ExternalClass{
+width:100%;
+}
+
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div{
+  line-height: 100%;
+}
+
+// Outermost container in OUtlook.com
+.ReadMsgBody {
+  width: 100%;
+  background-color: #ebebeb;
+}
+
+// Remove any extra Outlook Spacing
+table{
+  mso-table-lspace: 0pt;
+  mso-table-rspace: 0pt;
+}
+
+// Weird image resizing in Outlook
+img{
+  -ms-interpolation-mode:bicubic;
+}
+
+// Sometimes Yahoo turns text into ads/search links
+.yshortcuts a {
+  border-bottom: none !important;
+}
