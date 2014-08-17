@@ -8,7 +8,8 @@
 
     <title><%= "Newsletter" %></title>
     <style type="text/css" data-roadie-ignore>
-      <%= erb :'assets/css/reset.css' %>
+      <%= erb :'assets/css/reset.scss' %>
+      <%= erb :"assets/css/#{@template}/responsive.scss" %>
       <%= yield_content :header_css %>
     </style>
 
