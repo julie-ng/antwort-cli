@@ -87,8 +87,8 @@ module Antwort
       end
 
       def use_asset_server(markup='')
-        replaced = "<img src=\"#{@asset_server}/"
-        output = markup.gsub('<img src="/assets/', replaced)
+        replaced = "#{@asset_server}/"
+        output = markup.gsub('/assets/', replaced)
         output
       end
 
