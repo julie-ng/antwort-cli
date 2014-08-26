@@ -35,8 +35,12 @@ module Antwort
       @template = params[:template]
 
       data_file = settings.root + '/data/' + @template + '.yml'
-      @data     = YAML.load_file(data_file) if File.file? data_file
-      @data     = symbolize_keys! @data
+      if File.file? data_file
+        @data = YAML.load_file(data_file)
+        @data = symbolize_keys! @data
+      else
+        @data = {}
+      end
 
       if File.file? settings.templates_dir + '/' + @template + '/index.html.erb'
         erb :"emails/#{@template}/index", layout: :'views/layout'
