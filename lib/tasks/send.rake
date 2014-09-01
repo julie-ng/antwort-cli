@@ -14,7 +14,7 @@ task :send do
   Mail.defaults do
     delivery_method :smtp, {
       :address => ENV['SMTP_SERVER'],
-      :port => '25',
+      :port => ENV['SMTP_PORT'],
       :user_name => ENV['SMTP_USERNAME'],
       :password => ENV['SMTP_PASSWORD'],
       :authentication => 'plain',
