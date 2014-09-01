@@ -28,6 +28,21 @@ Date: 14 August 2014
 - Ruby 2.1
 - Dotenv
 
+### Environment
+
+In the project root, create a `.env` file with the following attributes
+
+
+    ASSET_SERVER:   https://example.s3.amazonaws.com
+
+    SMTP_SERVER:    smtp.mandrillapp.com
+    SMTP_PORT:      587
+    SMTP_USERNAME:  {{username}}
+    SMTP_PASSWORD:  {{password}}
+    SMTP_DOMAIN:    {{domain}}
+    SMTP_EMAIL:     {{default_recipient}}
+
+
 ## Use
 
 ### Structure
