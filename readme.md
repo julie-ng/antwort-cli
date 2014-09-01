@@ -16,9 +16,7 @@ Date: 14 August 2014
 
 **Todo**
 
-- [ ] sync assets to S3
-- [ ] rake task to create files for new email templates (via [thor](https://github.com/erikhuda/thor)?)
-
+See [Issues](https://github.com/jng5/antwort-generator/issues)
 
 ## Setup
 
@@ -97,7 +95,7 @@ We do not support sendmail because of challenges of sending from localhost.
 
 To send a test email, just type:
 
-    rake send id={id} template={name} subject={optional}
+    rake send id={optional} template={name} subject={optional}
 
 ### Development Server
 
@@ -105,14 +103,6 @@ Start the development server with the following command
 
     rake server
 
-Then open `http://localhost:9292/` in your browser to view your emails. A listing of all available email templates will be automatically generated for you.
-
-
-### Use as gem
-
-- add Thor to create/copy templaate files and directories for new template
-- turn antwort user on github into organization
-- create user with read access
-- add tokens to this user
+Then open `http://localhost:9494/` in your browser to view your emails. A listing of all available email templates will be automatically generated for you.
 
 
