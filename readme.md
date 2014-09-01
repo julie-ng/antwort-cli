@@ -6,7 +6,7 @@ Date: 14 August 2014
 **Documentation Todo:**
 
 - Use `image_tag` helper
-- Use 'content_for :header_css'
+- Use `content_for :header_css`
 
 ## Features
 
