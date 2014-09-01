@@ -17,7 +17,7 @@ Date: 14 August 2014
 **Todo**
 
 - [ ] sync assets to S3
-- [ ] rake task to create files for new template
+- [ ] rake task to create files for new email templates (via [thor](https://github.com/erikhuda/thor)?)
 
 
 ## Setup
@@ -28,7 +28,7 @@ Date: 14 August 2014
 - Ruby 2.1
 - Dotenv
 
-### Environment
+### Environment 
 
 In the project root, create a `.env` file with the following attributes
 
