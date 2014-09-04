@@ -3,6 +3,7 @@ require 'fileutils'
 namespace :build do
   desc 'Builds Markup from template (required: id=template_name})'
   task :template do
+    require 'antwort'
     template = ENV['id'] ? ENV['id'] : 'newsletter'
     Antwort::Builder.new(template: template).build
   end
