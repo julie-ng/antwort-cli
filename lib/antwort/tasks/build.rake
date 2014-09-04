@@ -10,11 +10,14 @@ namespace :build do
 
   desc 'Empties the build directory'
   task :clean do
-    folders = Dir.entries(File.expand_path('./build'))
-    folders.delete_if { |f| f.to_s[0] == '.' }
-    folders.each do |f|
-      puts "Removing #{f}..."
-      FileUtils.rm_rf(File.expand_path("./build/#{f}"))
-    end
+    build_dir = File.expand_path('./build')
+    next unless File.directory?(build_dir)
+
+    Dir.entries(build_dir)
+      .delete_if { |f| f.to_s[0] == '.' }
+      .each do |f|
+        puts "Removing #{f}..."
+        FileUtils.rm_rf(File.expand_path("./build/#{f}"))
+      end
   end
 end
