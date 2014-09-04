@@ -12,21 +12,19 @@ task :send do
   puts "Sending #{id} to #{recipient} ..."
 
   Mail.defaults do
-    delivery_method :smtp, {
-      :address => ENV['SMTP_SERVER'],
-      :port => ENV['SMTP_PORT'],
-      :user_name => ENV['SMTP_USERNAME'],
-      :password => ENV['SMTP_PASSWORD'],
-      :authentication => 'plain',
-      :enable_starttls_auto => false,
-      :return_response => true
-    }
+    delivery_method :smtp, address: ENV['SMTP_SERVER'],
+                           port: ENV['SMTP_PORT'],
+                           user_name: ENV['SMTP_USERNAME'],
+                           password: ENV['SMTP_PASSWORD'],
+                           authentication: 'plain',
+                           enable_starttls_auto: false,
+                           return_response: true
   end
 
   mail = Mail.deliver do
-    from     ENV['SMTP_USERNAME']
-    to       recipient
-    subject  subject
+    from ENV['SMTP_USERNAME']
+    to recipient
+    subject subject
 
     text_part do
       body 'This is plain text'
@@ -38,6 +36,6 @@ task :send do
     end
   end
 
-  puts "Sent #{Time.now.strftime("%d.%m.%Y %H:%M")}:"
+  puts "Sent #{Time.now.strftime('%d.%m.%Y %H:%M')}:"
   puts mail.inspect
 end

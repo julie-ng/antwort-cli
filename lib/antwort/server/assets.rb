@@ -20,6 +20,5 @@ module Sinatra
       env['PATH_INFO'].sub!(%r{^/assets}, '')
       settings.assets.call(env)
     end
-
   end
 end

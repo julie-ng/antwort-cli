@@ -10,4 +10,3 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://antwort.co'
   s.license     = 'MIT'
 end
-

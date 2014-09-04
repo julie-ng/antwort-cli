@@ -26,7 +26,7 @@ module Antwort
 
     get '/' do
       pages = Dir.entries(settings.templates_dir)
-      pages.delete_if {|page| page.to_s[0] == '.' }
+      pages.delete_if { |page| page.to_s[0] == '.' }
       @pages = pages.map { |page| page.split('.').first }
       erb :'views/index', layout: false
     end
@@ -52,6 +52,5 @@ module Antwort
     not_found do
       erb :'views/404'
     end
-
   end
 end

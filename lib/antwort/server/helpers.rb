@@ -1,21 +1,19 @@
 module Antwort
-
   module ApplicationHelpers
-
     def symbolize_keys!(hash)
-      hash.inject({}){|result, (key, value)|
+      hash.reduce({}) do |result, (key, value)|
         new_key = case key
                   when String then key.to_sym
                   else key
                   end
         new_value = case value
                     when Hash then symbolize_keys!(value)
-                    when Array then value.map{ |v| v.is_a?(Hash) ? symbolize_keys!(v) : v }
+                    when Array then value.map { |v| v.is_a?(Hash) ? symbolize_keys!(v) : v }
                     else value
                     end
         result[new_key] = new_value
         result
-      }
+      end
     end
 
     def sanitize_param(string)
@@ -24,8 +22,7 @@ module Antwort
   end
 
   module MarkupHelpers
-
-    def image_tag(path, options={})
+    def image_tag(path, options = {})
       @template ||= ''
       subdir = path.split('/').first == 'shared' ? '' :  @template + '/'
       options[:source] = '/assets/' + subdir + path
@@ -34,7 +31,7 @@ module Antwort
       content.gsub(/\n/, '')
     end
 
-    def button(text, url, args={})
+    def button(text, url, args = {})
       options = {
         text: text,
         url: url,
@@ -55,7 +52,7 @@ module Antwort
       content
     end
 
-    def wrapper_table(args={}, &block)
+    def wrapper_table(args = {}, &block)
       options = {
         width: '100%',
         cell_align: 'center',
@@ -69,13 +66,11 @@ module Antwort
     def counter_classes(index)
       # 0 index based
       klass = ''
-      klass += (index%2 == 0) ? ' is-2n' : ''
-      klass += (index%3 == 0) ? ' is-3n' : ''
-      klass += (index%4 == 0) ? ' is-4n' : ''
-      klass += (index%6 == 0) ? ' is-6n' : ''
+      klass += (index % 2 == 0) ? ' is-2n' : ''
+      klass += (index % 3 == 0) ? ' is-3n' : ''
+      klass += (index % 4 == 0) ? ' is-4n' : ''
+      klass += (index % 6 == 0) ? ' is-6n' : ''
       klass
     end
-
   end
-
 end
