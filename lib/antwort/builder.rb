@@ -35,7 +35,7 @@ module Antwort
     private
 
     def build_css
-      css_file = "source/assets/css/#{@template_name}/styles.scss"
+      css_file = "./assets/css/#{@template_name}/styles.scss"
       if File.file? css_file
         content = Tilt::ScssTemplate.new(css_file).render
         create_file(content: content, name: 'styles', ext: 'css')
