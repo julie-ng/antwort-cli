@@ -40,8 +40,7 @@ module Antwort
       end
 
       def clean_directory!
-        old_dir = connection.directories.create(key: email_id)
-        old_dir.destroy        
+        directory.files.each { |file| file.destroy }
       end
 
       def assets_dir
