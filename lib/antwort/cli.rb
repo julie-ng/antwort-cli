@@ -39,50 +39,50 @@ module Antwort
       end
     end
 
-    protected
-
     attr_reader :project_name, :email_id
 
-    def confirms_upload?
-      options[:force] ||
-        yes?("Are you sure? This will delete and replace all existing files in the #{email_id} directory")
-    end
-
-    def upload_mail
-      Upload.new(email_id).upload
-    end
-
-    def copy_email
-      directory 'email/css',
-                File.join('assets', 'css', email_directory)
-      directory 'email/images',
-                File.join('assets', 'images', email_directory)
-      copy_file 'email/email.html.erb',
-                File.join('emails', email_directory, 'index.html.erb')
-    end
-
-    def copy_project
-      directory 'project', project_directory
-    end
-
-    def initialize_git_repo
-      inside(project_directory) do
-        run('git init .')
+    no_commands do
+      def confirms_upload?
+        options[:force] ||
+          yes?("Are you sure? This will delete and replace all existing files in the #{email_id} directory")
       end
-    end
 
-    def run_bundler
-      inside(project_directory) do
-        run('bundle')
+      def upload_mail
+        Upload.new(email_id).upload
       end
-    end
 
-    def email_directory
-      email_id.downcase.gsub(/[^a-z|\-|\_]/, '')
-    end
+      def copy_email
+        directory 'email/css',
+                  File.join('assets', 'css', email_directory)
+        directory 'email/images',
+                  File.join('assets', 'images', email_directory)
+        copy_file 'email/email.html.erb',
+                  File.join('emails', email_directory, 'index.html.erb')
+      end
 
-    def project_directory
-      project_name.downcase.gsub(/[^a-z|\-|\_]/, '')
+      def copy_project
+        directory 'project', project_directory
+      end
+
+      def initialize_git_repo
+        inside(project_directory) do
+          run('git init .')
+        end
+      end
+
+      def run_bundler
+        inside(project_directory) do
+          run('bundle')
+        end
+      end
+
+      def email_directory
+        email_id.downcase.gsub(/[^a-z|\-|\_]/, '')
+      end
+
+      def project_directory
+        project_name.downcase.gsub(/[^a-z|\-|\_]/, '')
+      end
     end
   end
 end
