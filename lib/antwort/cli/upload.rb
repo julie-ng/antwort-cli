@@ -5,7 +5,7 @@ module Antwort
 
       def initialize(email_id)
         @email_id = email_id
-        fails ArgumentError, "Email #{email_id} does not exists" unless email_dir?
+        fail ArgumentError, "Email #{email_id} does not exists" unless email_dir?
       end
 
       def upload
