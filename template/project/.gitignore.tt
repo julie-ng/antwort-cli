@@ -1,0 +1,14 @@
+# Ignore Mac Finder file
+.DS_Store
+
+# Ignore bundler config
+.bundle
+
+# Ignore the build directory
+build
+
+# Ignore Sass
+*.sass-cache
+
+# Ignore Tmp and Cache
+tmp

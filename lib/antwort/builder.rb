@@ -22,7 +22,8 @@ module Antwort
     def build
       request = @request.get("/template/#{@template_name}")
       if request.status == 200
-        Dir.mkdir @template_dir
+        Dir.mkdir(@@build_dir) unless File.directory?(@@build_dir)
+        Dir.mkdir(@template_dir)
         build_css
         build_html(request.body)
         inline_css
@@ -35,7 +36,7 @@ module Antwort
     private
 
     def build_css
-      css_file = "source/assets/css/#{@template_name}/styles.scss"
+      css_file = "./assets/css/#{@template_name}/styles.scss"
       if File.file? css_file
         content = Tilt::ScssTemplate.new(css_file).render
         create_file(content: content, name: 'styles', ext: 'css')

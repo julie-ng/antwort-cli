@@ -14,7 +14,7 @@ module Antwort
 
     configure do
       enable :logging
-      set :root, File.expand_path('../../../', __FILE__) + '/source'
+      set :root, '.'
       set :views, settings.root
       set :templates_dir, settings.root + '/emails'
       set :partial_template_engine, :erb

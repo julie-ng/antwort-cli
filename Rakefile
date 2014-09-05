@@ -1,3 +1,10 @@
-require './lib/antwort'
+ENV['gem_push'] = 'false'
+require 'bundler/gem_tasks'
 
-Dir.glob('./lib/tasks/*.rake').each { |r| import r }
+desc 'Opens a console with antwort preloaded'
+task :console do
+  require 'pry'
+  require 'antwort'
+  include Antwort
+  Pry.start
+end

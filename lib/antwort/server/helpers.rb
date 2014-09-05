@@ -25,10 +25,11 @@ module Antwort
     def image_tag(path, options = {})
       @template ||= ''
       subdir = path.split('/').first == 'shared' ? '' :  @template + '/'
-      options[:source] = '/assets/' + subdir + path
+      options[:source] = File.join('/assets/', subdir, path)
       options[:alt] ||= ''
-      content = partial :'views/markup/image_tag', locals: options
-      content.gsub(/\n/, '')
+
+      partial('views/markup/image_tag', locals: options)
+        .gsub(/\n/, '')
     end
 
     def button(text, url, args = {})
@@ -48,8 +49,7 @@ module Antwort
       options[:width]  += 'px' if options[:width][-2..-1] != 'px'
       options[:height] += 'px' if options[:height][-2..-1] != 'px'
 
-      content = partial :'views/markup/button', locals: options
-      content
+      partial('views/markup/button', locals: options)
     end
 
     def wrapper_table(args = {}, &block)
@@ -59,8 +59,8 @@ module Antwort
         cell_valign: 'top',
         content: capture_html(&block)
       }.merge(args)
-      content = partial :'views/markup/table_wrapper', locals: options
-      concat_content content
+
+      concat_content partial('views/markup/table_wrapper', locals: options)
     end
 
     def counter_classes(index)

@@ -1,0 +1,9 @@
+guard 'livereload' do
+  watch(%r{^.rb})
+  watch(%r{^emails/.*/(.*)\.(erb)})
+  watch(%r{^emails/(.*)\.erb})
+  watch(%r{^views/.*/(.*)\.(erb)})
+  watch(%r{^views/(.*)\.erb})
+  watch(%r{^assets/css/.*/(.*)\.(css|scss)})
+  watch(%r{^assets/css/(.*)\.(css|scss)})
+end

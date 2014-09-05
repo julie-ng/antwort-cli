@@ -1,0 +1,16 @@
+AllCops:
+  Include:
+    - '*.gemspec'
+    - '**/Gemfile'
+    - '**/Rakefile'
+  Exclude:
+    - tmp/**/*
+
+SymbolArray:
+  Enabled: true
+
+LineLength:
+  Enabled: false
+
+Documentation:
+  Enabled: false
