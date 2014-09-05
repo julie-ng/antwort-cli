@@ -1,3 +1,5 @@
+require 'fog'
+
 module Antwort
   class CLI
     class Upload
