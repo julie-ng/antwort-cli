@@ -9,8 +9,10 @@ module Antwort
     end
 
     desc 'init PROJECT_NAME', 'Initializes a new Antwort project'
+    method_option :key, type: :string, desc: 'API key of the offsides gem server'
     def init(project_name)
       @project_name = project_name
+      @api_key = options[:key]
       copy_project
       initialize_git_repo
       run_bundler

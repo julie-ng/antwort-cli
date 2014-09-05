@@ -1,4 +1,8 @@
+<% if @api_key %>
+source 'https://offsides-gems.herokuapp.com/<%= @api_key %>'
+<% else %>
 # source 'https://offsides-gems.herokuapp.com/ADD_YOUR_KEY_HERE'
+<% end %>
 source 'https://rubygems.org'
 
 gem 'antwort'
