@@ -46,11 +46,11 @@ module Antwort
       end
 
       def assets_dir
-        File.join('.', 'assets', 'images', email_id)
+        @assets_dir ||= File.join('.', 'assets', 'images', email_id)
       end
 
       def email_dir
-        File.join('.', 'emails', email_id)
+        @email_dir ||= File.join('.', 'emails', email_id)
       end
 
       def email_dir?
