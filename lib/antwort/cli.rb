@@ -27,15 +27,26 @@ module Antwort
     end
 
     desc 'upload EMAIL_ID', 'Uploads an Antwort email to Amazon S3'
+    method_option :force, type: :boolean, default: false, desc: 'Forces replacing existing files on the server'
     def upload(email_id)
       @email_id = email_id
-      upload_mail
-      say 'Antwort email uploaded to AWS S3', :green
+      if confirms_upload?
+        upload_mail
+        say 'Antwort email uploaded to AWS S3', :green
+      else
+        say 'Aborting...', :red
+        say "Relax! Nothing's got deleted or replaced.", :green
+      end
     end
 
     protected
 
     attr_reader :project_name, :email_id
+
+    def confirms_upload?
+      options[:force] ||
+        yes?("Are you sure? This will delete and replace all existing files in the #{email_id} directory")
+    end
 
     def upload_mail
       Upload.new(email_id).upload
