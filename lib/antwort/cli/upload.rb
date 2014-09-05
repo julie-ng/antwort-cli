@@ -17,8 +17,8 @@ module Antwort
           next if f.to_s[0] == '.'
 
           directory.files.create(
-            key: f,
-            body: File.open(f),
+            key: "#{email_id}/#{f}",
+            body: File.open(File.join(assets_dir, f)),
             public: true
           )
         end
