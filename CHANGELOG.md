@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 * Gemified antwort generator
+* Added `antwort` CLI
+  * `$ antwort init MY_PROJECT` initializes the project 
+  * `$ antwort new FOO_LETTER` sets up a new email 
 
 ### Fixed
 
