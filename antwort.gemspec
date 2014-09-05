@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'thin'
   s.add_runtime_dependency 'rack-livereload'
   s.add_runtime_dependency 'guard-livereload'
+  s.add_runtime_dependency 'fog'
 
   s.add_development_dependency 'pry'
 end

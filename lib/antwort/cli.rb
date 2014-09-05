@@ -26,9 +26,20 @@ module Antwort
       say "Antwort email created in directory ./emails/#{email_directory}/", :green
     end
 
+    desc 'upload EMAIL_ID', 'Uploads an Antwort email to Amazon S3'
+    def upload(email_id)
+      @email_id = email_id
+      upload_mail
+      say 'Antwort email uploaded to AWS S3', :green
+    end
+
     protected
 
     attr_reader :project_name, :email_id
+
+    def upload_mail
+      Upload.new(email_id).upload
+    end
 
     def copy_email
       directory 'email/css',
