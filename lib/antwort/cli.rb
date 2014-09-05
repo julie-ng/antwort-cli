@@ -1,14 +1,20 @@
 require 'thor'
-require 'fileutils'
 
 module Antwort
   class CLI < Thor
+    include Thor::Actions
+
+    def self.source_root
+      File.expand_path('../../template', File.dirname(__FILE__))
+    end
+
     desc 'init PROJECT_NAME', 'Initializes a new Antwort project'
     def init(project_name)
       @project_name = project_name
       copy_project
+      initialize_git_repo
       run_bundler
-      say "Antwort project sucessfully initialized in directory #{project_dir}"
+      say "Antwort project sucessfully initialized in directory #{project_directory}", :green
     end
 
     protected
@@ -17,17 +23,24 @@ module Antwort
 
     def copy_project
       say 'Copying template...'
-      template_dir = File.expand_path('../../template', File.dirname(__FILE__))
-      FileUtils.copy_entry(template_dir, project_dir)
+      directory 'project', project_directory
+    end
+
+    def initialize_git_repo
+      inside(project_directory) do
+        run('git init .')
+      end
     end
 
     def run_bundler
       say 'Running bundler...'
-      `cd #{project_dir} && bundle install`
+      inside(project_directory) do
+        run('bundle')
+      end
     end
 
-    def project_dir
-      "./#{project_name}"
+    def project_directory
+      project_name.downcase.gsub(/[^a-z|\-|\_]/, '')
     end
   end
 end
