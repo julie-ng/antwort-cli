@@ -32,11 +32,15 @@ module Antwort
       end
 
       def directory
+        return @directory if defined?(@directory)
+
+        connection.directories.create(
+          key: ENV['AWS_BUCKET'],
+          public: true
+        )
+
         @directory ||=
-          connection.directories.create(
-            key: email_id,
-            public: true
-          )
+          connection.directories.get(ENV['AWS_BUCKET'], prefix: email_id)
       end
 
       def clean_directory!
