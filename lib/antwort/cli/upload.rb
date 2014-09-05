@@ -5,9 +5,21 @@ module Antwort
 
       def initialize(email_id)
         @email_id = email_id
+        fails ArgumentError, "Email #{email_id} does not exists" unless email_dir?
       end
 
       def upload
+        clean_directory!
+
+        Dir.foreach(assets_dir) do |f|
+          next if f.to_s[0] == '.'
+
+          directory.files.create(
+            key: f,
+            body: File.open(f),
+            public: true
+          )
+        end
       end
 
       def connection
@@ -22,8 +34,26 @@ module Antwort
       def directory
         @directory ||=
           connection.directories.create(
-            key: "#{ENV['ASSET_DIRECTORY']}/"
+            key: email_id,
+            public: true
           )
+      end
+
+      def clean_directory!
+        old_dir = connection.directories.create(key: email_id)
+        old_dir.destroy        
+      end
+
+      def assets_dir
+        File.join('.', 'assets', 'images', email_id)
+      end
+
+      def email_dir
+        File.join('.', 'emails', email_id)
+      end
+
+      def email_dir?
+        Dir.exist?(email_dir)
       end
     end
   end
