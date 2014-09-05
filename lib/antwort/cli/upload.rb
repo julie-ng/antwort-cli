@@ -37,11 +37,6 @@ module Antwort
       def directory
         return @directory if defined?(@directory)
 
-        connection.directories.create(
-          key: ENV['AWS_BUCKET'],
-          public: true
-        )
-
         @directory ||=
           connection.directories.get(ENV['AWS_BUCKET'], prefix: email_id)
       end
