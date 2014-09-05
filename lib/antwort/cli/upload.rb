@@ -42,7 +42,7 @@ module Antwort
       end
 
       def clean_directory!
-        directory.files.each { |file| file.destroy }
+        directory.files.each(&:destroy)
       end
 
       def assets_dir

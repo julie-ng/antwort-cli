@@ -14,4 +14,4 @@ def capture(stream)
   result
 end
 
-alias_method :silence, :capture
+alias silence capture
