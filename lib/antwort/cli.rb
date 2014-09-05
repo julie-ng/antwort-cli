@@ -1,4 +1,3 @@
-require 'antwort'
 require 'thor'
 
 module Antwort
