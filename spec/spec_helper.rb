@@ -18,4 +18,10 @@ RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.syntax = :expect
   end
+
+  config.before :suite do
+    ENV['AWS_ACCESS_KEY_ID'] ||= 'MY_TEST_ACCESS_KEY'
+    ENV['AWS_SECRET_ACCESS_KEY'] ||= 'MY_TEST_SECRET_ACCESS_KEY'
+    ENV['AWS_BUCKET'] ||= 'MY_TEST_BUCKET'
+  end
 end
