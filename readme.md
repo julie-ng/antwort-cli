@@ -34,8 +34,8 @@ In the project root, create a `.env` file with the following attributes
     ASSET_SERVER:           https://example.s3.amazonaws.com
     AWS_ACCESS_KEY_ID:      {{aws_access_key_id}}
     AWS_SECRET_ACCESS_KEY:  {{aws_secret_access_key}}  
-    AWS_BUCKET:             {{aws_bucket}}
-    FOG_REGION:             {{fog_region}}
+    AWS_BUCKET:             example
+    FOG_REGION:             eu-west-1
                             
     SMTP_SERVER:            smtp.mandrillapp.com
     SMTP_PORT:              587
@@ -64,7 +64,7 @@ See `.env.sample` for an example.
 To create a new email template, for example *newsletter*, simply run:
 
 ```bash
-$ bundle exec antwort new my_new_mail
+$ bundle exec antwort new newsletter
 ```
 
 ### Test E-Mail via send
