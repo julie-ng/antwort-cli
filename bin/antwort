@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/antwort'
+require_relative '../lib/antwort/cli'
 
 Antwort::CLI.start

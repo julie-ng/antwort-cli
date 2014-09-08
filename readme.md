@@ -31,15 +31,20 @@ See [Issues](https://github.com/jng5/antwort-generator/issues)
 In the project root, create a `.env` file with the following attributes
 
 
-    ASSET_SERVER:   https://example.s3.amazonaws.com
+    ASSET_SERVER:           https://example.s3.amazonaws.com
+    AWS_ACCESS_KEY_ID:      {{aws_access_key_id}}
+    AWS_SECRET_ACCESS_KEY:  {{aws_secret_access_key}}  
+    AWS_BUCKET:             example
+    FOG_REGION:             eu-west-1
+                            
+    SMTP_SERVER:            smtp.mandrillapp.com
+    SMTP_PORT:              587
+    SMTP_USERNAME:          {{username}}
+    SMTP_PASSWORD:          {{password}}
+    SMTP_DOMAIN:            {{domain}}
+    SMTP_EMAIL:             {{default_recipient}}
 
-    SMTP_SERVER:    smtp.mandrillapp.com
-    SMTP_PORT:      587
-    SMTP_USERNAME:  {{username}}
-    SMTP_PASSWORD:  {{password}}
-    SMTP_DOMAIN:    {{domain}}
-    SMTP_EMAIL:     {{default_recipient}}
-
+See `.env.sample` for an example.
 
 ## Use
 
@@ -48,46 +53,24 @@ In the project root, create a `.env` file with the following attributes
     .
     +-- .env
     +-- build
-    +-- lib
-    +-- source
-    |   +-- assets
-    |   |   +-- css
-    |   |   +-- images        
-    |   +-- emails
-    |   +-- views
+    +-- assets
+    |   +-- css
+    |   +-- images
+    +-- emails
+    +-- views
     +-- tmp
 
 
-To create a new email template, for example *newsletter*, simply:
+To create a new email template, for example *newsletter*, simply run:
 
-  - create a `{template}.html.erb` file in the `emails` directory
-  - create a `{template}` folder in the `images` directory
-  - create a `{template}` folder in the `css` directory
-
-And your structure should look like this:
-   
-
-    source
-    |
-    +-- assets
-    |   +-- images
-    |   |   +-- newsletter
-    |   |       +-- image-1.png
-    |   |       +-- image-2.png
-    |   +-- css
-    |       +-- newsletter
-    |           +-- styles.css
-    |           +-- main.css
-    |           +-- responsive.css
-    +-- emails
-        +-- newsletter.html.erb
-
-
-
+```bash
+$ bundle exec antwort new newsletter
+```
 
 ### Test E-Mail via send
 
-Antwort uses SMTP settings based on your `.env` file. We recommend using the [Mandrill](https://mandrillapp.com) service, which has a free tier that's perfect for testing.
+Antwort uses SMTP settings based on your `.env` file.
+We recommend using the [Mandrill](https://mandrillapp.com) service, which has a free tier that's perfect for testing.
 
 If you use your own SMTP server, check if your server limits/throttles requests.
 
@@ -95,14 +78,19 @@ We do not support sendmail because of challenges of sending from localhost.
 
 To send a test email, just type:
 
-    rake send id={optional} template={name} subject={optional}
+```bash
+$ rake send id={optional} template={name} subject={optional}
+```
 
 ### Development Server
 
 Start the development server with the following command
 
-    rake server
+```bash
+$ rake server
+```
 
-Then open `http://localhost:9494/` in your browser to view your emails. A listing of all available email templates will be automatically generated for you.
+Then open `http://localhost:9494/` in your browser to view your emails.
+A listing of all available email templates will be automatically generated for you.
 
 
