@@ -29,6 +29,7 @@ module Antwort
     desc 'upload EMAIL_ID', 'Uploads an Antwort email to Amazon S3'
     method_option :force, type: :boolean, default: false, desc: 'Forces replacing existing files on the server'
     def upload(email_id)
+      require_relative 'cli/upload'
       @email_id = email_id
       if confirms_upload?
         upload_mail
