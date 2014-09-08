@@ -9,7 +9,10 @@ module Antwort
     end
 
     desc 'init PROJECT_NAME', 'Initializes a new Antwort project'
-    method_option :key, type: :string, desc: 'API key of the offsides gem server'
+    method_option :key,
+                  type: :string,
+                  required: true,
+                  desc: 'API key of the offsides gem server'
     def init(project_name)
       @project_name = project_name
       @api_key = options[:key]
@@ -27,7 +30,10 @@ module Antwort
     end
 
     desc 'upload EMAIL_ID', 'Uploads an Antwort email to Amazon S3'
-    method_option :force, type: :boolean, default: false, desc: 'Forces replacing existing files on the server'
+    method_option :force,
+                  type: :boolean,
+                  default: false,
+                  desc: 'Forces replacing existing files on the server'
     def upload(email_id)
       require_relative 'cli/upload'
       @email_id = email_id
