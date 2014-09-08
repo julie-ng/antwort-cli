@@ -36,7 +36,6 @@ module Antwort
                   aliases: '-f',
                   desc: 'Forces replacing existing files on the server'
     def upload(email_id)
-      require_relative 'cli/upload'
       @email_id = email_id
       if confirms_upload?
         upload_mail
@@ -56,6 +55,7 @@ module Antwort
       end
 
       def upload_mail
+        require_relative 'cli/upload'
         Upload.new(email_id).upload
       end
 
