@@ -33,6 +33,7 @@ module Antwort
     method_option :force,
                   type: :boolean,
                   default: false,
+                  aliases: '-f',
                   desc: 'Forces replacing existing files on the server'
     def upload(email_id)
       require_relative 'cli/upload'
