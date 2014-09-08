@@ -93,4 +93,31 @@ $ rake server
 Then open `http://localhost:9494/` in your browser to view your emails.
 A listing of all available email templates will be automatically generated for you.
 
+### Available commands
 
+## `antwort` executable
+
+```bash
+bundle exec antwort
+```
+
+```
+Commands:
+  antwort help [COMMAND]               # Describe available commands or one specific command
+  antwort init PROJECT_NAME --key=KEY  # Initializes a new Antwort project
+  antwort new EMAIL_ID                 # Creates a new Antwort email
+  antwort upload EMAIL_ID              # Uploads an Antwort email to Amazon S3
+```
+
+## Rake tasks
+
+```bash
+$ bundle exec rake -T
+```
+
+```
+rake build:clean     # Empties the build directory
+rake build:template  # Builds Markup from template (required: id=template_name})
+rake send            # Sends email via SMTP by id={template_name} email={recipient} (optional: subject={subject_line})
+rake server          # Starts http://localhost:9292 server for developing emails
+```
