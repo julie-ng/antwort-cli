@@ -46,6 +46,16 @@ module Antwort
       end
     end
 
+    desc 'server', 'Starts http://localhost:9292 server for developing and previewing emails'
+    method_option :port,
+                  type: :string,
+                  default: 9292,
+                  desc: 'Port number of server'
+    def server
+      require 'antwort'
+      Antwort::Server.run!
+    end
+
     attr_reader :project_name, :email_id
 
     no_commands do
