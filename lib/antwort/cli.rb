@@ -8,7 +8,7 @@ module Antwort
       File.expand_path('../../template', File.dirname(__FILE__))
     end
 
-    desc 'init PROJECT_NAME', 'Initializes a new Antwort project'
+    desc 'init PROJECT_NAME', 'Initializes a new Antwort Email project'
     method_option :key,
                   type: :string,
                   required: true,
@@ -19,27 +19,27 @@ module Antwort
       copy_project
       initialize_git_repo
       run_bundler
-      say "Antwort project initialized in directory ./#{project_directory}/", :green
+      say "New Antwort Email project initialized in: ./#{project_directory}/", :green
     end
 
-    desc 'new EMAIL_ID', 'Creates a new Antwort email'
+    desc 'new EMAIL_ID', 'Creates a new email template'
     def new(email_id)
       @email_id = email_id
       copy_email
-      say "Antwort email created in directory ./emails/#{email_directory}/", :green
+      say "New email template created in: ./emails/#{email_directory}/", :green
     end
 
-    desc 'upload EMAIL_ID', 'Uploads an Antwort email to Amazon S3'
+    desc 'upload EMAIL_ID', 'Uploads email assets to AWS S3'
     method_option :force,
                   type: :boolean,
                   default: false,
                   aliases: '-f',
-                  desc: 'Forces replacing existing files on the server'
+                  desc: 'Overwrite existing files on the server'
     def upload(email_id)
       @email_id = email_id
       if confirms_upload?
         upload_mail
-        say 'Antwort email uploaded to AWS S3', :green
+        say 'Email assets uploaded to AWS S3', :green
       else
         say 'Aborting...', :red
         say "Relax! Nothing's got deleted or replaced.", :green
