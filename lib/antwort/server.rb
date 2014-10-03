@@ -19,7 +19,7 @@ module Antwort
       set :templates_dir, settings.root + '/emails'
       set :partial_template_engine, :erb
       enable :partial_underscores
-      set :port, 9494
+      set :port, 9292
     end
 
     register Sinatra::Assets # must come after we set root
