@@ -1,0 +1,166 @@
+
+$bodyFont: 'Helvetica Neue', Helvetica, sans-serif;
+$headlineFont: 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
+
+$bodyColor: #444;
+$blue:      #018696;
+$darkBlue:  #374550;
+$green:     #ACC642;
+$orange:    #DF4726;
+$yellow:    #FFC526;
+$linkColor: #7AA6B6;
+$linkVisitedColor: darken($linkColor, 10%);
+$linkHoverColor:  lighten($linkColor, 10%);
+$borderColor: #ddd;
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  color: $bodyColor;
+  font: 400 14px/1.5em $bodyFont;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  outline: none;
+}
+
+a:link {
+  color: $linkColor;
+}
+
+a:visited {
+  color: $linkVisitedColor;
+}
+
+a:hover,
+a:active {
+  color: $linkHoverColor;
+}
+
+a:focus {
+  outline: none;
+  outline-style: none;
+  -moz-outline-style: none;
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px solid $borderColor;
+  margin: 2em 0;
+}
+
+code {
+  background-color: #f3f3f3;
+  padding: 2px 6px;
+}
+
+h1 {
+  font: 600 2em/1.5em $headlineFont;
+}
+
+h2 {
+  font: 600 1.5em/1.5em $headlineFont;
+  color: $orange;
+}
+
+h3 {
+  font-weight: 500;
+  font-size: 1.25em; // 20/16
+  line-height: 1.5em;
+  font-family: $bodyFont;
+}
+
+h4 {
+  font: 400 1.125em/1.5em $bodyFont; // 18/16
+}
+
+.lead {
+  font: 300 1.6em/1.4em $headlineFont;
+  color: #666;
+}
+
+//-- Layout
+
+header {
+  margin-bottom: 2em;
+  padding: 1.25em 0;
+  background-color: $darkBlue;
+  color: #eee;
+
+  h1 {
+    margin: 0;
+    font-size: 1.25em;
+    color: $yellow;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  span {
+    color: $yellow;
+    font-weight: 800;
+  }
+
+  em {
+    font-style: normal;
+    font-weight: 300;
+    color: #ddd;
+    text-transform: none;
+  }
+
+  .container {
+    position: relative;
+  }
+
+  .support-link {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    height: 2em;
+    line-height: 2em;
+    margin-top: -1em;
+
+    a:link, a:visited {
+      color: #879C9E;
+      text-decoration: none;
+    }
+  }
+}
+
+footer {
+  margin-top: 2em;
+
+  p {
+    font-size: 0.85em;
+    color: #bbb;
+  }
+
+  a:link, a:visited {
+    color: #bbb;
+  }
+
+  a:hover, a:active {
+    color: $linkHoverColor;
+  }
+
+  .container {
+    border-top: 1px solid #eee;
+  }
+}
+
+.container {
+  width: 62.5em;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.content {
+  min-height: 200px;
+}

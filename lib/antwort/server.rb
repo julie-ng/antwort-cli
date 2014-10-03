@@ -28,7 +28,7 @@ module Antwort
       pages = Dir.entries(settings.templates_dir)
       pages.delete_if { |page| page.to_s[0] == '.' }
       @pages = pages.map { |page| page.split('.').first }
-      erb :'views/index', layout: false
+      erb :'views/index', layout: :'views/server'
     end
 
     get '/template/:template/?' do
@@ -50,7 +50,7 @@ module Antwort
     end
 
     not_found do
-      erb :'views/404'
+      erb :'views/404', layout: :'views/server'
     end
   end
 end

@@ -1,13 +1,18 @@
-<h1>Welcome to the email generator:</h1>
+<div class="container">
 
-<h3>Available Templates</h3>
-
-<ul>
-  <% @pages.each do |page| %>
-  <li>
-    <a href="template/<%= page %>">
-      <%= page %>
-    </a>
-  </li>
+  <h3>Emails</h3>
+  <% if @pages.length == 0 %>
+    <p>Oops, no emails found. Run <code>antwort new [name]</code> to create one.</p>
+  <% else %>
+    <ul class="emails-list">
+      <% @pages.each do |page| %>
+      <li>
+        <a href="template/<%= page %>">
+          <%= page %>
+        </a>
+      </li>
+      <% end %>
+    </ul>
   <% end %>
-</ul>
+
+</div>

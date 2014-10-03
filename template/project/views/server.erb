@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Antwort Email Development Server</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,600,600italic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/assets/server.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <p class="support-link">
+        <a href="mailto:support@antwort.co">Support</a>
+      </p>
+      <h1>
+        Antwort
+        <span>|</span>
+        <em>Email Development Server</em>
+      </h1>
+    </div>
+  </header>
+  <%= yield %>
+
+  <footer>
+    <div class="container">
+      <p>Copyright <%= Time.now.year %> <a href="http://offsides.io">Offsides</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>
