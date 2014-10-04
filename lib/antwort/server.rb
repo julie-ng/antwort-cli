@@ -14,6 +14,8 @@ module Antwort
     include Antwort::ApplicationHelpers
     include Antwort::MarkupHelpers
 
+    puts "-- requiring dev server --"
+
     configure do
       enable :logging
       set :root, Dir.pwd
@@ -34,23 +36,13 @@ module Antwort
     end
 
     get '/foo/:template' do
-      @layout = 'views/layout'
-      @template = params[:template]
-      file = "#{settings.views}/emails/#{@template}/index.html.erb"
-      file_content = File.read(file)
-
-      if (md = file_content.match(/^(?<metadata>---\s*\n.*?\n?)^(---\s*$\n?)/m))
-        contents = md.post_match
-        @metadata = YAML.load(md[:metadata])
-      end
-
+      @template = sanitize_param params[:template]
+      template_file = get_template_file @template
+      content = get_content(template_file)
+      data = {hello: 'world'}
       context = self
-      template = Tilt['erb'].new { contents }
-      layout = Tilt::ERBTemplate.new("#{settings.views}/views/layout.erb")
-      layout.render(context) {
-        puts template.inspect
-        template.render(context, :world => 'World!')
-      }
+      @metadata = content[:metadata]
+      render_template(content[:body], data, context)
     end
 
     get '/template/:template/?' do
@@ -74,5 +66,6 @@ module Antwort
     not_found do
       erb :'views/404', layout: :'views/server'
     end
+
   end
 end

@@ -19,6 +19,34 @@ module Antwort
     def sanitize_param(string)
       string.nil? ? '' : string.gsub(/([^A-Za-z0-9_\/-]+)|(--)/, '_')
     end
+
+    def get_template_file(template_name)
+      # Dir.entries("your/folder").select {|f| !File.directory? f}
+      "#{settings.views}/emails/#{template_name}/index.html.erb"
+    end
+
+    def get_content(file)
+      data = File.read(file)
+      md = data.match(/^(?<metadata>---\s*\n.*?\n?)^(---\s*$\n?)/m)
+      return {
+        body:     (md.nil?) ? data : md.post_match,
+        metadata: (md.nil?) ? {} : YAML.load(md[:metadata])
+      }
+    end
+
+    def render_template(erb_markup, data = {}, context = Object.new{}, layout = 'layout')
+      template = Tilt['erb'].new { erb_markup }
+      data.each { |k,v| instance_variable_set("@#{k}", v) }
+      if layout
+        layout = Tilt::ERBTemplate.new("#{settings.views}/views/#{layout}.erb")
+        layout.render(context) {
+          template.render(context)
+        }
+      else
+        template.render(context)
+      end
+    end
+
   end
 
   module MarkupHelpers
