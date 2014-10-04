@@ -58,6 +58,7 @@ module Antwort
 
     def inline_css
       markup  = File.read(@html.path)
+      markup  = markup.gsub(/(<link.*responsive.css")(>)/i, '\1 data-roadie-ignore\2')
       document = Roadie::Document.new(markup)
       document.asset_providers = [
         Roadie::FilesystemProvider.new(@template_dir)
