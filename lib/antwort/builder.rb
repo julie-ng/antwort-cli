@@ -69,6 +69,7 @@ module Antwort
     def cleanup_markup(markup)
       content = use_asset_server(markup)
       content = remove_livereload(content)
+      content = add_responsive_css(content)
       content
     end
 
@@ -100,6 +101,12 @@ module Antwort
     def remove_livereload(markup = '')
       markup.gsub(/<script.*?>(\s|\S)*<\/script>/i, '')
             .gsub(/(<head.*?>\n)(\s*\n)*/i, '\1')
+    end
+
+    def add_responsive_css(markup = '')
+      css = File.read("#{@template_dir}/responsive.css")
+      css_markup = "<style type=\"text/css\">\n" + css + "</style>\n"
+      markup.gsub(/<link(.*)responsive.css" data-roadie-ignore>/i, css_markup)
     end
   end
 end
