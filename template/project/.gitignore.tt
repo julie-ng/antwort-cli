@@ -4,11 +4,14 @@
 # Ignore bundler config
 .bundle
 
+# Ignore environment config
+.env
+
 # Ignore the build directory
 build
 
 # Ignore Sass
 *.sass-cache
 
-# Ignore Tmp and Cache
+# Ignore temp and Cache
 tmp
