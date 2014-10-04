@@ -36,12 +36,17 @@ module Antwort
     private
 
     def build_css
-      css_file = "./assets/css/#{@template_name}/styles.scss"
-      if File.file? css_file
-        content = Tilt::ScssTemplate.new(css_file).render
-        create_file(content: content, name: 'styles', ext: 'css')
+      build_css_file 'styles'
+      build_css_file 'responsive'
+    end
+
+    def build_css_file(filename='styles')
+      file = "./assets/css/#{@template_name}/#{filename}.scss"
+      if File.file? file
+        content = Tilt::ScssTemplate.new(file, style: :expanded).render
+        create_file(content: content, name: filename, ext: 'css')
       else
-        puts "Build failed. CSS for #{@template_name} not found." # continues anyway
+        puts "Build failed. #{filename}.scss for #{@template_name} not found." # continues anyway
       end
     end
 
