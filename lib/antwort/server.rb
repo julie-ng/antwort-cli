@@ -33,6 +33,26 @@ module Antwort
       erb :'views/index', layout: :'views/server'
     end
 
+    get '/foo/:template' do
+      @layout = 'views/layout'
+      @template = params[:template]
+      file = "#{settings.views}/emails/#{@template}/index.html.erb"
+      file_content = File.read(file)
+
+      if (md = file_content.match(/^(?<metadata>---\s*\n.*?\n?)^(---\s*$\n?)/m))
+        contents = md.post_match
+        @metadata = YAML.load(md[:metadata])
+      end
+
+      context = self
+      template = Tilt['erb'].new { contents }
+      layout = Tilt::ERBTemplate.new("#{settings.views}/views/layout.erb")
+      layout.render(context) {
+        puts template.inspect
+        template.render(context, :world => 'World!')
+      }
+    end
+
     get '/template/:template/?' do
       @template = params[:template]
 
