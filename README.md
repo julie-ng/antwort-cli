@@ -1,30 +1,28 @@
 # Antwort E-Mail Generator
 
 Author: Julie Ng  
-Date: 14 August 2014
+Version 0.0.3 (October 2014)
 
-**Documentation Todo:**
+### Speed up your email design and development workflow by automating repetitive tasks:
 
-- Use `image_tag` helper
-- Use `content_for :header_css`
+- design in code with live preview of markup using Antwort's local development server
+- build html and inline css from multiple templates
+- upload images to content server (S3 only)
+- send email test via SMTP
 
-## Features
+__Other features__
 
-- local development server for live preview of markup
-- builder that builds compiled html with inlined css
-- test email send via SMTP
 
-**Todo**
-
-See [Issues](https://github.com/jng5/antwort-generator/issues)
+- useful helpers, e.g. `image_tag` that automatically includes email specific markup.
 
 ## Setup
 
 ### Requirements
 
 - [Bundler](http://bundler.io/)
-- Ruby 2.1
-- Dotenv
+- Ruby 2.0+
+- AWS S3 Account, for email upload (optional)
+- SMTP credentials, for sending test emails (optional)
 
 ### Environment 
 
@@ -61,45 +59,18 @@ See `.env.sample` for an example.
     +-- tmp
 
 
-To create a new email template, for example *newsletter*, simply run:
+To create a new email template, for example `newsletter`, simply run:
 
-```bash
-$ bundle exec antwort new newsletter
+```
+bundle exec antwort new newsletter
 ```
 
-### Test E-Mail via send
 
-Antwort uses SMTP settings based on your `.env` file.
-We recommend using the [Mandrill](https://mandrillapp.com) service, which has a free tier that's perfect for testing.
+## Commands
 
-If you use your own SMTP server, check if your server limits/throttles requests.
 
-We do not support sendmail because of challenges of sending from localhost.
+### Antwort commands
 
-To send a test email, just type:
-
-```bash
-$ rake send id={optional} template={name} subject={optional}
-```
-
-### Development Server
-
-Start the development server with the following command
-
-```bash
-$ rake server
-```
-
-Then open `http://localhost:9494/` in your browser to view your emails.
-A listing of all available email templates will be automatically generated for you.
-
-### Available commands
-
-## `antwort` executable
-
-```bash
-bundle exec antwort
-```
 
 ```
 Commands:
@@ -109,10 +80,16 @@ Commands:
   antwort upload EMAIL_ID              # Uploads an Antwort email to Amazon S3
 ```
 
-## Rake tasks
+__Notes__ 
 
-```bash
-$ bundle exec rake -T
+- You should run the commands prefixed with `bundle exec` to make sure the correct version of gems are youed.
+- `--key` refers to API key to private gem server
+
+
+### Rake tasks
+
+```
+bundle exec rake -T
 ```
 
 ```
@@ -121,3 +98,8 @@ rake build:template  # Builds Markup from template (required: id=template_name})
 rake send            # Sends email via SMTP by id={template_name} email={recipient} (optional: subject={subject_line})
 rake server          # Starts http://localhost:9292 server for developing emails
 ```
+
+
+## License
+
+Copyright 2014 [Offsides UG](http://offsides.io). All rights reserved.
