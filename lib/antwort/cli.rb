@@ -65,7 +65,6 @@ module Antwort
       end
 
       def upload_mail
-        require_relative 'cli/upload'
         Upload.new(email_id).upload
       end
 
