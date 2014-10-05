@@ -45,10 +45,13 @@ module Antwort
 
       if template_exists? @template
         content   = get_content @template
-        data      = fetch_data @template
-        context   = self
-        @metadata = content[:metadata] || {}
-        render_template(content[:body], data, context)
+        @metadata = symbolize_keys!(content[:metadata]) || {}
+        opts = {
+          context: self,
+          data: fetch_data(@template)
+        }.merge(@metadata)
+
+        render_template(content[:body],  opts)
       else
         status 404
       end

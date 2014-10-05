@@ -62,16 +62,23 @@ module Antwort
       request.path_info.gsub(/\/template\//i,'')
     end
 
-    def render_template(erb_markup, data = {}, context = Object.new{}, layout = 'layout')
+    def render_template(erb_markup, args = {})
+      opts = {
+        data: {},
+        context: Object.new,
+        layout: 'layout'
+      }.merge(args)
+
       template = Tilt['erb'].new { erb_markup }
-      data.each { |k,v| instance_variable_set("@#{k}", v) }
-      if layout
-        layout = Tilt::ERBTemplate.new("#{settings.views}/views/#{layout}.erb")
-        layout.render(context) {
-          template.render(context)
+      opts[:data].each { |k,v| instance_variable_set("@#{k}", v) }
+
+      if opts[:layout]
+        layout = Tilt::ERBTemplate.new("#{settings.views}/views/#{opts[:layout]}.erb")
+        layout.render(opts[:context]) {
+          template.render(opts[:context])
         }
       else
-        template.render(context)
+        template.render(opts[:context])
       end
     end
 
