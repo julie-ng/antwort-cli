@@ -1,6 +1,9 @@
+ENV['RACK_ENV'] = 'test'
+
 require 'pathname'
 require 'antwort'
-require 'rspec/its'
+require 'rspec'
+require 'rack/test'
 
 Pathname.glob(Pathname(__dir__) + 'support' '**/*.rb').each { |f| require f }
 
@@ -11,6 +14,8 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 
+  config.include Rack::Test::Methods
+
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
   config.raise_errors_for_deprecations!
@@ -19,6 +24,7 @@ RSpec.configure do |config|
     mocks.syntax = :expect
   end
 
+  # move to .env later
   config.before :suite do
     ENV['AWS_ACCESS_KEY_ID'] ||= 'MY_TEST_ACCESS_KEY'
     ENV['AWS_SECRET_ACCESS_KEY'] ||= 'MY_TEST_SECRET_ACCESS_KEY'
