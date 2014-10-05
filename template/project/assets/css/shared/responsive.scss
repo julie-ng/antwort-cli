@@ -1,0 +1,10 @@
+// Shared responsive styles
+
+@import "reset";
+
+@media screen and (max-width: 400px) {
+ .content-wrapper {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}

@@ -7,8 +7,8 @@
     <ul class="emails-list">
       <% @pages.each do |page| %>
       <li>
-        <a href="template/<%= page %>">
-          <%= page %>
+        <a href="template/<%= page[:path] %>">
+          <%= page[:title] %>
         </a>
       </li>
       <% end %>

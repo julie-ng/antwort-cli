@@ -1,5 +1,12 @@
+//
+// Common Email Resets
+// -------------------
+// This file contains common email resets to adjust for quirks
+// across email clients. We've separated these definitions
+// because you should never need to change this.
 
-/* General resets */
+
+// General resets
 body {
   margin:0;
   padding:0;
@@ -15,7 +22,7 @@ table td {
   border-collapse:collapse;
 }
 
-/* Normalize Outlook.com styles */
+// Normalize Outlook.com styles
 .ExternalClass{
 width:100%;
 }
@@ -29,24 +36,24 @@ width:100%;
   line-height: 100%;
 }
 
-/* Outermost container in Outlook.com */
+// Outermost container in Outlook.com
 .ReadMsgBody {
   width: 100%;
   background-color: #ebebeb;
 }
 
-/* Remove any extra Outlook Spacing */
+// Remove any extra Outlook Spacing
 table{
   mso-table-lspace: 0pt;
   mso-table-rspace: 0pt;
 }
 
-/* Weird image resizing in Outlook */
+// Weird image resizing in Outlook
 img{
   -ms-interpolation-mode:bicubic;
 }
 
-/* Sometimes Yahoo turns text into ads/search links */
+// Sometimes Yahoo turns text into ads/search links
 .yshortcuts a {
   border-bottom: none !important;
 }
