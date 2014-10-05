@@ -50,6 +50,10 @@ module Antwort
       File.file? settings.templates_dir + '/' + template_name + '/index.html.erb'
     end
 
+    def get_template_from_path
+      request.path_info.gsub(/\/template\//i,'')
+    end
+
     def render_template(erb_markup, data = {}, context = Object.new{}, layout = 'layout')
       template = Tilt['erb'].new { erb_markup }
       data.each { |k,v| instance_variable_set("@#{k}", v) }
@@ -67,11 +71,9 @@ module Antwort
 
   module MarkupHelpers
     def image_tag(path, options = {})
-      @template ||= ''
-      subdir = path.split('/').first == 'shared' ? '' :  @template + '/'
+      subdir   = (path[0] == '/') ? '' : get_template_from_path
       options[:source] = File.join('/assets/', subdir, path)
       options[:alt] ||= ''
-
       partial('views/markup/image_tag', locals: options)
         .gsub(/\n/, '')
     end
