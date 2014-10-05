@@ -25,13 +25,29 @@ module Antwort
       "#{settings.views}/emails/#{template_name}/index.html.erb"
     end
 
-    def get_content(file)
+    def get_content(template_name)
+      file = get_template_file(template_name)
       data = File.read(file)
       md = data.match(/^(?<metadata>---\s*\n.*?\n?)^(---\s*$\n?)/m)
       return {
         body:     (md.nil?) ? data : md.post_match,
         metadata: (md.nil?) ? {} : YAML.load(md[:metadata])
       }
+    end
+
+    def fetch_data(template_name)
+      data_file = settings.root + '/data/' + template_name + '.yml'
+      if File.file? data_file
+        data = YAML.load_file(data_file)
+        data = symbolize_keys! data
+      else
+        data = {}
+      end
+      data
+    end
+
+    def template_exists?(template_name)
+      File.file? settings.templates_dir + '/' + template_name + '/index.html.erb'
     end
 
     def render_template(erb_markup, data = {}, context = Object.new{}, layout = 'layout')

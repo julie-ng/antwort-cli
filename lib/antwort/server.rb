@@ -14,8 +14,6 @@ module Antwort
     include Antwort::ApplicationHelpers
     include Antwort::MarkupHelpers
 
-    puts "-- requiring dev server --"
-
     configure do
       enable :logging
       set :root, Dir.pwd
@@ -35,29 +33,15 @@ module Antwort
       erb :'views/index', layout: :'views/server'
     end
 
-    get '/foo/:template' do
+    get '/template/:template' do
       @template = sanitize_param params[:template]
-      template_file = get_template_file @template
-      content = get_content(template_file)
-      data = {hello: 'world'}
-      context = self
-      @metadata = content[:metadata]
-      render_template(content[:body], data, context)
-    end
 
-    get '/template/:template/?' do
-      @template = params[:template]
-
-      data_file = settings.root + '/data/' + @template + '.yml'
-      if File.file? data_file
-        @data = YAML.load_file(data_file)
-        @data = symbolize_keys! @data
-      else
-        @data = {}
-      end
-
-      if File.file? settings.templates_dir + '/' + @template + '/index.html.erb'
-        erb :"emails/#{@template}/index", layout: :'views/layout'
+      if template_exists? @template
+        content   = get_content @template
+        data      = fetch_data @template
+        context   = self
+        @metadata = content[:metadata] || {}
+        render_template(content[:body], data, context)
       else
         status 404
       end
