@@ -25,6 +25,14 @@ module Antwort
       "#{settings.views}/emails/#{template_name}/index.html.erb"
     end
 
+    def get_page_title(template_name)
+      get_metadata(template_name)['title'] || 'Untitled'
+    end
+
+    def get_metadata(template_name)
+      get_content(template_name)[:metadata]
+    end
+
     def get_content(template_name)
       file = get_template_file(template_name)
       data = File.read(file)

@@ -29,7 +29,14 @@ module Antwort
     get '/' do
       pages = Dir.entries(settings.templates_dir)
       pages.delete_if { |page| page.to_s[0] == '.' }
-      @pages = pages.map { |page| page.split('.').first }
+      @pages = Array.new
+      pages.each do |p|
+        path = p.split('.').first
+        @pages.push({
+          path: path,
+          title: get_page_title(path)
+        })
+      end
       erb :'views/index', layout: :'views/server'
     end
 
