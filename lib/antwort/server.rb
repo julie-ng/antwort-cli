@@ -17,6 +17,7 @@ module Antwort
     configure do
       enable :logging
       set :root, Dir.pwd
+      set :root, Dir.pwd + '/spec/support/server' if ENV['RACK_ENV'] == 'test'
       set :views, settings.root
       set :templates_dir, settings.root + '/emails'
       set :partial_template_engine, :erb
@@ -24,7 +25,7 @@ module Antwort
       set :port, 9292
     end
 
-    register Sinatra::Assets # must come after we set root
+    register Sinatra::Assets # after we set root
 
     get '/' do
       pages = Dir.entries(settings.templates_dir)
