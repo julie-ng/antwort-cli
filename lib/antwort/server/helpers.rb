@@ -67,12 +67,24 @@ module Antwort
       end
     end
 
+    def image_url_from_path(path)
+      p = path.split(':')[0]
+      if (p == 'http' || p == 'https')
+        url = path
+      else
+        a = [path]
+        a.unshift(get_template_from_path) unless path[0] == '/'
+        a.unshift('/assets')
+        url = File.join(a)
+      end
+      url
+    end
+
   end
 
   module MarkupHelpers
     def image_tag(path, options = {})
-      subdir   = (path[0] == '/') ? '' : get_template_from_path
-      options[:source] = File.join('/assets/', subdir, path)
+      options[:source] = image_url_from_path(path)
       options[:alt] ||= ''
       partial('views/markup/image_tag', locals: options)
         .gsub(/\n/, '')
