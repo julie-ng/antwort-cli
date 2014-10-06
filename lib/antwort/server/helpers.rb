@@ -26,7 +26,7 @@ module Antwort
     end
 
     def get_page_title(template_name)
-      get_metadata(template_name)['title'] || 'Untitled'
+      get_metadata(template_name)[:title] || 'Untitled'
     end
 
     def get_metadata(template_name)
@@ -39,7 +39,7 @@ module Antwort
       md = data.match(/^(?<metadata>---\s*\n.*?\n?)^(---\s*$\n?)/m)
       return {
         body:     (md.nil?) ? data : md.post_match,
-        metadata: (md.nil?) ? {} : YAML.load(md[:metadata])
+        metadata: (md.nil?) ? {} : symbolize_keys!(YAML.load(md[:metadata]))
       }
     end
 

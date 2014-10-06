@@ -46,7 +46,7 @@ module Antwort
 
       if template_exists? @template
         content   = get_content @template
-        @metadata = symbolize_keys!(content[:metadata]) || {}
+        @metadata = content[:metadata] || {}
         opts = {
           context: self,
           data: fetch_data(@template)
