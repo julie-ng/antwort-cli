@@ -3,17 +3,33 @@
 
 # 0.0.3
 
-Work in progress: 3 Oct 2014
+Work in progress: 6 Oct 2014
 
 __Added__
 
 * Added `$ antwort server` command
 * Styled server pages
 
+    - Lists all templates by title
+    - If no templates, shows message to add one
+    - Styled 404 template not found page
+* Refactored Builder
+
+    - Builder now uses regex to remove rack live reload code
+    - Cleaned up CSS markup required for inlining css. Removed `roadie` references from project templates.
+    - Templates now use just `styles.scss` (inlined) and `responsive.scss` (outputed to `<head>`)
+* Individual email metadata via YAML frontmatter
+* Custom layouts per email via metadata
+* Adjusted templates included in project initializer based on code changes
+* Added some specs for Antwort::Server
+
+
 __Fixed__
 
 * Fixed port number, should be 9292 instead of 9494.
 * Include `lib/cli/upload` too
+* `image_tag` now respects absolute URLs starting with `http:` or `https:`
+* `image_tag` only prefxes template directory to path if image src does *not* start with `/`
   
 
 # 0.0.2
