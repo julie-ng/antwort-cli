@@ -1,1 +1,14 @@
-<h1>Hello World</h1>
+
+  <% if @pages.length == 0 %>
+    No emails found
+  <% else %>
+    <ul>
+      <% @pages.each do |page| %>
+      <li>
+        <a href="template/<%= page[:path] %>">
+          <%= page[:title] %>
+        </a>
+      </li>
+      <% end %>
+    </ul>
+  <% end %>
