@@ -1,4 +1,5 @@
 require 'fog'
+require 'dotenv'
 
 module Antwort
   class CLI
@@ -6,6 +7,7 @@ module Antwort
       attr_reader :email_id
 
       def initialize(email_id)
+        Dotenv.load
         @email_id = email_id
         fail ArgumentError, "Email #{email_id} does not exists" unless email_dir?
       end
