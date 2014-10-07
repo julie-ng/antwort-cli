@@ -28,7 +28,6 @@ module Antwort
               public: true
             )
 
-            # puts "  ceated #{ENV['ASSET_SERVER']}/#{email_id}/#{f}"
             say '    create   ', :green
             say "#{ENV['ASSET_SERVER']}/#{email_id}/#{f}"
           end
