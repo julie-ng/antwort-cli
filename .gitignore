@@ -1,32 +1,21 @@
+# bundler and gems config
 *.gem
 *.rbc
 .bundle
-.config
-.yardoc
 Gemfile.lock
-InstalledFiles
-_yardoc
-coverage
-doc/
-lib/bundler/man
+
+# Packaged gem
 pkg
-rdoc
-spec/reports
-test/tmp
-test/version_tmp
+
+# Environment variables
 .env
 
-# Ignore Mac Finder file
+# Mac Finder file
 .DS_Store
 
-# Ignore bundler config
-/.bundle
-
-# Ignore the build directory
+# build directory
 /build
 
-# Ignore Sass
+# Temp files and cache
 *.sass-cache
-
-# Ignore Tmp and Cache
 /tmp
