@@ -19,7 +19,7 @@ describe Antwort::CLI do
       end
 
       it 'messages success' do
-        expect(output).to include('to AWS S3')
+        expect(output).to include('Upload complete')
       end
     end
 
@@ -34,7 +34,7 @@ describe Antwort::CLI do
       end
 
       it 'messages cancelation' do
-        expect(output).to include('Abort')
+        expect(output).to include('aborted')
       end
     end
   end

@@ -19,7 +19,7 @@ module Antwort
       copy_project
       initialize_git_repo
       run_bundler
-      say "New Antwort Email project initialized in: ./#{project_directory}/", :green
+      say "New project initialized in: ./#{project_directory}/", :green
     end
 
     desc 'new EMAIL_ID', 'Creates a new email template'
@@ -34,19 +34,19 @@ module Antwort
                   type: :boolean,
                   default: false,
                   aliases: '-f',
-                  desc: 'Overwrite existing files on the server'
+                  desc: 'Overwrites existing files on the server'
     def upload(email_id)
       @email_id = email_id
       if confirms_upload?
         upload_mail
-        say 'Email assets uploaded to AWS S3', :green
+        puts 'Upload complete.'
       else
-        say 'Aborting...', :red
-        say "Relax! Nothing's got deleted or replaced.", :green
+        say 'Upload aborted. ', :red
+        say 'No files deleted or replaced.'
       end
     end
 
-    desc 'server', 'Starts http://localhost:9292 server for developing and previewing emails'
+    desc 'server', 'Starts http://localhost:9292 server for coding and previewing emails'
     method_option :port,
                   type: :string,
                   default: 9292,
@@ -61,7 +61,7 @@ module Antwort
     no_commands do
       def confirms_upload?
         options[:force] ||
-          yes?("Are you sure? This will delete and replace all existing files in the #{email_id} directory")
+          yes?("Upload will replace existing #{email_id} assets on server, ok? (y/n)")
       end
 
       def upload_mail
