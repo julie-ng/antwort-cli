@@ -56,6 +56,12 @@ module Antwort
       Antwort::Server.run!
     end
 
+    desc 'version','ouputs version number'
+    method_option :aliases => "-v"
+    def version
+      puts "Version: #{Antwort::VERSION}"
+    end
+
     attr_reader :project_name, :email_id
 
     no_commands do
