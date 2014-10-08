@@ -100,11 +100,11 @@ module Antwort
       end
 
       def email_directory
-        email_id.downcase.gsub(/[^a-z|\-|\_]/, '')
+        email_id.downcase.gsub(/([^A-Za-z0-9_\/-]+)|(--)/, '')
       end
 
       def project_directory
-        project_name.downcase.gsub(/[^a-z|\-|\_]/, '')
+        project_name.downcase.gsub(/([^A-Za-z0-9_\/-]+)|(--)/, '')
       end
     end
   end
