@@ -56,6 +56,13 @@ module Antwort
       Antwort::Server.run!
     end
 
+    desc 'build EMAIL_ID', 'Builds email markup and inlines CSS from source'
+    method_option aliases: 'b'
+    def build(email_id)
+      require 'antwort'
+      Antwort::Builder.new(template: email_id).build
+    end
+
     desc 'version','ouputs version number'
     method_option :aliases => "-v"
     def version
