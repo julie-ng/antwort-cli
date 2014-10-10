@@ -3,7 +3,7 @@
 
 # 0.0.3
 
-Work in progress: 6 Oct 2014
+7 Oct 2014
 
 __Added__
 
