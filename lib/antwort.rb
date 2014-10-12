@@ -1,3 +1,9 @@
+require 'thor'
+require 'dotenv'
+Dotenv.load
+
+puts "requiring parent antwort.rb"
+
 # Namespace
 module Antwort
 end
@@ -10,6 +16,3 @@ require_relative 'antwort/server/helpers'
 require_relative 'antwort/server/markup'
 require_relative 'antwort/server'
 require_relative 'antwort/version'
-
-require 'dotenv'
-Dotenv.load

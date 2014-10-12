@@ -1,10 +1,6 @@
 require 'fileutils'
 require 'tilt'
 require 'roadie'
-require 'thor'
-
-require 'dotenv'
-Dotenv.load
 
 module Antwort
   class Builder < Thor
