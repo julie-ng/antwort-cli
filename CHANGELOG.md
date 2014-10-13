@@ -1,6 +1,24 @@
 # Change log
 ---
 
+# 0.0.4
+
+13 Oct 2014
+
+__Added__
+
+* Added `$ antwort build` command to build emails
+* Added `$ antwort prune` command to empty `./build` directory
+* Added `$ antwort version` to output version, with `--version` option on executable
+* Made `bundle` and `git init` optional when initializing new antwort project
+* Various CLI output improvements
+* Various new project template improvements
+
+__Removed__
+
+* Removed `build.rake` tasks after integrating them into antwort executable
+
+
 # 0.0.3
 
 7 Oct 2014
