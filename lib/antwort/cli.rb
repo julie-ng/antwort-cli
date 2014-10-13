@@ -15,12 +15,20 @@ module Antwort
                   type: :string,
                   required: true,
                   desc: 'API key of the offsides gem server'
+    method_option :git,
+                  type: :boolean,
+                  default: true,
+                  desc: 'Initializes git repo if set to true'
+    method_option :bundle,
+                  type: :boolean,
+                  default: true,
+                  desc: 'Runs bundle command in new repo'
     def init(project_name)
       @project_name = project_name
       @api_key = options[:key]
       copy_project
-      initialize_git_repo
-      run_bundler
+      initialize_git_repo if options[:git]
+      run_bundler if options[:bundle]
       say "New project initialized in: ./#{project_directory}/", :green
     end
 
