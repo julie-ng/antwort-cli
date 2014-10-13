@@ -1,6 +1,15 @@
-/* shared/based.scss */
+// shared/based.scss
 
-.content-wrapper {
+.container {
+  width: 600px;
+  max-width: 600px;
+}
+
+.container-padding {
   padding-left: 24px;
   padding-right: 24px;
+}
+
+.content {
+  background-color: #ffffff;
 }
