@@ -34,6 +34,7 @@ module Antwort
     end
 
     desc 'new EMAIL_ID', 'Creates a new email template'
+    method_option aliases: 'n'
     def new(email_id)
       @email_id = email_id
       copy_email
@@ -45,6 +46,7 @@ module Antwort
                   default: false,
                   aliases: '-f',
                   desc: 'Overwrites existing files on the server'
+    method_option aliases: 'u'
     def upload(email_id)
       @email_id = email_id
       if confirms_upload?
