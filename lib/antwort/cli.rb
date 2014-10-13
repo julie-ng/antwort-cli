@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'thor'
 
 module Antwort
@@ -72,6 +73,26 @@ module Antwort
       Antwort::Builder.new(template: email_id).build
     end
 
+    desc 'prune', 'Removes all files in the ./build directory'
+    method_option :force,
+              type: :boolean,
+              default: false,
+              aliases: '-f',
+              desc: 'Removes all files in the ./build directory'
+    def prune
+      if confirms_prune?
+        build_dir = File.expand_path('./build')
+        Dir.foreach(build_dir) do |f|
+          next if f.to_s[0] == '.'
+          say "   delete ", :red
+          say "./build/#{f}/"
+          FileUtils.rm_rf(File.expand_path("./build/#{f}"))
+        end
+      else
+        say "prune aborted."
+      end
+    end
+
     desc 'version','ouputs version number'
     def version
       puts "Version: #{Antwort::VERSION}" if options[:version]
@@ -82,6 +103,11 @@ module Antwort
     attr_reader :project_name, :email_id
 
     no_commands do
+
+      def confirms_prune?
+        options[:force] || yes?('Are you sure you want to delete all folders in the ./build directory? (y/n)')
+      end
+
       def confirms_upload?
         options[:force] ||
           yes?("Upload will replace existing #{email_id} assets on server, ok? (y/n)")
