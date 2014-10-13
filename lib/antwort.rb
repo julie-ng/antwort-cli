@@ -2,8 +2,6 @@ require 'thor'
 require 'dotenv'
 Dotenv.load
 
-puts "requiring parent antwort.rb"
-
 # Namespace
 module Antwort
 end

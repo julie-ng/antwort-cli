@@ -4,6 +4,8 @@ module Antwort
   class CLI < Thor
     include Thor::Actions
 
+    class_option :version, type: :boolean
+
     def self.source_root
       File.expand_path('../../template', File.dirname(__FILE__))
     end
@@ -64,10 +66,11 @@ module Antwort
     end
 
     desc 'version','ouputs version number'
-    method_option :aliases => "-v"
     def version
-      puts "Version: #{Antwort::VERSION}"
+      puts "Version: #{Antwort::VERSION}" if options[:version]
     end
+
+    default_task :version
 
     attr_reader :project_name, :email_id
 
