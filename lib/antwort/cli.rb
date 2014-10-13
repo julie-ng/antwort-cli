@@ -36,7 +36,6 @@ module Antwort
     def new(email_id)
       @email_id = email_id
       copy_email
-      say "New email template created in: ./emails/#{email_directory}/", :green
     end
 
     desc 'upload EMAIL_ID', 'Uploads email assets to AWS S3'
