@@ -62,10 +62,11 @@ module Antwort
     method_option :port,
                   type: :string,
                   default: 9292,
+                  aliases: '-p',
                   desc: 'Port number of server'
     def server
       require 'antwort'
-      Antwort::Server.run!
+      Antwort::Server.run!(port: options[:port])
     end
 
     desc 'build EMAIL_ID', 'Builds email markup and inlines CSS from source'
