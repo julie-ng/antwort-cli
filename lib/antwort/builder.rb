@@ -14,6 +14,7 @@ module Antwort
       @id            = create_id
       @template_name = attrs[:template]
       @template_dir  = "#{@@build_dir}/#{@template_name}-#{@id}"
+      @source_dir    = @template_dir + '/source'
     end
 
     no_commands do
@@ -23,6 +24,7 @@ module Antwort
         if request.status == 200
           Dir.mkdir(@@build_dir) unless File.directory?(@@build_dir)
           Dir.mkdir(@template_dir)
+          Dir.mkdir("#{@template_dir}/source")
           build_css
           build_html(request.body)
           inline_css
@@ -54,6 +56,8 @@ module Antwort
       def build_html(content)
         puts "Compiling html..."
         content = content.gsub("/assets/#{@template_name}/styles.css", 'styles.css')
+                         .gsub("/assets/#{@template_name}/responsive.css", 'responsive.css')
+        content = remove_livereload(content)
         @html = create_file(content: content, name: @template_name, ext: 'html')
       end
 
@@ -63,7 +67,7 @@ module Antwort
         markup  = markup.gsub(/(<link.*responsive.css")(>)/i, '\1 data-roadie-ignore\2')
         document = Roadie::Document.new(markup)
         document.asset_providers = [
-          Roadie::FilesystemProvider.new(@template_dir)
+          Roadie::FilesystemProvider.new(@source_dir)
         ]
         inlined = cleanup_markup(document.transform)
         create_file(content: inlined, name: 'build', ext: 'html')
@@ -82,7 +86,10 @@ module Antwort
         name    = attrs[:name]
         ext     = attrs[:ext]
 
-        file = File.new("#{@template_dir}/#{name}.#{ext}", 'w')
+        file_url = (name == 'build') ? @template_dir : @source_dir
+        file_url += "/#{name}.#{ext}"
+
+        file = File.new(file_url, 'w')
         file.puts(content)
         file.close
         file
@@ -108,7 +115,7 @@ module Antwort
       end
 
       def add_responsive_css(markup = '')
-        css = File.read("#{@template_dir}/responsive.css")
+        css = File.read("#{@source_dir}/responsive.css")
         css_markup = "<style type=\"text/css\">\n" + css + "</style>\n"
         markup.gsub(/<link(.*)responsive.css" data-roadie-ignore>/i, css_markup)
       end
