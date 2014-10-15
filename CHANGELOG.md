@@ -1,6 +1,25 @@
 # Change log
 ---
 
+# 0.0.5
+
+15 Oct 2014
+
+__Added__
+
+* Added `$ antwort send [EMAIL_ID]` command to send emails
+* Added `$ antwort list` command to list all emails
+
+__Fixed__
+
+* Respect port number option when running server
+
+__Removed__
+
+* Removed `send.rake`
+* Removed duplicate dotenv load in `upload.rb`
+
+
 # 0.0.4
 
 13 Oct 2014
