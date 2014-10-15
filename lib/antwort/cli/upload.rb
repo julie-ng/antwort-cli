@@ -1,5 +1,4 @@
 require 'fog'
-require 'dotenv'
 require 'thor'
 
 module Antwort
@@ -9,7 +8,6 @@ module Antwort
       attr_reader :email_id
 
       def initialize(email_id)
-        Dotenv.load
         @email_id = email_id
         fail ArgumentError, "Email #{email_id} does not exists" unless email_dir?
       end
