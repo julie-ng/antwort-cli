@@ -58,6 +58,27 @@ module Antwort
       end
     end
 
+    desc 'send EMAIL_ID', 'Sends built email via SMTP'
+    method_option :from,
+                  type: :string,
+                  default: ENV['SMTP_USERNAME'],
+                  aliases: '-f',
+                  desc: 'Email address of sender'
+    method_option :recipient,
+                  type: :string,
+                  default: ENV['SEND_TO'],
+                  aliases: '-r',
+                  desc: 'Email address of receipient'
+    method_option :subject,
+                  type: :string,
+                  default: 'Test Email',
+                  aliases: '-s',
+                  desc: 'Email Subject'
+    def send(email_id)
+      id = last_build_by_id(email_id)
+      Send.new(id, options).send
+    end
+
     desc 'server', 'Starts http://localhost:9292 server for coding and previewing emails'
     method_option :port,
                   type: :string,
@@ -151,6 +172,14 @@ module Antwort
 
       def project_directory
         project_name.downcase.gsub(/([^A-Za-z0-9_\/-]+)|(--)/, '')
+      end
+
+      def built_emails
+        Dir.entries(File.expand_path('./build')).select { |f| !f.include? '.' }
+      end
+
+      def last_build_by_id(email_id)
+        built_emails.select { |f| f.include? email_id }.sort.last
       end
     end
   end
