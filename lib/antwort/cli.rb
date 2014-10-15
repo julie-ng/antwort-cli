@@ -40,6 +40,12 @@ module Antwort
       copy_email
     end
 
+    desc 'list', 'Lists all emails in the ./emails directory by id'
+    method_option aliases: 'l'
+    def list
+      available_emails.each { |e| puts "- #{e}" }
+    end
+
     desc 'upload EMAIL_ID', 'Uploads email assets to AWS S3'
     method_option :force,
                   type: :boolean,
@@ -176,6 +182,10 @@ module Antwort
 
       def built_emails
         Dir.entries(File.expand_path('./build')).select { |f| !f.include? '.' }
+      end
+
+      def available_emails
+        Dir.entries(File.expand_path('./emails')).select { |f| !f.include? '.' }
       end
 
       def last_build_by_id(email_id)
