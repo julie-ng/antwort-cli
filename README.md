@@ -1,7 +1,7 @@
 # Antwort E-Mail Generator
 
 Author: Julie Ng  
-Version 0.0.3 (October 2014)
+Version 0.0.5 (October 2014)
 
 ### Speed up your email design and development workflow by automating repetitive tasks:
 
@@ -40,7 +40,7 @@ In the project root, create a `.env` file with the following attributes
     SMTP_USERNAME:          {{username}}
     SMTP_PASSWORD:          {{password}}
     SMTP_DOMAIN:            {{domain}}
-    SMTP_EMAIL:             {{default_recipient}}
+    SEND_TO:                {{default_recipient}}
 
 See `.env.sample` for an example.
 
@@ -59,45 +59,31 @@ See `.env.sample` for an example.
     +-- tmp
 
 
-To create a new email template, for example `newsletter`, simply run:
+To create a new email template, for example `newsletter`, simply run: `bundle exec antwort new newsletter` and all the proper files will be created for you.
 
-```
-bundle exec antwort new newsletter
-```
 
 
 ## Commands
 
 
-### Antwort commands
-
-
 ```
 Commands:
+  antwort build EMAIL_ID               # Builds email markup and inlines CSS from source
   antwort help [COMMAND]               # Describe available commands or one specific command
-  antwort init PROJECT_NAME --key=KEY  # Initializes a new Antwort project
-  antwort new EMAIL_ID                 # Creates a new Antwort email
-  antwort upload EMAIL_ID              # Uploads an Antwort email to Amazon S3
+  antwort init PROJECT_NAME --key=KEY  # Initializes a new Antwort Email project
+  antwort list                         # Lists all emails in the ./emails directory by id
+  antwort new EMAIL_ID                 # Creates a new email template
+  antwort prune                        # Removes all files in the ./build directory
+  antwort send EMAIL_ID                # Sends built email via SMTP
+  antwort server                       # Starts http://localhost:9292 server for coding and previewing emails
+  antwort upload EMAIL_ID              # Uploads email assets to AWS S3
+  antwort version                      # ouputs version number
 ```
 
 __Notes__ 
 
 - You should run the commands prefixed with `bundle exec` to make sure the correct version of gems are youed.
 - `--key` refers to API key to private gem server
-
-
-### Rake tasks
-
-```
-bundle exec rake -T
-```
-
-```
-rake build:clean     # Empties the build directory
-rake build:template  # Builds Markup from template (required: id=template_name})
-rake send            # Sends email via SMTP by id={template_name} email={recipient} (optional: subject={subject_line})
-rake server          # Starts http://localhost:9292 server for developing emails
-```
 
 
 ## License
