@@ -11,7 +11,7 @@ module Antwort
       File.expand_path('../../template', File.dirname(__FILE__))
     end
 
-    desc 'init PROJECT_NAME', 'Initializes a new Antwort Email project'
+    desc 'init [project_name]', 'Initializes a new Antwort Email project'
     method_option :key,
                   type: :string,
                   required: true,
@@ -33,7 +33,7 @@ module Antwort
       say "New project initialized in: ./#{project_directory}/", :green
     end
 
-    desc 'new EMAIL_ID', 'Creates a new email template'
+    desc 'new [email_id]', 'Creates a new email template'
     method_option aliases: 'n'
     def new(email_id)
       @email_id = email_id
@@ -46,7 +46,7 @@ module Antwort
       available_emails.each { |e| puts "- #{e}" }
     end
 
-    desc 'upload EMAIL_ID', 'Uploads email assets to AWS S3'
+    desc 'upload [email_id]', 'Uploads email assets to AWS S3'
     method_option :force,
                   type: :boolean,
                   default: false,
@@ -64,7 +64,7 @@ module Antwort
       end
     end
 
-    desc 'send EMAIL_ID', 'Sends built email via SMTP'
+    desc 'send [email_id]', 'Sends built email via SMTP'
     method_option :from,
                   type: :string,
                   default: ENV['SMTP_USERNAME'],
@@ -96,7 +96,7 @@ module Antwort
       Antwort::Server.run!(port: options[:port])
     end
 
-    desc 'build EMAIL_ID', 'Builds email markup and inlines CSS from source'
+    desc 'build [email_id]', 'Builds email markup and inlines CSS from source'
     method_option aliases: 'b'
     def build(email_id)
       require 'antwort'
@@ -123,7 +123,7 @@ module Antwort
       end
     end
 
-    desc 'version','ouputs version number'
+    desc 'version','Ouputs version number'
     def version
       puts "Version: #{Antwort::VERSION}" if options[:version]
     end
