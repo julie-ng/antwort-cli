@@ -12,10 +12,12 @@ module Antwort
     end
 
     desc 'init [project_name]', 'Initializes a new Antwort Email project'
+    method_option :user,
+                  type: :string,
+                  desc: 'Your username to antwort gem server'
     method_option :key,
                   type: :string,
-                  required: true,
-                  desc: 'API key of the offsides gem server'
+                  desc: 'Your password to antwort gem server'
     method_option :git,
                   type: :boolean,
                   default: true,
@@ -26,7 +28,8 @@ module Antwort
                   desc: 'Runs bundle command in new repo'
     def init(project_name)
       @project_name = project_name
-      @api_key = options[:key]
+      @user = options[:user] if options[:user]
+      @key = options[:key] if options[:key]
       copy_project
       initialize_git_repo if options[:git]
       run_bundler if options[:bundle]
