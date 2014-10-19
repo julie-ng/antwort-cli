@@ -49,7 +49,13 @@ module Antwort
       available_emails.each { |e| puts "- #{e}" }
     end
 
-    desc 'upload [email_id]', 'Uploads email assets to AWS S3'
+    desc 'upload', 'Uploads email assets to AWS S3'
+    method_option :images,
+                  type: :string,
+                  banner: '[folder]',
+                  required: true,
+                  aliases: '-i',
+                  desc: 'Image assets folder to upload. [email_id] or \'shared\''
     method_option :force,
                   type: :boolean,
                   default: false,

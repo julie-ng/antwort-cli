@@ -9,7 +9,7 @@ module Antwort
 
       def initialize(email_id)
         @email_id = email_id
-        fail ArgumentError, "Email #{email_id} does not exists" unless email_dir?
+        fail ArgumentError, "Email #{email_id} does not exists" unless assets_dir?
       end
 
       no_commands do
@@ -56,6 +56,10 @@ module Antwort
           @assets_dir ||= File.join('.', 'assets', 'images', email_id)
         end
 
+        def assets_dir?
+          Dir.exist?(assets_dir)
+        end
+
         def email_dir
           @email_dir ||= File.join('.', 'emails', email_id)
         end
@@ -63,6 +67,7 @@ module Antwort
         def email_dir?
           Dir.exist?(email_dir)
         end
+
       end
     end
   end
