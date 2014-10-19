@@ -4,6 +4,7 @@ require 'thor'
 module Antwort
   class CLI < Thor
     include Thor::Actions
+    include Antwort::CLIHelpers
 
     class_option :version, type: :boolean
 
@@ -46,16 +47,10 @@ module Antwort
     desc 'list', 'Lists all emails in the ./emails directory by id'
     method_option aliases: 'l'
     def list
-      available_emails.each { |e| puts "- #{e}" }
+      list_folders('./emails').each { |e| puts "- #{e}" }
     end
 
     desc 'upload', 'Uploads email assets to AWS S3'
-    method_option :images,
-                  type: :string,
-                  banner: '[folder]',
-                  required: true,
-                  aliases: '-i',
-                  desc: 'Image assets folder to upload. [email_id] or \'shared\''
     method_option :force,
                   type: :boolean,
                   default: false,
@@ -63,14 +58,7 @@ module Antwort
                   desc: 'Overwrites existing files on the server'
     method_option aliases: 'u'
     def upload(email_id)
-      @email_id = email_id
-      if confirms_upload?
-        upload_mail
-        puts 'Upload complete.'
-      else
-        say 'Upload aborted. ', :red
-        say 'No files deleted or replaced.'
-      end
+      Upload.new(email_id, options[:force]).upload
     end
 
     desc 'send [email_id]', 'Sends built email via SMTP'
@@ -166,15 +154,6 @@ module Antwort
         options[:force] || yes?("Are you sure you want to delete '#{email_id}', including its css, images and data? (y/n)")
       end
 
-      def confirms_upload?
-        options[:force] ||
-          yes?("Upload will replace existing #{email_id} assets on server, ok? (y/n)")
-      end
-
-      def upload_mail
-        Upload.new(email_id).upload
-      end
-
       def copy_email
         directory 'email/css',
                   File.join('assets', 'css', email_directory)
@@ -215,17 +194,7 @@ module Antwort
         project_name.downcase.gsub(/([^A-Za-z0-9_\/-]+)|(--)/, '')
       end
 
-      def built_emails
-        Dir.entries(File.expand_path('./build')).select { |f| !f.include? '.' }
-      end
 
-      def available_emails
-        Dir.entries(File.expand_path('./emails')).select { |f| !f.include? '.' }
-      end
-
-      def last_build_by_id(email_id)
-        built_emails.select { |f| f.include? email_id }.sort.last
-      end
     end
   end
 end

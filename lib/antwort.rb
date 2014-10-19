@@ -7,6 +7,7 @@ module Antwort
 end
 
 require_relative 'antwort/builder'
+require_relative 'antwort/cli/helpers'
 require_relative 'antwort/cli'
 require_relative 'antwort/cli/send'
 require_relative 'antwort/cli/upload'
