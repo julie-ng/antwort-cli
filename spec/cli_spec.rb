@@ -1,8 +1,14 @@
 require 'spec_helper'
 
 describe Antwort::CLI do
+
+  before do
+    allow($stdout).to receive(:write)
+  end
+
   describe '#upload' do
     let(:output) { capture(:stdout) { subject.upload('newsletter') } }
+    before(:each) { allow($stdout).to receive(:write) }
 
     before :each do
       allow(subject).to receive(:upload_mail)
