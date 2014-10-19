@@ -132,6 +132,21 @@ module Antwort
       end
     end
 
+    desc 'remove [email_id]', 'Removes an email, incl. its assets, styles and data'
+    method_option :force,
+              type: :boolean,
+              default: false,
+              aliases: '-f',
+              desc: 'Removes an email, incl. its assets, styles and data'
+    def remove(email_id)
+      @email_id = email_id
+      if confirms_remove?
+        remove_email
+      else
+        say "Remove aborted."
+      end
+    end
+
     desc 'version','Ouputs version number'
     def version
       puts "Version: #{Antwort::VERSION}" if options[:version]
@@ -145,6 +160,10 @@ module Antwort
 
       def confirms_prune?
         options[:force] || yes?('Are you sure you want to delete all folders in the ./build directory? (y/n)')
+      end
+
+      def confirms_remove?
+        options[:force] || yes?("Are you sure you want to delete '#{email_id}', including its css, images and data? (y/n)")
       end
 
       def confirms_upload?
@@ -163,6 +182,13 @@ module Antwort
                   File.join('assets', 'images', email_directory)
         copy_file 'email/email.html.erb',
                   File.join('emails', email_directory, 'index.html.erb')
+      end
+
+      def remove_email
+        remove_file File.expand_path("./assets/data/#{email_id}.yml")
+        remove_dir File.expand_path("./assets/css/#{email_id}/")
+        remove_dir File.expand_path("./assets/images/#{email_id}/")
+        remove_dir File.expand_path("./emails/#{email_id}/")
       end
 
       def copy_project
