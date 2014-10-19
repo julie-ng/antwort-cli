@@ -12,12 +12,14 @@ module Antwort
         text: text,
         url: url,
         background_color: '#0095DA',
-        border_color: '#007FB9',
+        text_color: '#FFFFFF',
         border_radius: '4px',
         width: 200,
         height: 40,
         font_size: '16px'
       }.merge(args)
+
+      options.merge!({ border_color: options[:background_color] }) if options[:border_color].nil?
 
       options[:width]  = options[:width].to_s
       options[:height] = options[:height].to_s
