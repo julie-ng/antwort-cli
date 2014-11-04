@@ -1,6 +1,24 @@
 # Change log
 ---
 
+# 0.0.6
+
+Nov 2014
+
+__Added__
+
+* Added `$antwort remove [EMAIL_ID]` command to remove emails, incl. css and image assets.
+* Allows upload of shared images directory via `$antwort upload shared`
+* New emails get a blank title
+* Add username password to new project init
+
+
+__Fixed__
+
+* Defaults border color to background color if no border color is defined.
+
+
+
 # 0.0.5
 
 15 Oct 2014
