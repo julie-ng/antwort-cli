@@ -8,6 +8,7 @@ module Antwort
 
     class_option :version, type: :boolean
 
+    # set template source path for Thor
     def self.source_root
       File.expand_path('../../template', File.dirname(__FILE__))
     end
