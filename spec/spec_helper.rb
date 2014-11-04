@@ -30,4 +30,9 @@ RSpec.configure do |config|
     ENV['AWS_SECRET_ACCESS_KEY'] ||= 'MY_TEST_SECRET_ACCESS_KEY'
     ENV['AWS_BUCKET'] ||= 'MY_TEST_BUCKET'
   end
+
+  def fixtures_root
+    File.join(File.dirname(__FILE__), "fixtures")
+  end
+
 end
