@@ -17,10 +17,10 @@ describe Antwort::CLI::Upload do
       allow(Dir).to receive(:foreach)
     end
 
-    it 'cleans S3 directory' do
-      expect(subject).to receive(:clean_directory!)
-      subject.upload
-    end
+    # it 'cleans S3 directory' do
+    #   expect(subject).to receive(:clean_directory!)
+    #   subject.upload
+    # end
   end
 
   describe '#connection' do
