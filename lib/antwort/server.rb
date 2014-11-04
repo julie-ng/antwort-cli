@@ -59,7 +59,11 @@ module Antwort
     end
 
     not_found do
-      erb :'views/404', layout: :'views/server'
+      if is_asset_url
+        halt 404 # don't render template not found
+      else
+        erb :'views/404', layout: :'views/server'
+      end
     end
 
   end
