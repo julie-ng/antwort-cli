@@ -1,9 +1,8 @@
 # Change log
----
 
-# 0.0.6
+## 0.0.6
 
-Nov 2014
+6 Nov 2014
 
 __Added__
 
@@ -20,7 +19,7 @@ __Fixed__
 
 
 
-# 0.0.5
+## 0.0.5
 
 15 Oct 2014
 
@@ -39,7 +38,7 @@ __Removed__
 * Removed duplicate dotenv load in `upload.rb`
 
 
-# 0.0.4
+## 0.0.4
 
 13 Oct 2014
 
@@ -57,7 +56,7 @@ __Removed__
 * Removed `build.rake` tasks after integrating them into antwort executable
 
 
-# 0.0.3
+## 0.0.3
 
 7 Oct 2014
 
@@ -88,7 +87,7 @@ __Fixed__
 * `image_tag` only prefxes template directory to path if image src does *not* start with `/`
   
 
-# 0.0.2
+## 0.0.2
 
 Released: 8 Sept 2014
 
