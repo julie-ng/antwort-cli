@@ -1,4 +1,8 @@
 <div class="container content">
-  <h2>Template <em>"<%= @template %>"</em> not found</h2>
-  <p>Sorry, we could not find <em><%= @template %></em>. Please check <a href="/">list of available templates &rarr;</a></p>
+  <% if @template  %>
+    <h2>Template <em>"<%= @template %>"</em> not found</h2>
+    <p>Sorry, we could not find <em><%= @template %></em>. Please check <a href="/">list of available templates &rarr;</a></p>
+  <% else %>
+    <h2>Sorry, page not found.</h2>
+  <% end %>
 </div>

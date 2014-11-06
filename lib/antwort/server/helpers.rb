@@ -95,9 +95,5 @@ module Antwort
       url
     end
 
-    def is_asset_url
-      request.env['REQUEST_PATH'].split('/')[1] == 'assets'
-    end
-
   end
 end

@@ -16,6 +16,7 @@ __Added__
 __Fixed__
 
 * Defaults border color to background color if no border color is defined.
+* Always render 404 with content_type text/html
 
 
 
