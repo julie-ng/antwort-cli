@@ -1,7 +1,25 @@
 # Change log
----
 
-# 0.0.5
+## 0.0.6
+
+6 Nov 2014
+
+__Added__
+
+* Added `$antwort remove [EMAIL_ID]` command to remove emails, incl. css and image assets.
+* Allows upload of shared images directory via `$antwort upload shared`
+* New emails get a blank title
+* Add username password to new project init
+
+
+__Fixed__
+
+* Defaults border color to background color if no border color is defined.
+* Always render 404 with content_type text/html
+
+
+
+## 0.0.5
 
 15 Oct 2014
 
@@ -20,7 +38,7 @@ __Removed__
 * Removed duplicate dotenv load in `upload.rb`
 
 
-# 0.0.4
+## 0.0.4
 
 13 Oct 2014
 
@@ -38,7 +56,7 @@ __Removed__
 * Removed `build.rake` tasks after integrating them into antwort executable
 
 
-# 0.0.3
+## 0.0.3
 
 7 Oct 2014
 
@@ -69,7 +87,7 @@ __Fixed__
 * `image_tag` only prefxes template directory to path if image src does *not* start with `/`
   
 
-# 0.0.2
+## 0.0.2
 
 Released: 8 Sept 2014
 

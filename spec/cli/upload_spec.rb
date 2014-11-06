@@ -4,10 +4,14 @@ describe Antwort::CLI::Upload do
 
   subject { described_class.new('newsletter') }
 
+  before :all do
+    Dir.chdir(fixtures_root)
+  end
+
   before(:each) do
     allow($stdout).to receive(:write)
     Fog.mock!
-    allow_any_instance_of(described_class).to receive(:email_dir?).and_return(true)
+    allow_any_instance_of(described_class).to receive(:confirms_upload?).and_return(true)
   end
 
   after(:each) {  Fog.unmock! }

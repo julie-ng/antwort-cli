@@ -5,27 +5,59 @@ module Antwort
   class CLI
     class Upload < Thor
       include Thor::Actions
+      include Antwort::CLIHelpers
       attr_reader :email_id
 
-      def initialize(email_id)
-        @email_id = email_id
-        fail ArgumentError, "Email #{email_id} does not exists" unless assets_dir?
+      def initialize(email_id, force = false)
+        @force      = force
+        @email_id   = email_id
+        @images_dir = images_dir(email_id)
+        check_credentials
       end
 
       no_commands do
 
+        def check_credentials
+          failed = false
+          vars = ['ASSET_SERVER', 'AWS_BUCKET', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY']
+          vars.each do |var|
+            if ENV[var].nil?
+              say "Error ", :red
+              say "#{var} not set."
+              failed = true
+            end
+          end
+
+          if failed
+            abort "Please fix your .env config file and try again."
+          end
+        end
+
         def upload
+          count = count_files @images_dir
+          abort "No images in #{@images_dir} to upload." if count === 0
+
+          if confirms_upload?(count)
+            do_upload
+          else
+            say 'Upload aborted. ', :red
+            say 'No files deleted or replaced.'
+          end
+        end
+
+        def confirms_upload?(count)
+          yes?("Upload #{count} images and overwrite '#{email_id}' folder on assets server? (y/n)")
+        end
+
+        def do_upload
           clean_directory!
-
-          Dir.foreach(assets_dir) do |f|
+          Dir.foreach(@images_dir) do |f|
             next if f.to_s[0] == '.'
-
             directory.files.create(
               key: "#{email_id}/#{f}",
-              body: File.open(File.join(assets_dir, f)),
+              body: File.open(File.join(@images_dir, f)),
               public: true
             )
-
             say '    create   ', :green
             say "#{ENV['ASSET_SERVER']}/#{email_id}/#{f}"
           end
@@ -50,22 +82,6 @@ module Antwort
 
         def clean_directory!
           directory.files.each(&:destroy)
-        end
-
-        def assets_dir
-          @assets_dir ||= File.join('.', 'assets', 'images', email_id)
-        end
-
-        def assets_dir?
-          Dir.exist?(assets_dir)
-        end
-
-        def email_dir
-          @email_dir ||= File.join('.', 'emails', email_id)
-        end
-
-        def email_dir?
-          Dir.exist?(email_dir)
         end
 
       end
