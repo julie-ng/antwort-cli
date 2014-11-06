@@ -37,7 +37,7 @@ module Antwort
           count = count_files @images_dir
           abort "No images in #{@images_dir} to upload." if count === 0
 
-          if confirm_upload(count)
+          if confirms_upload?(count)
             do_upload
           else
             say 'Upload aborted. ', :red
@@ -45,7 +45,7 @@ module Antwort
           end
         end
 
-        def confirm_upload(count)
+        def confirms_upload?(count)
           yes?("Upload #{count} images and overwrite '#{email_id}' folder on assets server? (y/n)")
         end
 

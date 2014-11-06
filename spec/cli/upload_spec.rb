@@ -4,10 +4,14 @@ describe Antwort::CLI::Upload do
 
   subject { described_class.new('newsletter') }
 
+  before :all do
+    Dir.chdir(fixtures_root)
+  end
+
   before(:each) do
     allow($stdout).to receive(:write)
     Fog.mock!
-    allow_any_instance_of(described_class).to receive(:email_dir?).and_return(true)
+    allow_any_instance_of(described_class).to receive(:confirms_upload?).and_return(true)
   end
 
   after(:each) {  Fog.unmock! }
@@ -17,10 +21,10 @@ describe Antwort::CLI::Upload do
       allow(Dir).to receive(:foreach)
     end
 
-    # it 'cleans S3 directory' do
-    #   expect(subject).to receive(:clean_directory!)
-    #   subject.upload
-    # end
+    it 'cleans S3 directory' do
+      expect(subject).to receive(:clean_directory!)
+      subject.upload
+    end
   end
 
   describe '#connection' do
