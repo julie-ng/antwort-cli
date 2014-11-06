@@ -1,7 +1,7 @@
 # Antwort E-Mail Generator
 
 Author: Julie Ng  
-Version 0.0.5 (October 2014)
+Version 0.0.6 (November 2014)
 
 ### Speed up your email design and development workflow by automating repetitive tasks:
 
