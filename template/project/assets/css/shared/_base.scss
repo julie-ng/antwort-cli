@@ -1,13 +1,16 @@
 // shared/based.scss
 
+@import "_vars";
+@import "_mixins";
+
 .container {
   width: 600px;
   max-width: 600px;
 }
 
 .container-padding {
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: $gutter;
+  padding-right: $gutter;
 }
 
 .content {

@@ -1,0 +1,25 @@
+//
+// Mixins
+// -------------------
+// shared properties that we don't want to repeatedly define
+
+@mixin padding($top: $gutter, $right: $gutter, $bottom: $gutter, $left: $gutter) {
+  padding-top:    $top;
+  padding-right:  $right;
+  padding-bottom: $bottom;
+  padding-left:   $left;
+}
+
+@mixin border-radius($radius: 4px){
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin font($weight: normal, $size: 14px, $line-height: 20px, $family: $fontFamily) {
+  font-weight: $weight;
+  font-size:   $size;
+  line-height: $line-height;
+  font-family: $family;
+}
+

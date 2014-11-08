@@ -3,11 +3,13 @@
 // Styles here to should use the [class=""] or [class*""] syntax
 // to prevent Yahoo Mail from serving the mobile version in their webmail interface.
 
-@import "reset";
+@import "_vars";
+@import "_mixins";
+@import "_reset";
 
 @media screen and (max-width: 400px) {
  td[class*="container-padding"] {
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: $gutter/2;
+    padding-right: $gutter/2;
   }
 }
