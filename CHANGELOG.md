@@ -1,22 +1,36 @@
 # Change log
 
+## 0.0.7
+
+__Added__
+
+* Added `Sinatra::ConfigFile` to set button defaults
+
+__Updated__
+
+* Changed button markup to use Litmus Bulletproof strategy
+* Updated CSS organization; use underscore prefixes for included styles
+
+__Removed__
+
+* Rake tasks remnants, including `Rakefile`
+
+
 ## 0.0.6
 
 6 Nov 2014
 
 __Added__
 
-* Added `$antwort remove [EMAIL_ID]` command to remove emails, incl. css and image assets.
+* Added `$antwort remove [EMAIL_ID]` command to remove emails, incl. css and image assets
 * Allows upload of shared images directory via `$antwort upload shared`
 * New emails get a blank title
-* Add username password to new project init
-
+* Add username password to new project `init`
 
 __Fixed__
 
-* Defaults border color to background color if no border color is defined.
-* Always render 404 with content_type text/html
-
+* Defaults border color to background color if no border color is defined
+* Always render 404 with content_type `text/html`
 
 
 ## 0.0.5
