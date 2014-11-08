@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/partial'
 require 'sinatra/content_for'
+require 'sinatra/config_file'
 require 'rack-livereload'
 require 'sinatra/reloader'
 
@@ -8,11 +9,14 @@ module Antwort
   class Server < Sinatra::Base
     use Rack::LiveReload
     Tilt.register Tilt::ERBTemplate, 'html.erb'
+    register Sinatra::ConfigFile
     register Sinatra::Partial
     register Sinatra::Reloader
     helpers Sinatra::ContentFor
     helpers Antwort::ApplicationHelpers
     helpers Antwort::MarkupHelpers
+
+    config_file 'data/config.yml'
 
     configure do
       enable :logging

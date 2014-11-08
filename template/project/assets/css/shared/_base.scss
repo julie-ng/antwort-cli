@@ -16,3 +16,23 @@
 .content {
   background-color: #ffffff;
 }
+
+
+//-- Buttons
+
+.button {
+  td {
+    @include border-radius(3px);
+    background-color: $buttonBgColor;
+  }
+
+  a {
+    @include border-radius(3px);
+    @include font(bold, 14px, 20px);
+    text-decoration: none;
+    display: inline-block;
+    padding: 12px 18px;
+    background-color: $buttonBgColor;
+    color: $buttonColor;
+  }
+}

@@ -11,20 +11,9 @@ module Antwort
       options = {
         text: text,
         url: url,
-        background_color: '#0095DA',
-        text_color: '#FFFFFF',
-        border_radius: '4px',
-        width: 200,
-        height: 40,
-        font_size: '16px'
+        background_color: settings.buttons.background_color,
+        color: settings.buttons.color,
       }.merge(args)
-
-      options.merge!({ border_color: options[:background_color] }) if options[:border_color].nil?
-
-      options[:width]  = options[:width].to_s
-      options[:height] = options[:height].to_s
-      options[:width]  += 'px' if options[:width][-2..-1] != 'px'
-      options[:height] += 'px' if options[:height][-2..-1] != 'px'
 
       partial('views/markup/button', locals: options)
     end
