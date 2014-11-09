@@ -44,12 +44,11 @@ module Antwort
     end
 
     def fetch_data(template_name)
+      data = {}
       data_file = settings.root + '/data/' + template_name + '.yml'
       if File.file? data_file
         data = YAML.load_file(data_file)
-        data = symbolize_keys! data
-      else
-        data = {}
+        data = symbolize_keys! data if data
       end
       data
     end
@@ -70,7 +69,7 @@ module Antwort
       }.merge(args)
 
       template = Tilt['erb'].new { erb_markup }
-      opts[:data].each { |k,v| instance_variable_set("@#{k}", v) }
+      opts[:data].each { |k,v| instance_variable_set("@#{k}", v) } if opts[:data]
 
       if opts[:layout]
         layout = Tilt::ERBTemplate.new("#{settings.views}/views/#{opts[:layout]}.erb")

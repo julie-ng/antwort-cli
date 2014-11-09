@@ -10,6 +10,7 @@ __Updated__
 
 * Changed button markup to use Litmus Bulletproof strategy
 * Updated CSS organization; use underscore prefixes for included styles
+* Only parses data YAML if we have it; fixes errors from `symbolize_keys!` on `false`
 
 __Removed__
 
