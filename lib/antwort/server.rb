@@ -1,22 +1,19 @@
 require 'sinatra/base'
 require 'sinatra/partial'
 require 'sinatra/content_for'
-require 'sinatra/config_file'
 require 'rack-livereload'
 require 'sinatra/reloader'
+require 'ostruct'
 
 module Antwort
   class Server < Sinatra::Base
     use Rack::LiveReload
     Tilt.register Tilt::ERBTemplate, 'html.erb'
-    register Sinatra::ConfigFile
     register Sinatra::Partial
     register Sinatra::Reloader
     helpers Sinatra::ContentFor
     helpers Antwort::ApplicationHelpers
     helpers Antwort::MarkupHelpers
-
-    config_file 'data/config.yml'
 
     configure do
       enable :logging
@@ -46,6 +43,7 @@ module Antwort
     end
 
     get '/template/:template' do
+      @config = OpenStruct.new(fetch_data('config'))
       @template = sanitize_param params[:template]
 
       if template_exists? @template

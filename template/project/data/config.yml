@@ -1,3 +1,5 @@
-buttons:
-  background_color: '#374550'
-  color: '#fffff'
+styles:
+  background_color: '#ffffff'
+  buttons:
+    background_color: '#374550'
+    color: '#fffff'

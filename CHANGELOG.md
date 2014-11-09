@@ -4,7 +4,7 @@
 
 __Added__
 
-* Added `Sinatra::ConfigFile` to set button defaults
+* Added `data/config.yml` to store global defaults, e.g. button colors. Updated new project templates to reflect this.
 
 __Updated__
 

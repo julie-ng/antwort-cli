@@ -11,8 +11,8 @@ module Antwort
       options = {
         text: text,
         url: url,
-        background_color: settings.buttons.background_color,
-        color: settings.buttons.color,
+        background_color: @config.styles.buttons.background_color,
+        color:            @config.styles.buttons.color,
       }.merge(args)
 
       partial('views/markup/button', locals: options)
