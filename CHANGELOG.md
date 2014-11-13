@@ -2,6 +2,8 @@
 
 ## 0.0.7
 
+13 Nov 2014
+
 __Added__
 
 * Added `data/config.yml` to store global defaults, e.g. button colors. Updated new project templates to reflect this.
@@ -14,7 +16,8 @@ __Updated__
 
 __Removed__
 
-* Rake tasks remnants, including `Rakefile`
+* Removed Rake tasks remnants, including `Rakefile`
+* Removed `Sinatra::ConfigFile`
 
 
 ## 0.0.6
