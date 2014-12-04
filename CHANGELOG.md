@@ -1,5 +1,11 @@
 # Change log
 
+## 0.0.8
+
+__Added__
+
+* Added `SEND_FROM` environment variable to use as sender address, in case it differs from SMTP username.
+
 ## 0.0.7
 
 13 Nov 2014

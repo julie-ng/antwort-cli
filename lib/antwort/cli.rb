@@ -65,7 +65,7 @@ module Antwort
     desc 'send [email_id]', 'Sends built email via SMTP'
     method_option :from,
                   type: :string,
-                  default: ENV['SMTP_USERNAME'],
+                  default: ENV['SEND_FROM'],
                   aliases: '-f',
                   desc: 'Email address of sender'
     method_option :recipient,
