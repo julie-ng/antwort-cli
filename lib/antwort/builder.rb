@@ -67,6 +67,10 @@ module Antwort
           css  = "#{destination_dir}/styles.css"
           compile_css(source: scss, destination: css)
           templates.each { |t| inline_partial(partial: "#{source_markup_dir}/#{t}", css: css) }
+          say ""
+          say "** NOTE: Accuracy of Inlinied Partials **", :yellow
+          say "Partials do not have access to the full DOM tree. Therefore, nested CSS selectors, e.g. \".layout td\","
+          say "may not be matched for inlining. Always double check your code before use in production!"
         else
           puts "No partials found in #{folder}."
         end
@@ -127,8 +131,6 @@ module Antwort
         source_file = attrs[:partial]
         filename    = source_file.split('/').last
 
-        puts "Inline: #{source_file}"
-
         markup   = File.read(source_file)
         css      = File.read(css_file)
         document = Roadie::Document.new markup
@@ -137,8 +139,12 @@ module Antwort
         inlined  = remove_extra_dom(inlined)
         inlined  = correct_erb_var_names(inlined)
 
-        # t = create_tempfile(content: markup, name:'markup', ext: 'html')
-        create_file(content: inlined, path: "#{destination_dir}/#{filename}")
+        if create_file(content: inlined, path: "#{destination_dir}/#{filename}")
+          say "Inline ", :green
+        else
+          say "Inline failed ", :red
+        end
+        say source_file
       end
 
       def cleanup_markup(markup)
