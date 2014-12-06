@@ -96,9 +96,15 @@ module Antwort
 
     desc 'build [email_id]', 'Builds email markup and inlines CSS from source'
     method_option aliases: 'b'
-    def build(email_id)
+    method_option :partials,
+                  type: :boolean,
+                  default: false,
+                  aliases: '-p',
+                  desc: 'Build partials'
+    def build(email_id='')
       require 'antwort'
-      Antwort::Builder.new(template: email_id).build
+      builder = Antwort::Builder.new(email: email_id, partials: options[:partials])
+      builder.build
     end
 
     desc 'prune', 'Removes all files in the ./build directory'
@@ -146,6 +152,10 @@ module Antwort
     attr_reader :project_name, :email_id
 
     no_commands do
+
+      def build_partials?
+        options[:partials]
+      end
 
       def confirms_prune?
         options[:force] || yes?('Are you sure you want to delete all folders in the ./build directory? (y/n)')

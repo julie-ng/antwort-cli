@@ -29,6 +29,11 @@ module Antwort
       Dir.entries(path).select { |f| !f.include? '.' }
     end
 
+    def list_partials(folder_name)
+      path = File.expand_path(folder_name)
+      Dir.entries(path).select { |f| f[0]== '_' && f[-4,4] == '.erb' }
+    end
+
     def folder_exists?(folder_name)
       if Dir.exists?(folder_name)
         return true

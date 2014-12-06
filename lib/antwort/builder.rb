@@ -1,64 +1,113 @@
 require 'fileutils'
 require 'tilt'
 require 'roadie'
+require_relative 'cli/helpers'
 
 module Antwort
   class Builder < Thor
-    @@build_dir   = File.expand_path('./build')
+    include Antwort::CLIHelpers
+    attr_reader :build_id, :template_name, :build_partials, :build_dir, :source_markup_dir, :source_scss_dir, :destination_dir
+
+    @@build_dir = File.expand_path('./build')
 
     def initialize(attrs = {})
-      @asset_server = ENV['ASSET_SERVER'] || '/assets/'
-      @app ||= Antwort::Server.new
-      @request ||= Rack::MockRequest.new(@app)
+      @build_id       = create_id_from_timestamp
+      @build_partials = attrs[:partials]
+      @template_name  = attrs[:email]
 
-      @id            = create_id
-      @template_name = attrs[:template]
-      @template_dir  = "#{@@build_dir}/#{@template_name}-#{@id}"
-      @source_dir    = @template_dir + '/source'
+      @asset_server  = ENV['ASSET_SERVER'] || '/assets/'
+
+      set_build_directories
     end
 
     no_commands do
 
-      def build
-        request = @request.get("/template/#{@template_name}")
+      def set_build_directories
+        @build_dir          = build_partials? ? "#{@@build_dir}/partials" : @@build_dir
+        @source_markup_dir  = "./emails/#{template_name}"
+        @source_scss_dir    = "./assets/css/#{template_name}/"
+        @destination_dir    = "#{build_dir}/#{template_name}-#{build_id}"
+      end
+
+      def build(attrs = {})
+        if build_partials?
+          build_partial_templates
+        else
+          build_email
+        end
+      end
+
+      def build_email
+        @app     ||= Antwort::Server.new
+        @request ||= Rack::MockRequest.new(@app)
+
+        request = @request.get("/template/#{template_name}")
         if request.status == 200
-          Dir.mkdir(@@build_dir) unless File.directory?(@@build_dir)
-          Dir.mkdir(@template_dir)
-          Dir.mkdir("#{@template_dir}/source")
+          create_build_directories
           build_css
           build_html(request.body)
           inline_css
-          say "Build #{@template_name}-#{@id} successful.", :green
+          say "Build #{@template_name}-#{build_id} successful.", :green
         else
-          say 'Build failed. ', :red
-          say "Template #{@template_name} not found."
+          say "Build '#{@template_name}' failed.", :red
+          say "If the template exists, verify that the Antwort server can render the template."
+        end
+      end
+
+      def build_partials?
+        build_partials == true
+      end
+
+      def build_partial_templates
+        templates = list_partials(source_markup_dir)
+
+        if templates.length > 0
+          create_build_directories
+          scss = "#{source_scss_dir}/styles.scss"
+          css  = "#{destination_dir}/styles.css"
+          compile_css(source: scss, destination: css)
+          templates.each { |t| inline_partial(partial: "#{source_markup_dir}/#{t}", css: css) }
+        else
+          puts "No partials found in #{folder}."
         end
       end
 
       private
 
-      def build_css
-        puts "Compiling css..."
-        build_css_file 'styles'
-        build_css_file 'responsive'
+      def create_build_directories
+        # Create parent 'build' folder if it doesn't exist
+        Dir.mkdir(@@build_dir) unless File.directory?(@@build_dir)
+
+        Dir.mkdir(build_dir) unless File.directory?(build_dir)
+        Dir.mkdir(destination_dir)
+        Dir.mkdir("#{destination_dir}/source") unless build_partials?
       end
 
-      def build_css_file(filename='styles')
-        file = "./assets/css/#{@template_name}/#{filename}.scss"
-        if File.file? file
-          content = Tilt::ScssTemplate.new(file, style: :expanded).render
-          create_file(content: content, name: filename, ext: 'css')
+      def build_css
+        puts "Compiling css..."
+        dest = "#{destination_dir}/source"
+        compile_css(source: "#{source_scss_dir}/styles.scss", destination: "#{dest}/styles.css")
+        compile_css(source: "#{source_scss_dir}/responsive.scss", destination: "#{dest}/responsive.css")
+      end
+
+      def compile_css(attrs={})
+        source_file      = attrs[:source]
+        destination_file = attrs[:destination]
+
+        if File.file? source_file
+          content = Tilt::ScssTemplate.new(source_file, style: :expanded).render
+          create_file(content: content, path: destination_file)
         else
-          puts "Build failed. #{filename}.scss for #{@template_name} not found." # continues anyway
+          puts "Build failed. #{filename}.scss for #{template_name} not found." # continues anyway
         end
       end
 
       def build_html(content)
         puts "Compiling html..."
-        content = content.gsub("/assets/#{@template_name}/styles.css", 'styles.css')
-                         .gsub("/assets/#{@template_name}/responsive.css", 'responsive.css')
+        content = content.gsub("/assets/#{template_name}/styles.css", 'styles.css')
+                         .gsub("/assets/#{template_name}/responsive.css", 'responsive.css')
         content = remove_livereload(content)
-        @html = create_file(content: content, name: @template_name, ext: 'html')
+        @html = create_file(content: content, path: "#{destination_dir}/source/#{template_name}.html")
       end
 
       def inline_css
@@ -67,10 +116,29 @@ module Antwort
         markup  = markup.gsub(/(<link.*responsive.css")(>)/i, '\1 data-roadie-ignore\2')
         document = Roadie::Document.new(markup)
         document.asset_providers = [
-          Roadie::FilesystemProvider.new(@source_dir)
+          Roadie::FilesystemProvider.new("#{destination_dir}/source")
         ]
         inlined = cleanup_markup(document.transform)
-        create_file(content: inlined, name: 'build', ext: 'html')
+        create_file(content: inlined, path: "#{destination_dir}/inlined.html")
+      end
+
+      def inline_partial(attrs = {})
+        css_file    = attrs[:css]
+        source_file = attrs[:partial]
+        filename    = source_file.split('/').last
+
+        puts "Inline: #{source_file}"
+
+        markup   = File.read(source_file)
+        css      = File.read(css_file)
+        document = Roadie::Document.new markup
+        document.add_css(css)
+        inlined  = document.transform
+        inlined  = remove_extra_dom(inlined)
+        inlined  = correct_erb_var_names(inlined)
+
+        # t = create_tempfile(content: markup, name:'markup', ext: 'html')
+        create_file(content: inlined, path: "#{destination_dir}/#{filename}")
       end
 
       def cleanup_markup(markup)
@@ -83,14 +151,10 @@ module Antwort
 
       def create_file(attrs)
         content = attrs[:content]
-        name    = attrs[:name]
-        ext     = attrs[:ext]
+        path    = attrs[:path]
 
-        file_url = (name == 'build') ? @template_dir : @source_dir
-        file_url += "/#{name}.#{ext}"
-
-        file = File.new(file_url, 'w')
-        file.puts(content)
+        file = File.new(path, 'w')
+        file.write(content)
         file.close
         file
       end
@@ -98,7 +162,7 @@ module Antwort
       # Creates id based on current time stamp
       # e.g. 2014-08-14 15:50:25 +0200
       # becomes 20140814155025
-      def create_id
+      def create_id_from_timestamp
         stamp = Time.now.to_s
         stamp.split(' ')[0..1].join.gsub(/(-|:)/, '')
       end
@@ -115,9 +179,19 @@ module Antwort
       end
 
       def add_responsive_css(markup = '')
-        css = File.read("#{@source_dir}/responsive.css")
+        css = File.read("#{destination_dir}/source/responsive.css")
         css_markup = "<style type=\"text/css\">\n" + css + "</style>\n"
         markup.gsub(/<link(.*)responsive.css" data-roadie-ignore>/i, css_markup)
+      end
+
+      def remove_extra_dom(html='')
+        html.gsub(/\<!(.*)\<body style="margin:0;padding:0"\>/im,'')
+            .gsub(/\n<\/body>(.*)/im,'')
+      end
+
+      def correct_erb_var_names(html='')
+        html.gsub(/&lt;%=(.*)%&gt;/i,'{{\1}}')
+            .gsub(/\<%=(.*)%\>/i,'{{\1}}')
       end
     end
   end
