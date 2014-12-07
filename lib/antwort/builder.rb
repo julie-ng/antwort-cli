@@ -129,7 +129,7 @@ module Antwort
       def inline_partial(attrs = {})
         css_file    = attrs[:css]
         source_file = attrs[:partial]
-        filename    = source_file.split('/').last
+        filename    = source_file.split('/').last.gsub('.erb','')
 
         markup   = File.read(source_file)
         css      = File.read(css_file)
