@@ -31,7 +31,7 @@ module Antwort
           mail_from    = from
           mail_to      = to
           mail_subject = subject
-          html_body    = File.open("build/#{@email_id}/build.html").read
+          html_body    = File.open("build/#{@email_id}/inlined.html").read
 
           mail = Mail.new do
             from    mail_from
