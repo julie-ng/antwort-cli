@@ -36,8 +36,8 @@ module Antwort
     end
 
     def remove_extra_dom(html='')
-      html.gsub(/\<!(.*)\<body style="margin:0;padding:0"\>/im,'')
-          .gsub(/\n<\/body>(.*)/im,'')
+      html.gsub(/\<!(.*)\<body.*?\>/im,'')
+          .gsub(/<\/body>.*?<\/html\>/im,'')
     end
 
     def correct_erb_var_names(html='')
