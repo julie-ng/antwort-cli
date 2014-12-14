@@ -1,9 +1,8 @@
 module Antwort
   class EmailBuilder < Builder
-
     attr_accessor :html_markup
 
-    def post_initialize(attrs={})
+    def post_initialize(*)
       app     ||= Antwort::Server.new
       mock    ||= Rack::MockRequest.new(app)
 
@@ -13,7 +12,7 @@ module Antwort
       else
         say 'Error: ', :red
         say "Template #{template_name} invalid."
-        say "If the template exists, verify that the Antwort server can render the template."
+        say 'If the template exists, verify that the Antwort server can render the template.'
       end
     end
 
@@ -55,7 +54,5 @@ module Antwort
       css_markup = "<style type=\"text/css\">\n" + css + "</style>\n"
       markup.gsub(/<link(.*)responsive.css" data-roadie-ignore>/i, css_markup)
     end
-
-
   end
 end

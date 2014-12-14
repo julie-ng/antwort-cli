@@ -22,15 +22,14 @@ module Antwort
       post_initialize(attrs)
     end
 
-    def post_initialize(attrs={})
+    def post_initialize(*)
       nil
     end
 
     def create_build_directories
-      unless Dir.exists? build_dir
-        Dir.mkdir(build_dir)
-        Dir.mkdir("#{build_dir}/source")
-      end
+      return if Dir.exist? build_dir
+      Dir.mkdir(build_dir)
+      Dir.mkdir("#{build_dir}/source")
     end
 
     def build
@@ -49,7 +48,7 @@ module Antwort
       @css = load_css
     end
 
-    def compile_scss(attrs={})
+    def compile_scss(attrs = {})
       source_file      = attrs[:source]
       destination_file = attrs[:destination]
 
@@ -57,7 +56,7 @@ module Antwort
         content = Tilt::ScssTemplate.new(source_file, style: :expanded).render
         create_file(content: content, path: destination_file)
       else
-        say "Build failed. ", :red
+        say 'Build failed. ', :red
         say "#{filename}.scss for #{template_name} not found."
       end
     end
@@ -70,7 +69,7 @@ module Antwort
       file.write(content)
       file.close
       say '    create  ', :green
-      say path.gsub(/\A.\//,'')
+      say path.gsub(/\A.\//, '')
       file
     end
 
@@ -84,6 +83,5 @@ module Antwort
       stamp = Time.now.to_s
       stamp.split(' ')[0..1].join.gsub(/(-|:)/, '')
     end
-
   end
 end
