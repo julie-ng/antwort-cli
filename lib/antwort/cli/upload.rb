@@ -1,5 +1,4 @@
 require 'fog'
-require 'thor'
 
 module Antwort
   class CLI

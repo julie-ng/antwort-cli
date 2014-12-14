@@ -1,5 +1,4 @@
 require 'mail'
-require 'thor'
 
 module Antwort
   class CLI

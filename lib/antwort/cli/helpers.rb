@@ -1,6 +1,3 @@
-require 'fileutils'
-require 'thor'
-
 module Antwort
   module CLIHelpers
 
