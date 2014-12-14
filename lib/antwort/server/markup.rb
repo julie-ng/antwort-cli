@@ -13,7 +13,7 @@ module Antwort
         url: url,
         align: 'left',
         background_color: @config.styles[:buttons][:background_color],
-        color:            @config.styles[:buttons][:color],
+        color:            @config.styles[:buttons][:color]
       }.merge(args)
 
       partial('views/markup/button', locals: options)
@@ -33,7 +33,7 @@ module Antwort
     def counter_classes(index)
       # 0 index based
       klass = ''
-      klass += (index % 2 == 0) ? ' is-2n' : ''
+      klass += index.even?      ? ' is-2n' : ''
       klass += (index % 3 == 0) ? ' is-3n' : ''
       klass += (index % 4 == 0) ? ' is-4n' : ''
       klass += (index % 6 == 0) ? ' is-6n' : ''

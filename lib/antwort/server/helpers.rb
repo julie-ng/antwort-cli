@@ -37,7 +37,7 @@ module Antwort
       file = get_template_file(template_name)
       data = File.read(file)
       md = data.match(/^(?<metadata>---\s*\n.*?\n?)^(---\s*$\n?)/m)
-      return {
+      {
         body:     (md.nil?) ? data : md.post_match,
         metadata: (md.nil?) ? {} : symbolize_keys!(YAML.load(md[:metadata]))
       }
@@ -57,8 +57,8 @@ module Antwort
       File.file? settings.templates_dir + '/' + template_name + '/index.html.erb'
     end
 
-    def get_template_from_path
-      request.path_info.gsub(/\/template\//i,'')
+    def template_from_path
+      request.path_info.gsub(%r{/template/}i, '')
     end
 
     def render_template(erb_markup, args = {})
@@ -69,7 +69,7 @@ module Antwort
       }.merge(args)
 
       template = Tilt['erb'].new { erb_markup }
-      opts[:data].each { |k,v| instance_variable_set("@#{k}", v) } if opts[:data]
+      opts[:data].each { |k, v| instance_variable_set("@#{k}", v) } if opts[:data]
 
       if opts[:layout]
         layout = Tilt::ERBTemplate.new("#{settings.views}/views/#{opts[:layout]}.erb")
@@ -87,12 +87,11 @@ module Antwort
         url = path
       else
         a = [path]
-        a.unshift(get_template_from_path) unless path[0] == '/'
+        a.unshift(template_from_path) unless path[0] == '/'
         a.unshift('/assets')
         url = File.join(a)
       end
       url
     end
-
   end
 end
