@@ -104,6 +104,11 @@ module Antwort
       # builder.build
       email = Antwort::EmailBuilder.new(email: email_id)
       email.build
+
+      if build_partials?
+        partials = Antwort::PartialBuilder.new(email: email_id)
+        partials.build
+      end
     end
 
     desc 'prune', 'Removes all files in the ./build directory'
