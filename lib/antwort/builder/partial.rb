@@ -17,9 +17,9 @@ module Antwort
 
     def build_html(partial_name)
       source_file = "#{source_dir}/#{partial_name}"
-      filename    = source_file.split('/').last.gsub('.erb', '')
       markup      = File.read(source_file)
       inlined     = inline(markup)
+      filename    = adjust_filename(partial_name)
       create_file(content: inlined, path: "#{build_dir}/#{filename}")
     end
 
@@ -31,6 +31,12 @@ module Antwort
       inlined  = remove_extra_dom(inlined)
       inlined  = correct_erb_var_names(inlined)
       inlined
+    end
+
+    def adjust_filename(filename)
+      name = filename.gsub('.erb', '')
+      name << '.html' unless name[-5, 5] == '.html'
+      name
     end
 
     def remove_extra_dom(html = '')
