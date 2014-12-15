@@ -9,8 +9,11 @@ AllCops:
 SymbolArray:
   Enabled: true
 
-LineLength:
+Metrics/LineLength:
   Enabled: false
+
+Metrics/MethodLength:
+  Max: 16
 
 Documentation:
   Enabled: false
