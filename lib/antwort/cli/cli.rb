@@ -7,7 +7,7 @@ module Antwort
 
     # set template source path for Thor
     def self.source_root
-      File.expand_path('../../template', File.dirname(__FILE__))
+      File.expand_path('../../../template', File.dirname(__FILE__))
     end
 
     desc 'init [project_name]', 'Initializes a new Antwort Email project'
