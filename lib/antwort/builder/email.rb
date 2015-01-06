@@ -35,6 +35,7 @@ module Antwort
       document.asset_providers << Roadie::NullProvider.new
       document.add_css(css)
       inlined = cleanup_markup(document.transform)
+      inlined = remove_excessive_newlines(inlined)
       create_file(content: inlined, path: "#{build_dir}/#{template_name}.html")
     end
 
@@ -53,6 +54,10 @@ module Antwort
       css = File.read("#{markup_dir}/responsive.css")
       css_markup = "<style type=\"text/css\">\n" + css + "</style>\n" + "</head>\n"
       markup.gsub(%r{((\r|\n)*)</head>}i, css_markup)
+    end
+
+    def remove_excessive_newlines(markup = '')
+      markup.gsub(/^([ \t]*\n){3,}/m, "\n\n")
     end
   end
 end
