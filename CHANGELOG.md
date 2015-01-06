@@ -4,7 +4,16 @@
 
 __Added__
 
+* Refactored Builder to generate both templates and partials
 * Added `SEND_FROM` environment variable to use as sender address, in case it differs from SMTP username.
+
+__Fixed__
+
+* Make sure partials always have `.html` file extension, in case file is named `_partial.erb`
+
+__Updated__
+
+* Various code cleanup
 
 ## 0.0.7
 
