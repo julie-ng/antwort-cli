@@ -76,8 +76,8 @@ module Antwort
                   aliases: '-s',
                   desc: 'Email Subject'
     def send(email_id)
-      id = last_build_by_id(email_id)
-      Send.new(id, options).send
+      build = last_build_by_id(email_id)
+      Send.new(build, options).send
     end
 
     desc 'server', 'Starts http://localhost:9292 server for coding and previewing emails'
