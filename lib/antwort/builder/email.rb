@@ -51,8 +51,8 @@ module Antwort
 
     def add_responsive_css(markup = '')
       css = File.read("#{markup_dir}/responsive.css")
-      css_markup = "<style type=\"text/css\">\n" + css + "</style>\n"
-      markup.gsub(/<link(.*)responsive.css" data-roadie-ignore>/i, css_markup)
+      css_markup = "<style type=\"text/css\">\n" + css + "</style>\n" + "</head>\n"
+      markup.gsub(%r{((\r|\n)*)</head>}i, css_markup)
     end
   end
 end
