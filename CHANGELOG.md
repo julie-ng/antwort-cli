@@ -16,6 +16,8 @@ __Fixed__
 * Default buttons now work in Outlook (missing border property)
 * Default email now also responsive (missing media query)
 * Prevent double slashes in image asset URLs when building templates without an `ASSET_SERVER` environment variable
+* Only creates a build subfolder if it exists
+* Preserves `&nbsp;` in code
 
 __Updated__
 
