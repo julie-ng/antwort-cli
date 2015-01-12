@@ -45,12 +45,12 @@ module Antwort
 
     def preserve_erb_code(html = '')
       html = preserve_comments(html)
-      html = preserve_logic(html)
+      html = preserve_loops(html)
       html = preserve_variables(html)
       html
     end
 
-    def preserve_logic(html = '')
+    def preserve_loops(html = '')
       html.gsub(%r{<%\s+(.*)(\.each\s+do\s+\|)(.*)(\|\s+)%>}, '{% for \3 in \1 %}')
           .gsub(%r{<%\s+end\s+%>}, '{% endfor %}')
     end
