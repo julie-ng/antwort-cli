@@ -66,7 +66,7 @@ module Antwort
     end
 
     def preserve_variables(html = '')
-      html.gsub(/#\{(.*?)\}/, '{{\1}}')     # string interpolated
+      html.gsub(/#\{(.*?)\}/, '{{ \1 }}')   # string interpolated
           .gsub(/\[:(.*?)\]/, '.\1')        # a[:b][:c] -> a.b.c
           .gsub(%r{<%=(.*?)%>}, '{{\1}}')   # assume leftover erb output are variables
     end
