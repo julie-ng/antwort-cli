@@ -26,8 +26,7 @@ module Antwort
       markup = html_markup
       markup = markup.gsub("/assets/#{template_name}/styles.css", 'styles.css')
                      .gsub("/assets/#{template_name}/responsive.css", 'responsive.css')
-      html_markup = markup
-      create_file(content: html_markup, path: "#{markup_dir}/#{template_name}.html")
+      create_file(content: markup, path: "#{markup_dir}/#{template_name}.html")
     end
 
     def inline_css
