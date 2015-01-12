@@ -1,19 +1,32 @@
 # Change log
 
+12 Jan 2015
+
 ## 0.0.8
 
 __Added__
 
 * Refactored Builder to generate both templates and partials
-* Added `SEND_FROM` environment variable to use as sender address, in case it differs from SMTP username.
+* Added `SEND_FROM` environment variable to use as sender address, in case it differs from SMTP username
 
 __Fixed__
 
 * Make sure partials always have `.html` file extension, in case file is named `_partial.erb`
+* Default buttons now work in Outlook (missing border property)
+* Default email now also responsive (missing media query)
 
 __Updated__
 
 * Various code cleanup
+* Updated project templates
+  * Added default font styles
+  * Updated meta tags in layout to support media queries on Windows Phone  
+  * Added more getting started text in demo email
+  * Added sample placeholder image for `image_tag` example.
+  * Added `button` helper examples
+  * Updated sample .ruby-version to use latest version of ruby
+  
+
 
 ## 0.0.7
 
