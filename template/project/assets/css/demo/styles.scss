@@ -12,9 +12,22 @@ code {
   background-color: #eeeeee;
   color: #333333;
 
-  // Note: these inline-block styles is for documentation in demo email only.
-  // It will not work in an actual email across all email clients.
   display: inline-block;
   padding: 0 4px;
   vertical-align: middle;
 }
+
+.table {
+  td {
+    border: 1px solid #dddddd;
+    border-left-width: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    &:first-child {
+      border-left-width: 1px;
+    }
+  }
+}
+
+// Note: These layout styles may not work across all email clients.
+// They are here for documentation purposes.
