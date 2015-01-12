@@ -7,6 +7,13 @@
 @import "_mixins";
 @import "_reset";
 
+@media screen and (max-width: 600px) {
+  table[class="container"] {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
 @media screen and (max-width: 400px) {
  td[class*="container-padding"] {
     padding-left: $gutter/2;

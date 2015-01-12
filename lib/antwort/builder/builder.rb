@@ -17,8 +17,7 @@ module Antwort
       @markup_dir    = "#{build_dir}/source"
       @source_dir    = "./emails/#{template_name}"
       @scss_dir      = "./assets/css/#{template_name}"
-      @asset_server  = ENV['ASSET_SERVER'] || '/assets/'
-      create_build_directories
+      @asset_server  = ENV['ASSET_SERVER'] || '/assets'
       post_initialize(attrs)
     end
 
@@ -82,6 +81,14 @@ module Antwort
     def create_id_from_timestamp
       stamp = Time.now.to_s
       stamp.split(' ')[0..1].join.gsub(/(-|:)/, '')
+    end
+
+    def preserve_nbsps(html = '')
+      html.gsub(/&nbsp;/, '%nbspace%')
+    end
+
+    def restore_nbsps(html = '')
+      html.gsub(/%nbspace%/, '&nbsp;')
     end
   end
 end

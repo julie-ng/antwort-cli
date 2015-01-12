@@ -3,6 +3,11 @@
 @import "_vars";
 @import "_mixins";
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .container {
   width: 600px;
   max-width: 600px;
@@ -15,6 +20,19 @@
 
 .content {
   background-color: #ffffff;
+}
+
+.title {
+  font-weight: bold;
+  font-size:   24px;
+  line-height: 28px;
+  font-family: $fontFamily;
+}
+
+.body-text {
+  font-size:   16px;
+  line-height: 20px;
+  font-family: $fontFamily;
 }
 
 
@@ -32,7 +50,15 @@
     text-decoration: none;
     display: inline-block;
     padding: 12px 18px;
+    border: 1px solid darken($buttonBgColor, 5%);
     background-color: $buttonBgColor;
     color: $buttonColor;
+  }
+
+  &.green {
+    td, a {
+      background-color: $greenBtnBgColor;
+      border-color: darken($greenBtnBgColor, 5%);
+    }
   }
 }

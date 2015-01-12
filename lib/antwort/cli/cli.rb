@@ -100,8 +100,6 @@ module Antwort
                   desc: 'Build partials'
     def build(email_id='')
       require 'antwort'
-      # builder = Antwort::Builder.new(email: email_id, partials: options[:partials])
-      # builder.build
       email = Antwort::EmailBuilder.new(email: email_id)
       email.build
 

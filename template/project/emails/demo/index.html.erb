@@ -1,24 +1,54 @@
 ---
-title: Demo Email
+title: Using Antwort Generator (Demo Email)
 ---
 
 <br>
 
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-  <tr>
-    <td>
-      This is a demo email to get you started. The ID is 'demo', based on the file name.
-      <br><br>
+<div class="title">Using Antwort Generator</div>
+<br>
 
-      <strong>Example: YAML data</strong>
-      <br><br>
+<div class="body-text">
+  This is a demo email to get you started. The ID is 'demo', based on the file name.
+  <br><br>
 
-      <ul>
-        <% @people.each do |p| %>
-        <li><%= p[:name] %></li>
-        <% end %>
-      </ul>
+  Make sure your body text is always wrapped with a <code>.body-text</code> class, if not within a <code>td</code> then as least within a <code>div</code>.
+  <br><br>
 
-    </td>
-  </tr>
-</table>
+  <strong>Loading YAML Data</strong><br>
+  If you have a YAML file with the same name as your email-template name, for example a <code>demo.yml</code> for the <code>demo</code> email, you can load data like this:
+  <br><br>
+
+  <% @people.each do |p| %>
+    &bull; <%= p[:name] %><br>
+  <% end %>
+  <br><br>
+
+  <strong>Image Tag Helper</strong><br>
+
+  Adding images in email requires a lot of extra markup. To dry up the code, we have an <code>image_tag</code> helper, which you can use like this:<br>
+  <%= image_tag '/shared/placeholder.png', width: 50, height: 50, alt: 'Placeholder', klass: 'foo' %>
+  <br><br>
+
+
+  <strong>Button Helper</strong><br>
+  This is how you use the <code>button</code> helper:
+  <br><br>
+  <%= button 'Default Button &rarr;', '/' %><br>
+  <%= button 'A green button &rarr;', '/', color: 'green' %>
+  <br><br>
+
+  To create additional button styles, make sure you add the appropriate CSS class definitions. See <code>_base.scss</code> for an example.
+  <br><br>
+</div>
+
+
+<div class="body-text">
+  <strong>Using Partials</strong>
+  <br><br>
+
+  You can use the <code>partial</code> helper to include external files. Note: partial filenames <em>must</em> begin with an underscore '_'. Use the optional <code>locals</code> attribute to pass data to the partial.
+</div>
+<br>
+
+<%= partial :'emails/demo/partial', locals: { people: @people } %>
+<br><br>

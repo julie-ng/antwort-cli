@@ -8,33 +8,38 @@ module Antwort
 
       request = mock.get("/template/#{template_name}")
       if request.status == 200
+        create_build_directories
         @html_markup = remove_livereload(request.body)
       else
         say 'Error: ', :red
-        say "Template #{template_name} invalid."
-        say 'If the template exists, verify that the Antwort server can render the template.'
+        say "Template '#{template_name}' not found."
       end
     end
 
     def build
-      build_css
-      build_html
-      inline_css
+      unless html_markup.nil?
+        build_css
+        build_html
+        inline_css
+      end
     end
 
     def build_html
       markup = html_markup
       markup = markup.gsub("/assets/#{template_name}/styles.css", 'styles.css')
                      .gsub("/assets/#{template_name}/responsive.css", 'responsive.css')
-      html_markup = markup
-      create_file(content: html_markup, path: "#{markup_dir}/#{template_name}.html")
+      create_file(content: markup, path: "#{markup_dir}/#{template_name}.html")
     end
 
     def inline_css
-      document = Roadie::Document.new(html_markup)
+      markup   = preserve_nbsps(html_markup)
+      document = Roadie::Document.new(markup)
+
       document.asset_providers << Roadie::NullProvider.new
       document.add_css(css)
-      inlined = cleanup_markup(document.transform)
+
+      inlined = restore_nbsps(document.transform)
+      inlined = cleanup_markup(inlined)
       inlined = remove_excessive_newlines(inlined)
       create_file(content: inlined, path: "#{build_dir}/#{template_name}.html")
     end

@@ -1,19 +1,37 @@
 # Change log
 
+12 Jan 2015
+
 ## 0.0.8
 
 __Added__
 
+* Added `SEND_FROM` environment variable to use as sender address, in case it differs from SMTP username
 * Refactored Builder to generate both templates and partials
-* Added `SEND_FROM` environment variable to use as sender address, in case it differs from SMTP username.
+* Preserve ERB code in partials by changing to [Twig](http://twig.sensiolabs.org/) syntax, which is ignored by our inliner.
 
 __Fixed__
 
 * Make sure partials always have `.html` file extension, in case file is named `_partial.erb`
+* Default buttons now work in Outlook (missing border property)
+* Default email now also responsive (missing media query)
+* Prevent double slashes in image asset URLs when building templates without an `ASSET_SERVER` environment variable
+* Only creates a build subfolder if it exists
+* Preserves `&nbsp;` in code
 
 __Updated__
 
 * Various code cleanup
+* Updated project templates
+  * Added default font styles
+  * Updated meta tags in layout to support media queries on Windows Phone  
+  * Added more getting started text in demo email
+  * Added sample placeholder image for `image_tag` example
+  * Added `button` helper examples
+  * Added examples using partials
+  * Updated sample .ruby-version to use latest version of ruby
+  * Removed deprecated button defualts via `config.yml`. Use CSS instead
+
 
 ## 0.0.7
 

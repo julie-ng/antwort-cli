@@ -1,3 +1,33 @@
 // demo/styles.scss
 
 @import "../shared/styles";
+
+// Use email specific stylesheets for custom code that isn't used elsewhere.
+// This helps for overriding default styles.
+
+code {
+  font-size: 14px;
+  line-height: 16px;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #eeeeee;
+  color: #333333;
+
+  display: inline-block;
+  padding: 0 4px;
+  vertical-align: middle;
+}
+
+.table {
+  td {
+    border: 1px solid #dddddd;
+    border-left-width: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    &:first-child {
+      border-left-width: 1px;
+    }
+  }
+}
+
+// Note: These layout styles may not work across all email clients.
+// They are here for documentation purposes.

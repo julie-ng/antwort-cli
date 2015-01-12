@@ -1,0 +1,9 @@
+<table border="0" cellspacing="0" cellpadding="0" class="table">
+  <tr>
+  <% people.each do |person| %>
+    <td width="200" align="center" class="body-text">
+      <em>Hello <%= person[:name] %></em><br>
+    </td>
+  <% end %>
+  </tr>
+</table>
