@@ -14,6 +14,7 @@ __Fixed__
 * Make sure partials always have `.html` file extension, in case file is named `_partial.erb`
 * Default buttons now work in Outlook (missing border property)
 * Default email now also responsive (missing media query)
+* Prevent double slashes in image asset URLs when building templates without an `ASSET_SERVER` environment variable
 
 __Updated__
 
@@ -22,10 +23,12 @@ __Updated__
   * Added default font styles
   * Updated meta tags in layout to support media queries on Windows Phone  
   * Added more getting started text in demo email
-  * Added sample placeholder image for `image_tag` example.
+  * Added sample placeholder image for `image_tag` example
   * Added `button` helper examples
+  * Added examples using partials
   * Updated sample .ruby-version to use latest version of ruby
-  * Removed deprecated button defualts via `config.yml`. Use CSS instead.
+  * Removed deprecated button defualts via `config.yml`. Use CSS instead
+
 
 ## 0.0.7
 
