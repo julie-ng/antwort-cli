@@ -6,8 +6,9 @@
 
 __Added__
 
-* Refactored Builder to generate both templates and partials
 * Added `SEND_FROM` environment variable to use as sender address, in case it differs from SMTP username
+* Refactored Builder to generate both templates and partials
+* Preserve ERB code in partials by changing to [Twig](http://twig.sensiolabs.org/) syntax, which is ignored by our inliner.
 
 __Fixed__
 
