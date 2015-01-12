@@ -3,6 +3,11 @@
 @import "_vars";
 @import "_mixins";
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .container {
   width: 600px;
   max-width: 600px;
