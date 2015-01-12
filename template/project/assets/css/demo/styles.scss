@@ -1,3 +1,20 @@
 // demo/styles.scss
 
 @import "../shared/styles";
+
+// Use email specific stylesheets for custom code that isn't used elsewhere.
+// This helps for overriding default styles.
+
+code {
+  font-size: 14px;
+  line-height: 16px;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #eeeeee;
+  color: #333333;
+
+  // Note: these inline-block styles is for documentation in demo email only.
+  // It will not work in an actual email across all email clients.
+  display: inline-block;
+  padding: 0 4px;
+  vertical-align: middle;
+}

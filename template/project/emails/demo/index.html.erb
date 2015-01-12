@@ -4,21 +4,25 @@ title: Demo Email
 
 <br>
 
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-  <tr>
-    <td>
-      This is a demo email to get you started. The ID is 'demo', based on the file name.
-      <br><br>
+<div class="title">Newsletter</div>
+<br>
 
-      <strong>Example: YAML data</strong>
-      <br><br>
+<div class="body-text">
+  This is a demo email to get you started. The ID is 'demo', based on the file name.
+  <br><br>
 
-      <ul>
-        <% @people.each do |p| %>
-        <li><%= p[:name] %></li>
-        <% end %>
-      </ul>
+  Make sure your body text is always wrapped with a <code>.body-text</code> class, if not within a <code>td</code> then as least within a <code>div</code>.
+  <br><br>
 
-    </td>
-  </tr>
-</table>
+  This is how to use the image tag helper:<br>
+  <%= image_tag '/shared/placeholder.png', width: 50, height: 50, alt: 'Placeholder', klass: 'foo' %>
+  <br><br>
+
+  If you have a YAML file with the same name as your email-template name, for example a <code>demo.yml</code> for the <code>demo</code> email, you can load data like this:
+  <br><br>
+
+  <% @people.each do |p| %>
+    - <%= p[:name] %><br>
+  <% end %>
+
+</div>
