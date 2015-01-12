@@ -1,9 +1,9 @@
 # Antwort E-Mail Generator
 
 Author: Julie Ng  
-Version 0.0.6 (November 2014)
+Version 0.0.8 (12 January 2015)
 
-### Speed up your email design and development workflow by automating repetitive tasks:
+### Speed up your email design and development workflow:
 
 - design in code with live preview of markup using Antwort's local development server
 - build html and inline css from multiple templates
@@ -88,4 +88,4 @@ __Notes__
 
 ## License
 
-Copyright 2014 [Offsides UG](http://offsides.io). All rights reserved.
+Copyright 2014-2015 [Offsides UG](http://offsides.io). All rights reserved.
