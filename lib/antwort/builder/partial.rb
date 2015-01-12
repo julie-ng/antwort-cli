@@ -55,7 +55,8 @@ module Antwort
     end
 
     def preserve_variables(html = '')
-      html.gsub(%r{<%=(.*)%>}, '{{\1}}')
+      html.gsub(%r{<%=(.*?)%>}, '{{\1}}')
+          .gsub(/#\{(.*?)\}/,'{{\1}}')
     end
 
     def show_accuracy_warning
