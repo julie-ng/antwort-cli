@@ -10,12 +10,8 @@ module Antwort
     def button(text, url, args = {})
       options = {
         text: text,
-        url: url,
-        align: 'left',
-        background_color: @config.styles[:buttons][:background_color],
-        color:            @config.styles[:buttons][:color]
+        url: url
       }.merge(args)
-
       partial('views/markup/button', locals: options)
     end
 
