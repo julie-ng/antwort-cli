@@ -48,8 +48,7 @@ title: Using Antwort Generator (Demo Email)
 
   You can use the <code>partial</code> helper to include external files. Note: partial filenames <em>must</em> begin with an underscore '_'. Use the optional <code>locals</code> attribute to pass data to the partial.
 </div>
+<br>
 
-<blockquote>
-  <%= partial :'emails/demo/partial', locals: { list: @people } %>
-</blockquote>
+<%= partial :'emails/demo/partial', locals: { list: @people } %>
 <br><br>
