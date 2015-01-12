@@ -50,12 +50,14 @@ module Antwort
       html = preserve_conditionals(html) # conditionals before loops, in case we have them inside loops
       html = preserve_loops(html)
       html = preserve_variables(html)
+      html = preserve_assignemnts(html)
       html
     end
 
     def preserve_conditionals(html = '')
       html.gsub(%r{<%\s+else\s+%>}, '{% else %}')
           .gsub(%r{<%\s+if (.*)\s+%>([\s\S]*?)(<%\s+end\s+%>)}, '{% if \1 %}\2{% endif %}')
+          .gsub(%r{<%\s+elsif(.*)\s+%>}, '{% elseif \1 %}')
     end
 
     def preserve_loops(html = '')
@@ -71,6 +73,10 @@ module Antwort
       html.gsub(/#\{(.*?)\}/, '{{ \1 }}')   # string interpolated
           .gsub(/\[:(.*?)\]/, '.\1')        # a[:b][:c] -> a.b.c
           .gsub(%r{<%=(.*?)%>}, '{{\1}}')   # assume leftover erb output are variables
+    end
+
+    def preserve_assignemnts(html = '')
+      html.gsub(%r{<%\s+([A-Za-z0-9_]+)\s*(=)\s*(.*)\s+%>}, '{% set \1 = \3 %}')
     end
 
     def show_accuracy_warning
