@@ -44,12 +44,18 @@ module Antwort
     end
 
     def preserve_erb_code(html = '')
+      html = preserve_logic(html)
       html = preserve_variables(html)
       html
     end
 
+    def preserve_logic(html = '')
+      html.gsub(%r{<%\s+(.*)(\.each\s+do\s+\|)(.*)(\|\s+)%>}, '{% for \3 in \1 %}')
+          .gsub(%r{<%\s+end\s+%>}, '{% endfor %}')
+    end
+
     def preserve_variables(html = '')
-      html.gsub(%r{<%=(.*)%>}i, '{{\1}}')
+      html.gsub(%r{<%=(.*)%>}, '{{\1}}')
     end
 
     def show_accuracy_warning
