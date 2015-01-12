@@ -45,9 +45,15 @@ module Antwort
 
     def preserve_erb_code(html = '')
       html = preserve_comments(html)
+      html = preserve_conditionals(html) # conditionals before loops, in case we have them inside loops
       html = preserve_loops(html)
       html = preserve_variables(html)
       html
+    end
+
+    def preserve_conditionals(html = '')
+      html.gsub(%r{<%\s+else\s+%>}, '{% else %}')
+          .gsub(%r{<%\s+if (.*)\s+%>([\s\S]*?)(<%\s+end\s+%>)}, '{% if \1 %}\2{% endif %}')
     end
 
     def preserve_loops(html = '')
