@@ -44,6 +44,7 @@ module Antwort
     end
 
     def preserve_erb_code(html = '')
+      html = preserve_comments(html)
       html = preserve_logic(html)
       html = preserve_variables(html)
       html
@@ -52,6 +53,10 @@ module Antwort
     def preserve_logic(html = '')
       html.gsub(%r{<%\s+(.*)(\.each\s+do\s+\|)(.*)(\|\s+)%>}, '{% for \3 in \1 %}')
           .gsub(%r{<%\s+end\s+%>}, '{% endfor %}')
+    end
+
+    def preserve_comments(html = '')
+      html.gsub(%r{<%#(.*)%>},'{#\1#}')
     end
 
     def preserve_variables(html = '')
