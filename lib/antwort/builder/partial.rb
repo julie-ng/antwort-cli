@@ -30,7 +30,7 @@ module Antwort
       document = Roadie::Document.new markup
       document.add_css(css)
       inlined  = document.transform
-      inlined  = remove_extra_dom(inlined)
+      inlined  = cleanup(inlined)
       inlined
     end
 
@@ -40,9 +40,22 @@ module Antwort
       name
     end
 
+    def cleanup(html = '')
+      code = remove_extra_dom(html)
+      code = cleanup_logic(code)
+      code
+    end
+
     def remove_extra_dom(html = '')
       html.gsub(/\<!(.*)\<body.*?\>/im, '')
           .gsub(%r{</body>.*?</html>}im, '')
+    end
+
+    def cleanup_logic(html = '')
+      html.gsub(/&gt;=/, '>=')
+          .gsub(/&lt;=/, '<=')
+          .gsub(/&gt;=/, '>=')
+          .gsub(/&amp;&amp;/, '&&')
     end
 
     def preserve_erb_code(html = '')
