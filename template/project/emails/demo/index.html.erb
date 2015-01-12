@@ -1,10 +1,10 @@
 ---
-title: Demo Email
+title: Using Antwort Generator (Demo Email)
 ---
 
 <br>
 
-<div class="title">Newsletter</div>
+<div class="title">Using Antwort Generator</div>
 <br>
 
 <div class="body-text">
@@ -14,15 +14,30 @@ title: Demo Email
   Make sure your body text is always wrapped with a <code>.body-text</code> class, if not within a <code>td</code> then as least within a <code>div</code>.
   <br><br>
 
-  This is how to use the image tag helper:<br>
-  <%= image_tag '/shared/placeholder.png', width: 50, height: 50, alt: 'Placeholder', klass: 'foo' %>
-  <br><br>
-
+  <strong>Loading YAML Data</strong><br>
   If you have a YAML file with the same name as your email-template name, for example a <code>demo.yml</code> for the <code>demo</code> email, you can load data like this:
   <br><br>
 
   <% @people.each do |p| %>
     - <%= p[:name] %><br>
   <% end %>
+  <br><br>
+
+  <strong>Image Tag Helper</strong><br>
+
+  Adding images in email requires a lot of extra markup. To dry up the code, we have an <code>image_tag</code> helper, which you can use like this:<br>
+  <%= image_tag '/shared/placeholder.png', width: 50, height: 50, alt: 'Placeholder', klass: 'foo' %>
+  <br><br>
+
+
+  <strong>Button Helper</strong><br>
+  This is how you use the <code>button</code> helper:
+  <br><br>
+  <%= button 'Default Button &rarr;', '/' %><br>
+  <%= button 'A green button &rarr;', '/', color: 'green' %>
+  <br><br>
+
+  To create additional button styles, make sure you add the appropriate CSS class definitions. See <code>_base.scss</code> for an example.
+  <br>
 
 </div>
