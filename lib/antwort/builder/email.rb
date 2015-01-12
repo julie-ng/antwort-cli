@@ -31,10 +31,14 @@ module Antwort
     end
 
     def inline_css
-      document = Roadie::Document.new(html_markup)
+      markup   = preserve_nbsps(html_markup)
+      document = Roadie::Document.new(markup)
+
       document.asset_providers << Roadie::NullProvider.new
       document.add_css(css)
-      inlined = cleanup_markup(document.transform)
+
+      inlined = restore_nbsps(document.transform)
+      inlined = cleanup_markup(inlined)
       inlined = remove_excessive_newlines(inlined)
       create_file(content: inlined, path: "#{build_dir}/#{template_name}.html")
     end

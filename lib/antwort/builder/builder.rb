@@ -83,5 +83,13 @@ module Antwort
       stamp = Time.now.to_s
       stamp.split(' ')[0..1].join.gsub(/(-|:)/, '')
     end
+
+    def preserve_nbsps(html = '')
+      html.gsub(/&nbsp;/, '%nbspace%')
+    end
+
+    def restore_nbsps(html = '')
+      html.gsub(/%nbspace%/, '&nbsp;')
+    end
   end
 end

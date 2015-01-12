@@ -19,7 +19,9 @@ module Antwort
       source_file = "#{source_dir}/#{partial_name}"
       source      = File.read(source_file)
       markup      = preserve_erb_code(source)
+      markup      = preserve_nbsps(markup)
       inlined     = inline(markup)
+      inlined     = restore_nbsps(inlined)
       filename    = adjust_filename(partial_name)
       create_file(content: inlined, path: "#{build_dir}/#{filename}")
     end
