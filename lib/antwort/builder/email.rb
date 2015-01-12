@@ -8,18 +8,20 @@ module Antwort
 
       request = mock.get("/template/#{template_name}")
       if request.status == 200
+        create_build_directories
         @html_markup = remove_livereload(request.body)
       else
         say 'Error: ', :red
-        say "Template #{template_name} invalid."
-        say 'If the template exists, verify that the Antwort server can render the template.'
+        say "Template '#{template_name}' not found."
       end
     end
 
     def build
-      build_css
-      build_html
-      inline_css
+      unless html_markup.nil?
+        build_css
+        build_html
+        inline_css
+      end
     end
 
     def build_html

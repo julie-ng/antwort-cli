@@ -4,9 +4,13 @@ module Antwort
 
     def post_initialize(*)
       @templates = list_partials(source_dir) # try Antwort::CLIHelpers::list_partials later
-      return if templates.length > 0
-      say 'Error: ', :red
-      puts "No partials found in #{template_name} folder."
+      if templates.length < 1
+        say 'Error: ', :red
+        puts "No partials found in #{template_name} folder."
+        return
+      else
+        create_build_directories
+      end
     end
 
     def build
