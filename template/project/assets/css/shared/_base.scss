@@ -50,6 +50,7 @@ body {
     text-decoration: none;
     display: inline-block;
     padding: 12px 18px;
+    border: 1px solid darken($buttonBgColor, 5%);
     background-color: $buttonBgColor;
     color: $buttonColor;
   }
@@ -57,6 +58,7 @@ body {
   &.green {
     td, a {
       background-color: $greenBtnBgColor;
+      border-color: darken($greenBtnBgColor, 5%);
     }
   }
 }
