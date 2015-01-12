@@ -17,7 +17,8 @@ module Antwort
 
     def build_html(partial_name)
       source_file = "#{source_dir}/#{partial_name}"
-      markup      = File.read(source_file)
+      source      = File.read(source_file)
+      markup      = preserve_erb_code(source)
       inlined     = inline(markup)
       filename    = adjust_filename(partial_name)
       create_file(content: inlined, path: "#{build_dir}/#{filename}")
@@ -26,10 +27,8 @@ module Antwort
     def inline(markup)
       document = Roadie::Document.new markup
       document.add_css(css)
-
       inlined  = document.transform
       inlined  = remove_extra_dom(inlined)
-      inlined  = correct_erb_var_names(inlined)
       inlined
     end
 
@@ -44,7 +43,12 @@ module Antwort
           .gsub(%r{</body>.*?</html>}im, '')
     end
 
-    def correct_erb_var_names(html = '')
+    def preserve_erb_code(html = '')
+      html = preserve_variables(html)
+      html
+    end
+
+    def preserve_variables(html = '')
       html.gsub(/&lt;%=(.*)%&gt;/i, '{{\1}}')
           .gsub(/\<%=(.*)%\>/i, '{{\1}}')
     end
