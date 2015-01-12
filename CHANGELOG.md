@@ -25,8 +25,7 @@ __Updated__
   * Added sample placeholder image for `image_tag` example.
   * Added `button` helper examples
   * Updated sample .ruby-version to use latest version of ruby
-  
-
+  * Removed deprecated button defualts via `config.yml`. Use CSS instead.
 
 ## 0.0.7
 
