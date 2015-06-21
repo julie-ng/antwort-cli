@@ -21,6 +21,7 @@ describe Antwort::PartialBuilder do
     it "adjusts filename as necssary (make sure it ends with .html)"
 
     describe "Code and Logic" do
+
       it "preserves comments" do
         h = {
           "<%# foo %>"  => "{# foo #}",
@@ -78,6 +79,7 @@ describe Antwort::PartialBuilder do
       end
 
       it "does not confuse ends from ifs or loops"
+
       it "preserves variable assignments" do
         h = {
           "<% foo=bar %>" => "{% set foo = bar %}",
@@ -90,8 +92,19 @@ describe Antwort::PartialBuilder do
           expect(@builder.preserve_assignments(key)).to eq(value)
         end
       end
-      it "cleans up logic mangled by html entities"
+
+      it "cleans up logic mangled by html entities" do
+        # and preserves spaces
+        h = {
+          " &gt;= " => " >= ",
+          " &lt;= " => " <= ",
+          " &gt;= " => " >= ",
+          " &amp;&amp; " => " && "
+        }
+        h.each do |key, value|
+          expect(@builder.cleanup_logic(key)).to eq(value)
+        end
+      end
     end
   end
-
 end
