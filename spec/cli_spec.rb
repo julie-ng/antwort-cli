@@ -44,39 +44,7 @@ describe Antwort::CLI do
     end
   end
 
-  # describe '#confirms_upload?' do
-  #   context 'option is true' do
-  #     before :each do
-  #       subject.options = { force: true }
-  #     end
 
-  #     it 'returns true' do
-  #       expect(subject.confirms_upload?).to be_truthy
-  #     end
-  #   end
-
-  #   context 'question got answered with yes' do
-  #     before :each do
-  #       subject.options = { force: false }
-  #       expect(subject).to receive(:yes?).and_return(true)
-  #     end
-
-  #     it 'returns true' do
-  #       expect(subject.confirms_upload?).to be_truthy
-  #     end
-  #   end
-
-  #   context 'none is true' do
-  #     before :each do
-  #       subject.options = { force: false }
-  #       expect(subject).to receive(:yes?).and_return(false)
-  #     end
-
-  #     it 'returns false' do
-  #       expect(subject.confirms_upload?).to be_falsey
-  #     end
-  #   end
-  # end
 
   # describe '#upload_mail' do
   #   before :each do
