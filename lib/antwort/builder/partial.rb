@@ -84,7 +84,8 @@ module Antwort
     end
 
     def preserve_comments(html = '')
-      html.gsub(%r{<%#(.*)%>},'{#\1#}')
+      html.gsub(%r{<%[ \t]*#(.*)%>},'{#\1#}')
+          .gsub(/{#([^=\s])/, '{# \1')          # {#foo #} ->{# foo #}
     end
 
     def preserve_variables(html = '')

@@ -21,7 +21,18 @@ describe Antwort::PartialBuilder do
     it "adjusts filename as necssary (make sure it ends with .html)"
 
     describe "Code and Logic" do
-      it "preserves comments"
+      it "preserves comments" do
+        h = {
+          "<%# foo %>"  => "{# foo #}",
+          "<% # foo %>" => "{# foo #}",
+          "<% #foo %>"  => "{# foo #}",
+          "<%#= foo %>" => "{#= foo #}",
+          "<%# foo bar == cat %>" => "{# foo bar == cat #}"
+        }
+        h.each do |key, value|
+          expect(@builder.preserve_comments(key)).to eq(value)
+        end
+      end
 
       it "preserves conditionals" do
         # Regex requires matching closing end
