@@ -32,7 +32,7 @@ describe Antwort::PartialBuilder do
           '<% if foo = \'bar\' %>do something<% end %>' => '{% if foo = \'bar\' %}do something{% endif %}',
           '<% if foo = "bar" %>do something<% end %>'   => '{% if foo = "bar" %}do something{% endif %}',
           '<% if foo %>bar<% else %>cat<% end %>'       => '{% if foo %}bar{% else %}cat{% endif %}',
-          # '<% if foo = bar %>bar<% elsif foo = cat %>cat<% else %>dog<% end %>' => '{% if foo = bar %}bar{% elseif foo = cat %}cat{% else %}dog{% endif %}'
+          '<% if foo = bar %>bar<% elsif foo = cat %>cat<% else %>dog<% end %>' => '{% if foo = bar %}bar{% elseif foo = cat %}cat{% else %}dog{% endif %}'
         }
         h.each do |key, value|
           expect(@builder.preserve_conditionals(key)).to eq(value)

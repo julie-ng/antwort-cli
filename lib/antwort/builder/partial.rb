@@ -72,10 +72,10 @@ module Antwort
     end
 
     def preserve_conditionals(html = '')
-      html.gsub(%r{<%\s*else\s*%>}, '{% else %}')
-          .gsub(%r{<%\s*if (.*)%>([\s\S]*?)(<%\s*end\s*%>)}, '{% if \1 %}\2{% endif %}')
-          .gsub(%r{<%\s*elsif(.*)\s*%>}, '{% bah! \1 %}')
-          .gsub('  %}', ' %}')
+      html.gsub(%r{<%\s*if (.*?)%>([\s\S]*?)(<%\s*end\s*%>)}, '{% if \1 %}\2{% endif %}') # opening if and closing end
+          .gsub(%r{<%\s*elsif(.*?)%>}, '{% elseif\1%}') # now match conditionals in between
+          .gsub(%r{<%\s*else\s*%>}, '{% else %}')
+          .gsub(/[ \t]{2,}%}/, ' %}') # remove extra white space, e.g. {% else    %}
     end
 
     def preserve_loops(html = '')
