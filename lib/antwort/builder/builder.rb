@@ -27,6 +27,7 @@ module Antwort
 
     def create_build_directories
       return if Dir.exist? build_dir
+      Dir.mkdir "build" unless Dir.exist? "./build"
       Dir.mkdir(build_dir)
       Dir.mkdir("#{build_dir}/source")
     end
