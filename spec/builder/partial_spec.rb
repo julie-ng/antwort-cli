@@ -54,9 +54,12 @@ describe Antwort::PartialBuilder do
         h = {
           "<%= cat %>" => "{{ cat }}",
           '#{foo}'     => "{{ foo }}",
-          "foo[:bar]"  => "foo.bar",
-          # "foo['bar']"  => "foo.bar", add later
-          "foo[:bar][:cat]"  => "foo.bar.cat"
+          "foo[:bar]"          => "foo.bar",
+          "foo[:bar][:cat]"    => "foo.bar.cat",
+          "foo['bar']"         => "foo.bar",
+          "foo['bar']['cat']"  => "foo.bar.cat",
+          'foo["bar"]'         => "foo.bar",
+          'foo["bar"]["cat"]'  => "foo.bar.cat"
         }
         h.each do |key, value|
           expect(@builder.preserve_variables(key)).to eq(value)
