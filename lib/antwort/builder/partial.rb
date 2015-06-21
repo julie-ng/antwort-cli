@@ -67,7 +67,7 @@ module Antwort
       html = preserve_conditionals(html) # conditionals before loops, in case we have them inside loops
       html = preserve_loops(html)
       html = preserve_variables(html)
-      html = preserve_assignemnts(html)
+      html = preserve_assignments(html)
       html
     end
 
@@ -96,7 +96,7 @@ module Antwort
           .gsub(%r{<%=(.*?)%>}, '{{\1}}')   # assume leftover erb output are variables
     end
 
-    def preserve_assignemnts(html = '')
+    def preserve_assignments(html = '')
       html.gsub(%r{<%\s+([A-Za-z0-9_]+)\s*(=)\s*(.*)\s+%>}, '{% set \1 = \3 %}')
     end
 

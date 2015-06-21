@@ -78,7 +78,18 @@ describe Antwort::PartialBuilder do
       end
 
       it "does not confuse ends from ifs or loops"
-      it "preserves variable assignments"
+      it "preserves variable assignments" do
+        h = {
+          "<% foo=bar %>" => "{% set foo = bar %}",
+          "<% foo = bar %>" => "{% set foo = bar %}",
+          "<% foo = 'bar' %>" => "{% set foo = 'bar' %}",
+          "<% foo = [1, 2, 3] %>" => "{% set foo = [1, 2, 3] %}",
+          "<% foo =  { key: val } %>" => "{% set foo = { key: val } %}"
+        }
+        h.each do |key, value|
+          expect(@builder.preserve_assignments(key)).to eq(value)
+        end
+      end
       it "cleans up logic mangled by html entities"
     end
   end
