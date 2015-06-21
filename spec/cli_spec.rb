@@ -43,26 +43,4 @@ describe Antwort::CLI do
       end
     end
   end
-
-
-
-  # describe '#upload_mail' do
-  #   before :each do
-  #     subject.instance_variable_set(:@email_id, 'newsletter')
-  #   end
-
-  #   it 'creates new instance of Upload' do
-  #     expect(Antwort::CLI::Upload).to receive(:new).with('newsletter') do
-  #       double('Antwort::CLI::Upload').as_null_object
-  #     end
-
-  #     subject.upload_mail
-  #   end
-
-  #   it 'calls Upload#upload' do
-  #     allow_any_instance_of(Antwort::CLI::Upload).to receive(:email_dir?) { true }
-  #     expect_any_instance_of(Antwort::CLI::Upload).to receive(:upload)
-  #     subject.upload_mail
-  #   end
-  # end
 end
