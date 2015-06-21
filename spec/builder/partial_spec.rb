@@ -7,6 +7,7 @@ describe Antwort::PartialBuilder do
   end
 
   before :each do
+    allow($stdout).to receive(:write) # Ignore warnings
     @builder = Antwort::PartialBuilder.new
   end
 
@@ -21,9 +22,47 @@ describe Antwort::PartialBuilder do
 
     describe "Code and Logic" do
       it "preserves comments"
-      it "preserves conditionals"
-      it "preserves loops"
-      it "preserves variables"
+
+      it "preserves conditionals" do
+        # Regex requires matching closing end
+        h = {
+          '<% if foo %>do something<% end %>'           => '{% if foo %}do something{% endif %}',
+          '<%if foo%>do something<%end%>'               => '{% if foo %}do something{% endif %}',
+          '<% if foo=bar %>do something<% end %>'       => '{% if foo=bar %}do something{% endif %}',
+          '<% if foo = \'bar\' %>do something<% end %>' => '{% if foo = \'bar\' %}do something{% endif %}',
+          '<% if foo = "bar" %>do something<% end %>'   => '{% if foo = "bar" %}do something{% endif %}',
+          '<% if foo %>bar<% else %>cat<% end %>'       => '{% if foo %}bar{% else %}cat{% endif %}',
+          # '<% if foo = bar %>bar<% elsif foo = cat %>cat<% else %>dog<% end %>' => '{% if foo = bar %}bar{% elseif foo = cat %}cat{% else %}dog{% endif %}'
+        }
+        h.each do |key, value|
+          expect(@builder.preserve_conditionals(key)).to eq(value)
+        end
+      end
+
+      it "preserves loops" do
+        h = {
+          "<% cats.each do |cat| %>" => "{% for cat in cats %}",
+          # "<% cats.each_with_index do |cat, i| %>" => "{% for cat in cats %}", # what about index?
+          "<% end %>" => "{% endfor %}"
+        }
+        h.each do |key, value|
+          expect(@builder.preserve_loops(key)).to eq(value)
+        end
+      end
+
+      it "preserves variables" do
+        h = {
+          "<%= cat %>" => "{{ cat }}",
+          '#{foo}'     => "{{ foo }}",
+          "foo[:bar]"  => "foo.bar",
+          # "foo['bar']"  => "foo.bar", add later
+          "foo[:bar][:cat]"  => "foo.bar.cat"
+        }
+        h.each do |key, value|
+          expect(@builder.preserve_variables(key)).to eq(value)
+        end
+      end
+
       it "does not confuse ends from ifs or loops"
       it "preserves variable assignments"
       it "cleans up logic mangled by html entities"
