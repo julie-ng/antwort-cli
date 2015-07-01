@@ -102,7 +102,8 @@ describe Antwort::PartialBuilder do
             "<% foo = bar %>" => "{% set foo = bar %}",
             "<% foo = 'bar' %>" => "{% set foo = 'bar' %}",
             "<% foo = [1, 2, 3] %>" => "{% set foo = [1, 2, 3] %}",
-            "<% foo =  { key: val } %>" => "{% set foo = { key: val } %}"
+            "<% foo =  { key: val } %>" => "{% set foo = { key: val } %}",
+            "<% foo ||= 'bar' %>" => "{% set foo = foo || 'bar' %}"
           }
           h.each do |key, value|
             expect(@builder.preserve_assignments(key)).to eq(value)

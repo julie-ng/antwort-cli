@@ -103,7 +103,8 @@ module Antwort
     end
 
     def preserve_assignments(html = '')
-      html.gsub(%r{<%\s+([A-Za-z0-9_]+)\s*(=)\s*(.*)\s+%>}, '{% set \1 = \3 %}')
+      html.gsub(%r{<%\s+([A-Za-z0-9_]+)\s*(\|\|=)\s*(.*)\s+%>}, '{% set \1 = \1 || \3 %}')
+          .gsub(%r{<%\s+([A-Za-z0-9_]+)\s*(=)\s*(.*)\s+%>}, '{% set \1 = \3 %}')
     end
 
     def show_accuracy_warning
