@@ -47,6 +47,7 @@ module Antwort
     def cleanup(html = '')
       code = remove_extra_dom(html)
       code = cleanup_logic(code)
+      code = restore_variables_in_links(code)
       code
     end
 
@@ -60,6 +61,11 @@ module Antwort
           .gsub(/&lt;=/, '<=')
           .gsub(/&gt;=/, '>=')
           .gsub(/&amp;&amp;/, '&&')
+    end
+
+    def restore_variables_in_links(html = '')
+      html.gsub('%7B%7B%20','{{ ')
+          .gsub('%20%7D%7D',' }}')
     end
 
     def preserve_erb_code(html = '')
