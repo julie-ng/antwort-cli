@@ -77,6 +77,14 @@ module Antwort
                   desc: 'Email Subject'
     def send(email_id)
       build = last_build_by_id(email_id)
+
+      if build.nil?
+        say "   warning  ", :yellow
+        say "No build found for '#{email_id}'. Building now..."
+        build(email_id)
+        build = last_build_by_id(email_id)
+      end
+
       Send.new(build, options).send
     end
 
@@ -100,13 +108,13 @@ module Antwort
                   desc: 'Build partials'
     def build(email_id='')
       require 'antwort'
-      email = Antwort::EmailBuilder.new(email: email_id)
-      email.build
+      attrs = { email: email_id }
+      email = build_partials? ? Antwort::PartialBuilder.new(attrs) : Antwort::EmailBuilder.new(attrs)
 
-      if build_partials?
-        partials = Antwort::PartialBuilder.new(email: email_id)
-        partials.build
+      until email.build
+        sleep 1
       end
+      return true
     end
 
     desc 'prune', 'Removes all files in the ./build directory'

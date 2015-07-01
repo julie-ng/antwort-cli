@@ -9,7 +9,8 @@ module Antwort
       request = mock.get("/template/#{template_name}")
       if request.status == 200
         create_build_directories
-        @html_markup = remove_livereload(request.body)
+        @html_markup  = remove_livereload(request.body)
+        @inlined_file = "#{build_dir}/#{template_name}.html"
       else
         say 'Error: ', :red
         say "Template '#{template_name}' not found."
@@ -22,6 +23,11 @@ module Antwort
         build_html
         inline_css
       end
+
+      until File.exist?(@inlined_file)
+        sleep 1
+      end
+      return true
     end
 
     def build_html
@@ -41,7 +47,7 @@ module Antwort
       inlined = restore_nbsps(document.transform)
       inlined = cleanup_markup(inlined)
       inlined = remove_excessive_newlines(inlined)
-      create_file(content: inlined, path: "#{build_dir}/#{template_name}.html")
+      create_file(content: inlined, path: @inlined_file)
     end
 
     def cleanup_markup(markup)
