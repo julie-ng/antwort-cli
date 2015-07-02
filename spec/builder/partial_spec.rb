@@ -33,6 +33,12 @@ describe Antwort::PartialBuilder do
           expect(@builder.cleanup_logic(key)).to eq(value)
         end
       end
+
+      it "can restore variables in links" do
+        a = '<a href="%7B%7B%20hello%20%7D%7D">world</a>'
+        b = '<a href="{{ hello }}">world</a>'
+        expect(@builder.restore_variables_in_links(a)).to eq(b)
+      end
     end
 
     describe "Code and Logic" do
