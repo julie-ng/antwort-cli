@@ -57,7 +57,7 @@ module Antwort
         create_file(content: content, path: destination_file)
       else
         say 'Build failed. ', :red
-        say "#{filename}.scss for #{template_name} not found."
+        say "#{source_file}.scss for #{template_name} not found."
       end
     end
 
