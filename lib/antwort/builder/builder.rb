@@ -36,15 +36,15 @@ module Antwort
     end
 
     def load_css
-      css_file = "#{markup_dir}/styles.css"
+      css_file = "#{markup_dir}/inline.css"
       build_css unless File.file? css_file
       css = File.read(css_file)
       css
     end
 
     def build_css
-      compile_scss(source: "#{scss_dir}/styles.scss", destination: "#{markup_dir}/styles.css")
-      compile_scss(source: "#{scss_dir}/responsive.scss", destination: "#{markup_dir}/responsive.css")
+      compile_scss(source: "#{scss_dir}/inline.scss", destination: "#{markup_dir}/inline.css")
+      compile_scss(source: "#{scss_dir}/include.scss", destination: "#{markup_dir}/include.css")
       @css = load_css
     end
 

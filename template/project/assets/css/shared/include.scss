@@ -1,7 +1,8 @@
-// Shared responsive styles
+
+// Included Styles
 // ------------------------
-// Styles here to should use the [class=""] or [class*""] syntax
-// to prevent Yahoo Mail from serving the mobile version in their webmail interface.
+// These styles will be included in the <head> of your email.
+// Remember to use !important to override inlined styles.
 
 @import "_vars";
 @import "_mixins";

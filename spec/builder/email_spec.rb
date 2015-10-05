@@ -14,7 +14,7 @@ describe Antwort::EmailBuilder do
     it "can inline CSS"
     it "cleans up markup"
     it "removes livereload"
-    it "adds in the responsive/included CSS"
+    it "adds in the included CSS"
     it "removes excessive newlines"
   end
 

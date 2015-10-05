@@ -7,8 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- enable media queries for windows phone 8 -->
    <meta name="format-detection" content="telephone=no"> <!-- disable auto telephone linking in iOS -->
   <title><%= @metadata[:title] || "Email Title" %></title>
-  <link rel="stylesheet" type="text/css" href="/assets/<%= @template %>/styles.css">
-  <link rel="stylesheet" type="text/css" href="/assets/<%= @template %>/responsive.css">
+  <link rel="stylesheet" type="text/css" href="/assets/<%= @template %>/inline.css">
+  <link rel="stylesheet" type="text/css" href="/assets/<%= @template %>/include.css">
 </head>
 <body bgcolor="<%= @config.styles[:background_color] %>" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 

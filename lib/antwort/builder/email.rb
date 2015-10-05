@@ -32,8 +32,8 @@ module Antwort
 
     def build_html
       markup = html_markup
-      markup = markup.gsub("/assets/#{template_name}/styles.css", 'styles.css')
-                     .gsub("/assets/#{template_name}/responsive.css", 'responsive.css')
+      markup = markup.gsub("/assets/#{template_name}/inline.css", 'inline.css')
+                     .gsub("/assets/#{template_name}/include.css", 'include.css')
       create_file(content: markup, path: "#{markup_dir}/#{template_name}.html")
     end
 
@@ -52,7 +52,7 @@ module Antwort
 
     def cleanup_markup(markup)
       content = use_asset_server(markup)
-      content = add_responsive_css(content)
+      content = add_included_css(content)
       content
     end
 
@@ -61,8 +61,8 @@ module Antwort
             .gsub(/(<head.*?>\n)(\s*\n)*/i, '\1')
     end
 
-    def add_responsive_css(markup = '')
-      css = File.read("#{markup_dir}/responsive.css")
+    def add_included_css(markup = '')
+      css = File.read("#{markup_dir}/include.css")
       css_markup = "<style type=\"text/css\">\n" + css + "</style>\n" + "</head>\n"
       markup.gsub(%r{((\r|\n)*)</head>}i, css_markup)
     end
