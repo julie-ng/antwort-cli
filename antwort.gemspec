@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '~> 2.0'
 
   s.add_runtime_dependency 'rake'
+  s.add_runtime_dependency 'thor'
   s.add_runtime_dependency 'sinatra'
   s.add_runtime_dependency 'sinatra-contrib'
   s.add_runtime_dependency 'sinatra-partial'
