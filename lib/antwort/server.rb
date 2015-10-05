@@ -46,18 +46,14 @@ module Antwort
     end
 
     get '/template/:template' do
-      @config = OpenStruct.new(fetch_data('config'))
+      @config   = OpenStruct.new(fetch_data_yaml('config'))
       @template = sanitize_param params[:template]
 
       if template_exists? @template
-        content   = get_content @template
-        @metadata = content[:metadata] || {}
-        opts = {
-          context: self,
-          data: fetch_data(@template)
-        }.merge(@metadata)
-
-        render_template(content[:body],  opts)
+        content = read_template @template
+        hash_to_instance_vars content[:metadata]
+        hash_to_instance_vars fetch_data_yaml(@template)
+        erb content[:body], layout: :'views/layout'
       else
         status 404
       end

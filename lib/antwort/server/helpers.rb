@@ -30,11 +30,12 @@ module Antwort
     end
 
     def get_metadata(template_name)
-      get_content(template_name)[:metadata]
+      read_template(template_name)[:metadata]
     end
 
-    def get_content(template_name)
+    def read_template(template_name)
       file = get_template_file(template_name)
+
       data = File.read(file)
       md = data.match(/^(?<metadata>---\s*\n.*?\n?)^(---\s*$\n?)/m)
       {
@@ -43,7 +44,7 @@ module Antwort
       }
     end
 
-    def fetch_data(template_name)
+    def fetch_data_yaml(template_name)
       data = {}
       data_file = settings.root + '/data/' + template_name + '.yml'
       if File.file? data_file
@@ -61,24 +62,8 @@ module Antwort
       request.path_info.gsub(%r{/template/}i, '')
     end
 
-    def render_template(erb_markup, args = {})
-      opts = {
-        data: {},
-        context: Object.new,
-        layout: 'layout'
-      }.merge(args)
-
-      template = Tilt['erb'].new { erb_markup }
-      opts[:data].each { |k, v| instance_variable_set("@#{k}", v) } if opts[:data]
-
-      if opts[:layout]
-        layout = Tilt::ERBTemplate.new("#{settings.views}/views/#{opts[:layout]}.erb")
-        layout.render(opts[:context]) {
-          template.render(opts[:context])
-        }
-      else
-        template.render(opts[:context])
-      end
+    def hash_to_instance_vars(data)
+      data.each { |k, v| instance_variable_set("@#{k}", v) } unless data.empty?
     end
 
     def image_url_from_path(path)
