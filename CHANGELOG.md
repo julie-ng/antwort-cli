@@ -1,8 +1,41 @@
-# Change log
+# Change Log
 
-12 Jan 2015
+## 0.0.9
+
+06 Oct 2015
+
+__Added__
+* Preserve more logic for partials, including:
+  - conditionals
+  - variables
+  - varibles in lines
+  - non brekaing spaces
+  - code comments
+  - assignments including `||=` asssignments
+* add Yahoo table `align="center"` workaround to inline css.
+
+__Breaking Changes__
+
+* Stylesheets have been renamed to more accurately reflect how they are integrated into the email.
+  - `styles.scss` is now `inline.scss`, because it will be inlined.
+  - `responsive.scss` is now `include.scss`, because it will be included in the `<head>`, not all of which are responsive styles. Some are just CSS resets.
+* Meta data variables are now set directly as instance variables and can be accessed directly. For example, use `@title` instead of `@metadata[:title]`
+
+__Fixed__
+* Create `./build` directory if it doesn't exist (#30)
+* Build email before send if not already built and inlined (#31)
+* Restore variables inside links (#32)
+* Make default server layout responsive (#29)
+* [`Sinatra::ContentFor`](http://www.sinatrarb.com/contrib/content_for.html) helper now works
+
+__Updated__
+* Cleaned up existing and added more specs
+* Update `.env.sample` defaults and add missing `SEND_FROM`
+
 
 ## 0.0.8
+
+12 Jan 2015
 
 __Added__
 
