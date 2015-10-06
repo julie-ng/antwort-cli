@@ -87,8 +87,7 @@ describe Antwort::PartialBuilder do
 
         it "variables" do
           h = {
-            "<%= cat %>" => "{{ cat }}",
-            '#{foo}'     => "{{ foo }}",
+            "<%= cat %>"         => "{{ cat }}",
             "foo[:bar]"          => "foo.bar",
             "foo[:bar][:cat]"    => "foo.bar.cat",
             "foo['bar']"         => "foo.bar",
