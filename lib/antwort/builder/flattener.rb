@@ -1,17 +1,17 @@
 module Antwort
   class Flattener
 
-    attr_reader :line, :styles, :flattened, :flattened_styles
+    attr_reader :source, :styles, :flattened, :flattened_styles
 
-    def initialize(line='')
-      @line = line
+    def initialize(source='')
+      @source = source
       @styles = set_styles
       self
     end
 
     def flatten
       flatten_styles
-      flatten_line
+      flatten_source
       self
     end
 
@@ -19,12 +19,12 @@ module Antwort
 
       def set_styles
         styles = []
-        @line.scan(/style="(.+?)"/).each { |s| styles.push(s.first) }
+        @source.scan(/style="(.+?)"/).each { |s| styles.push(s.first) }
         styles
       end
 
-      def flatten_line
-        flat = String.new(@line)
+      def flatten_source
+        flat = String.new(@source)
         @styles.each_with_index do |style, i|
           flat.sub!(styles[i], flattened_styles[i]) unless styles[i] == flattened_styles[i]
         end

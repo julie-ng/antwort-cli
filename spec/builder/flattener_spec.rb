@@ -3,17 +3,17 @@ require "spec_helper"
 describe Antwort::Flattener do
 
   describe "initialize" do
-    it "saves line to a attr_reader" do
+    it "saves source to a attr_reader" do
       s = Antwort::Flattener.new('<td>')
-      expect(s.line).to eq('<td>')
+      expect(s.source).to eq('<td>')
     end
 
     describe "saves matches to an array" do
-      it "matches single style per line" do
+      it "matches single style per source" do
         s = Antwort::Flattener.new('<div style="color:black">')
         expect(s.styles).to eq(['color:black'])
       end
-      it "matches multiple styles per line" do
+      it "matches multiple styles per source" do
         s = Antwort::Flattener.new('<td style="background-color:#cccccc"><div style="color: red">')
         expect(s.styles).to eq(["background-color:#cccccc", "color: red"])
       end
@@ -37,11 +37,11 @@ describe Antwort::Flattener do
         expect(@s.flattened_styles).to eq(['color:red','background:white'])
       end
 
-      it "stores original line as a string" do
-        expect(@s.line).to eq('<td style="color:black;color:red;"><div style="background:white;">')
+      it "stores original source as a string" do
+        expect(@s.source).to eq('<td style="color:black;color:red;"><div style="background:white;">')
       end
 
-      it "stores flattened line as a string" do
+      it "stores flattened source as a string" do
         expect(@s.flattened).to eq('<td style="color:red"><div style="background:white">')
       end
     end
