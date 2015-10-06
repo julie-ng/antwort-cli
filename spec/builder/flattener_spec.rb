@@ -76,6 +76,12 @@ describe Antwort::Flattener do
         'font-size' => '12px'})
     end
 
+    it "trims leading and trailing white space form hash keys and values" do
+      expect(@s.send(:str_to_hash, 'color:red; color: black;border :none;')).to eq({
+        'color' => 'black',
+        'border' => 'none'})
+    end
+
     it "can push styles hash back into sting" do
       hash = { 'font-size' => '14px', 'font-family' => 'Helvetica' }
       expect(@s.send(:hash_to_str, hash)).to eq('font-size:14px;font-family:Helvetica')

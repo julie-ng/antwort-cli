@@ -45,7 +45,7 @@ module Antwort
       # automatically overriding repeat attributes
       def str_to_hash(str)
         h = Hash.new
-        str.split(';').each { |s| h[s.split(':').first] = s.split(':').last.strip }
+        str.split(';').each { |s| h[s.split(':').first.strip] = s.split(':').last.strip }
         h
       end
 
