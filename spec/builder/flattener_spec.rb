@@ -45,6 +45,17 @@ describe Antwort::Flattener do
         expect(@s.flattened).to eq('<td style="color:red"><div style="background:white">')
       end
     end
+
+    describe "method flattened?" do
+      it "returns true if changes where made" do
+        s = Antwort::Flattener.new('<td style="color: red; color: black;">').flatten
+        expect(s.flattened?).to eq(true)
+      end
+      it "returns false if chnages were not made" do
+        s = Antwort::Flattener.new('<td style"color:red">').flatten
+        expect(s.flattened?).to eq(false)
+      end
+    end
   end
 
   describe "code cleanup" do

@@ -4,8 +4,9 @@ module Antwort
     attr_reader :source, :styles, :flattened, :flattened_styles
 
     def initialize(source='')
-      @source = source
-      @styles = set_styles
+      @source       = source
+      @styles       = set_styles
+      @is_flattened = false
       self
     end
 
@@ -13,6 +14,10 @@ module Antwort
       flatten_styles
       flatten_source
       self
+    end
+
+    def flattened?
+      @is_flattened
     end
 
     private
@@ -26,7 +31,10 @@ module Antwort
       def flatten_source
         flat = String.new(@source)
         @styles.each_with_index do |style, i|
-          flat.sub!(styles[i], flattened_styles[i]) unless styles[i] == flattened_styles[i]
+          unless styles[i] == flattened_styles[i]
+            flat.sub!(styles[i], flattened_styles[i])
+            @is_flattened = true
+          end
         end
         @flattened = flat
       end
