@@ -22,8 +22,7 @@ describe Antwort::Flattener do
 
   describe "flattens css styles" do
     it "a single match" do
-      s = Antwort::Flattener.new('<div style="color:black;color:red;background:white;">')
-      s.flatten
+      s = Antwort::Flattener.new('<div style="color:black;color:red;background:white;">').flatten
       expect(s.flattened_styles).to eq(['color:red;background:white'])
       expect(s.flattened).to eq('<div style="color:red;background:white">')
     end
@@ -50,8 +49,7 @@ describe Antwort::Flattener do
 
   describe "code cleanup" do
     before :all do
-      @s = Antwort::Flattener.new('<td style="color: black;">')
-      @s.flatten
+      @s = Antwort::Flattener.new('<td style="color: black;">').flatten
     end
 
     it "removes trailing semicolon;" do

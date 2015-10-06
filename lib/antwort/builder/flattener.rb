@@ -12,6 +12,7 @@ module Antwort
     def flatten
       flatten_styles
       flatten_line
+      self
     end
 
     private
