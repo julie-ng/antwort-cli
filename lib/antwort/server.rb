@@ -53,7 +53,8 @@ module Antwort
         content = read_template @template
         hash_to_instance_vars content[:metadata]
         hash_to_instance_vars fetch_data_yaml(@template)
-        erb content[:body], layout: :'views/layout'
+        layout = @layout.nil? ? :'views/layout' : @layout
+        erb content[:body], layout: layout
       else
         status 404
       end
