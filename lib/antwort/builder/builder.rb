@@ -7,6 +7,8 @@ module Antwort
   class Builder
     include Thor::Shell
     include Antwort::CLIHelpers
+    include Antwort::LogicHelpers
+    include Antwort::MarkupSanitizers
 
     attr_reader :template_name, :build_id, :build_dir, :markup_dir, :source_dir, :scss_dir, :asset_server, :css
 
@@ -82,14 +84,6 @@ module Antwort
     def create_id_from_timestamp
       stamp = Time.now.to_s
       stamp.split(' ')[0..1].join.gsub(/(-|:)/, '')
-    end
-
-    def preserve_nbsps(html = '')
-      html.gsub(/&nbsp;/, '%nbspace%')
-    end
-
-    def restore_nbsps(html = '')
-      html.gsub(/%nbspace%/, '&nbsp;')
     end
 
     def flatten_inlined_css(markup)

@@ -1,3 +1,5 @@
+require 'antwort/builder/helpers/logic'
+require 'antwort/builder/helpers/sanitizers'
 require 'antwort/builder/builder'
 require 'antwort/builder/email'
 require 'antwort/builder/partial'
