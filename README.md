@@ -1,19 +1,18 @@
 # Antwort E-Mail Generator
 
 Author: Julie Ng  
-Version 0.0.8 (12 January 2015)
+Version 0.0.9 (5 October 2015)
+
 
 ### Speed up your email design and development workflow:
 
-- design in code with live preview of markup using Antwort's local development server
-- build html and inline css from multiple templates
-- upload images to content server (S3 only)
-- send email test via SMTP
+- design in code with **live preview** of markup using Antwort's local development server
+- **build html** and **inline css** from multiple templates
+- **upload images** to content server (S3 only)
+- **send email** test via SMTP
+- includes **useful helpers**, e.g. `image_tag` that automatically includes email specific markup.
 
-__Other features__
-
-
-- useful helpers, e.g. `image_tag` that automatically includes email specific markup.
+See [CHANGELOG.md](https://github.com/jng5/antwort-generator/blob/master/CHANGELOG.md) for full functionality list.
 
 ## Setup
 
@@ -41,6 +40,7 @@ In the project root, create a `.env` file with the following attributes
     SMTP_PASSWORD:          {{password}}
     SMTP_DOMAIN:            {{domain}}
     SEND_TO:                {{default_recipient}}
+    SEND_FROM:              {{default_sender}}
 
 See `.env.sample` for an example.
 
