@@ -26,6 +26,7 @@ module Antwort
       markup      = preserve_nbsps(markup)
       inlined     = inline(markup)
       inlined     = restore_nbsps(inlined)
+      inlined     = flatten_inlined_css(inlined)
       filename    = adjust_filename(partial_name)
       create_file(content: inlined, path: "#{build_dir}/#{filename}")
     end

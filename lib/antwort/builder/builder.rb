@@ -91,5 +91,22 @@ module Antwort
     def restore_nbsps(html = '')
       html.gsub(/%nbspace%/, '&nbsp;')
     end
+
+    def flatten_inlined_css(markup)
+      copy = String.new(markup)
+
+      # loop through lines so we have the line number
+      markup.lines.each_with_index do |line, i|
+        f = Flattener.new(line).flatten
+        if f.flattened?
+          say "    flattened styles on line #{i}: ", :yellow
+          say " #{f.flattened}"
+          copy << f.flattened
+        else
+          copy << f.source
+        end
+      end
+      copy
+    end
   end
 end

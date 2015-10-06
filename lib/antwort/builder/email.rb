@@ -47,6 +47,7 @@ module Antwort
       inlined = restore_nbsps(document.transform)
       inlined = cleanup_markup(inlined)
       inlined = remove_excessive_newlines(inlined)
+      inlined = flatten_inlined_css(inlined)
       create_file(content: inlined, path: @inlined_file)
     end
 
