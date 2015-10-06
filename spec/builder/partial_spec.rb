@@ -24,7 +24,6 @@ describe Antwort::PartialBuilder do
       it "# can clean up logic mangled by html entities" do
         # and preserves spaces
         h = {
-          " &gt;= " => " >= ",
           " &lt;= " => " <= ",
           " &gt;= " => " >= ",
           " &amp;&amp; " => " && "
