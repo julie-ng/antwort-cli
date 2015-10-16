@@ -87,7 +87,7 @@ module Antwort
     end
 
     def flatten_inlined_css(markup)
-      copy = String.new(markup)
+      copy = ''
 
       # loop through lines so we have the line number
       markup.lines.each_with_index do |line, i|
