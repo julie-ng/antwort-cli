@@ -93,8 +93,8 @@ module Antwort
       markup.lines.each_with_index do |line, i|
         f = Flattener.new(line).flatten
         if f.flattened?
-          say "    flattened styles on line #{i}: ", :yellow
-          say " #{f.flattened}"
+          say " flattened  CSS #{f.flattened_keys} ", :yellow
+          say "#{i}: #{f.source.strip}"
           copy << f.flattened
         else
           copy << f.source
