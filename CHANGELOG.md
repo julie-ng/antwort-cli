@@ -2,7 +2,7 @@
 
 ## 0.0.9
 
-06 Oct 2015
+Released: 20 Oct 2015
 
 __Added__
 * Preserve more logic for partials, including:
@@ -35,7 +35,7 @@ __Updated__
 
 ## 0.0.8
 
-12 Jan 2015
+Released: 12 Jan 2015
 
 __Added__
 
@@ -68,7 +68,7 @@ __Updated__
 
 ## 0.0.7
 
-13 Nov 2014
+Released: 13 Nov 2014
 
 __Added__
 
@@ -88,7 +88,7 @@ __Removed__
 
 ## 0.0.6
 
-6 Nov 2014
+Released: 6 Nov 2014
 
 __Added__
 
@@ -105,7 +105,7 @@ __Fixed__
 
 ## 0.0.5
 
-15 Oct 2014
+Released: 15 Oct 2014
 
 __Added__
 
@@ -124,7 +124,7 @@ __Removed__
 
 ## 0.0.4
 
-13 Oct 2014
+Released: 13 Oct 2014
 
 __Added__
 
@@ -142,7 +142,7 @@ __Removed__
 
 ## 0.0.3
 
-7 Oct 2014
+Released: 7 Oct 2014
 
 __Added__
 
