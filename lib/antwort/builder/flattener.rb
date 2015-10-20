@@ -14,11 +14,10 @@ module Antwort
       copy = String.new(@source)
       @styles.each do |m|
         style = Antwort::Style.new(m)
-        if style.duplicates?
-          @flattened_keys.concat(style.duplicate_keys)
-          copy.sub!(m, style.flattened_str)
-        end
+        @flattened_keys.concat(style.duplicate_keys) if style.duplicates?
+        copy.sub!(m, style.flattened_str) # flattened_str removes extra spaces and trailing semicolons
       end
+
       @flattened = copy
       self
     end
