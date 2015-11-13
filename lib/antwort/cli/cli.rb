@@ -191,12 +191,13 @@ module Antwort
                   File.join('assets', 'css', email_directory)
         directory 'email/images',
                   File.join('assets', 'images', email_directory)
+        create_file File.join('data', "#{email_id}.yml")
         copy_file 'email/email.html.erb',
                   File.join('emails', email_directory, 'index.html.erb')
       end
 
       def remove_email
-        remove_file File.expand_path("./assets/data/#{email_id}.yml")
+        remove_file File.expand_path("./data/#{email_id}.yml")
         remove_dir File.expand_path("./assets/css/#{email_id}/")
         remove_dir File.expand_path("./assets/images/#{email_id}/")
         remove_dir File.expand_path("./emails/#{email_id}/")
