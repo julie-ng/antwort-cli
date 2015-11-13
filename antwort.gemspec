@@ -31,8 +31,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'roadie', '>= 3.0.0'
 
   s.add_runtime_dependency 'sass'
-  s.add_runtime_dependency 'sprockets'
-  s.add_runtime_dependency 'sprockets-sass'
+  s.add_runtime_dependency 'sprockets', '~> 3.0'
 
   s.add_runtime_dependency 'thin'
   s.add_runtime_dependency 'rack-livereload'

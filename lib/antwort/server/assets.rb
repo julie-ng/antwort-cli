@@ -2,7 +2,6 @@ require 'sinatra/base'
 require 'sinatra/extension'
 require 'sprockets'
 require 'sass'
-require 'sprockets-sass'
 
 module Sinatra
   module Assets
