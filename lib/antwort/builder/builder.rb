@@ -10,7 +10,7 @@ module Antwort
     include Antwort::LogicHelpers
     include Antwort::MarkupSanitizers
 
-    attr_reader :template_name, :build_id, :build_dir, :markup_dir, :source_dir, :scss_dir, :asset_server, :css
+    attr_reader :template_name, :build_id, :build_dir, :markup_dir, :source_dir, :scss_dir, :asset_server, :css, :css_style
 
     def initialize(attrs = {})
       @template_name = attrs[:email]
@@ -19,6 +19,7 @@ module Antwort
       @markup_dir    = "#{build_dir}/source"
       @source_dir    = "./emails/#{template_name}"
       @scss_dir      = "./assets/css/#{template_name}"
+      @css_style     = attrs['css-style'].to_sym
       @asset_server  = ENV['ASSET_SERVER'] || '/assets'
       post_initialize(attrs)
     end
@@ -55,7 +56,7 @@ module Antwort
       destination_file = attrs[:destination]
 
       if File.file? source_file
-        content = Tilt::ScssTemplate.new(source_file, style: :expanded).render
+        content = Tilt::ScssTemplate.new(source_file, style: @css_style).render
         create_file(content: content, path: destination_file)
       else
         say 'Build failed. ', :red

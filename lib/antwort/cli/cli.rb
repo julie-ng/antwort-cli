@@ -106,9 +106,14 @@ module Antwort
                   default: false,
                   aliases: '-p',
                   desc: 'Build partials'
+    method_option :'css-style',
+                  type: :string,
+                  default: 'expanded',
+                  aliases: '-o',
+                  desc: 'Sass output style'
     def build(email_id='')
       require 'antwort'
-      attrs = { email: email_id }
+      attrs = { email: email_id }.merge(options)
       email = build_partials? ? Antwort::PartialBuilder.new(attrs) : Antwort::EmailBuilder.new(attrs)
 
       until email.build
