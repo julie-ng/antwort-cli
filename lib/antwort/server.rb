@@ -15,6 +15,7 @@ module Antwort
     register Sinatra::Partial
     register Sinatra::Reloader
     helpers Sinatra::ContentFor
+    helpers Antwort::Helpers
     helpers Antwort::ApplicationHelpers
     helpers Antwort::MarkupHelpers
 

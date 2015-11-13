@@ -6,6 +6,7 @@ require 'thor/shell'
 module Antwort
   class Builder
     include Thor::Shell
+    include Antwort::Helpers
     include Antwort::CLIHelpers
     include Antwort::LogicHelpers
     include Antwort::MarkupSanitizers
