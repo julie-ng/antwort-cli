@@ -113,12 +113,18 @@ module Antwort
                   desc: 'Sass output style'
     def build(email_id='')
       require 'antwort'
-      attrs = { email: email_id }.merge(options)
-      email = build_partials? ? Antwort::PartialBuilder.new(attrs) : Antwort::EmailBuilder.new(attrs)
+      attrs = { email: email_id, id: create_id_from_timestamp }.merge(options)
 
+      email = Antwort::EmailBuilder.new(attrs)
       until email.build
         sleep 1
       end
+
+      if build_partials?
+        partials = Antwort::PartialBuilder.new(attrs)
+        sleep 1 until partials.build
+      end
+
       return true
     end
 
@@ -220,6 +226,10 @@ module Antwort
         project_name.downcase.gsub(/([^A-Za-z0-9_\/-]+)|(--)/, '')
       end
 
+      def create_id_from_timestamp
+        stamp = Time.now.to_s
+        stamp.split(' ')[0..1].join.gsub(/(-|:)/, '')
+      end
 
     end
   end

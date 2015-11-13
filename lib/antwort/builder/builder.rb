@@ -14,7 +14,7 @@ module Antwort
 
     def initialize(attrs = {})
       @template_name = attrs[:email]
-      @build_id      = create_id_from_timestamp
+      @build_id      = attrs[:id]
       @build_dir     = "./build/#{template_name}-#{build_id}"
       @markup_dir    = "#{build_dir}/source"
       @source_dir    = "./emails/#{template_name}"
@@ -80,11 +80,6 @@ module Antwort
       replaced = "#{asset_server}/"
       output = markup.gsub('/assets/', replaced)
       output
-    end
-
-    def create_id_from_timestamp
-      stamp = Time.now.to_s
-      stamp.split(' ')[0..1].join.gsub(/(-|:)/, '')
     end
 
     def flatten_inlined_css(markup)
