@@ -48,7 +48,7 @@ module Antwort
     end
 
     def hash_to_instance_vars(data)
-      data.each { |k, v| instance_variable_set("@#{k}", v) } unless data.empty?
+      data.each { |k, v| instance_variable_set("@#{k}", v) } if data
     end
 
     def image_url_from_path(path)
