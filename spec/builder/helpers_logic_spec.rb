@@ -120,7 +120,9 @@ describe Antwort::LogicHelpers do
           '<%if foo%>do something<%end%>'               => '{% if foo %}do something{% end %}',
           '<% if foo=bar %>do something<% end %>'       => '{% if foo=bar %}do something{% end %}',
           '<% if foo = \'bar\' %>do something<% end %>' => '{% if foo = \'bar\' %}do something{% end %}',
-          '<% if foo = "bar" %>do something<% end %>'   => '{% if foo = "bar" %}do something{% end %}'
+          '<% if foo = "bar" %>do something<% end %>'   => '{% if foo = "bar" %}do something{% end %}',
+          '<% if i < @config.products.length - 1 %>'    => '{% if i < @config.products.length - 1 %}',
+          '<% if i<@config.products.length-1 %>'    => '{% if i<@config.products.length-1 %}'
         }
         h.each do |key, value|
           expect(@helper.preserve_conditionals(key)).to eq(value)
