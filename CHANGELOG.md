@@ -1,5 +1,22 @@
 # Change Log
 
+## 0.0.10
+
+Released: 15 November 2015
+
+__Added__
+
+* New Feature: `--css-style` or `-o` flag for [Sass output style](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style). Possible values: `expanded, `nested`, `compact`, or `compressed`.
+* Building partials now also builds the emails
+
+__Fixed__
+
+* Adding and removing emails now also adds and removes respective `data/[email_id].yml` data file.
+
+__Updated__
+
+* `symbolize_keys` helper is now a generic antwort helper.
+
 ## 0.0.9
 
 Released: 20 Oct 2015
