@@ -19,16 +19,17 @@ module Antwort
     end
 
     def preserve_conditionals(html = '')
-      html.gsub(%r{<%\s*if (.*?)%>([\s\S]*?)(<%\s*end\s*%>)}, '{% if \1 %}\2{% endif %}') # opening if and closing end
+      html.gsub(%r{<%\s*if (.*?)%>}, '{% if \1 %}') # opening if and closing end
           .gsub(%r{<%\s*elsif(.*?)%>}, '{% elseif\1%}') # now match conditionals in between
           .gsub(%r{<%\s*else\s*%>}, '{% else %}')
           .gsub(/[ \t]{2,}%}/, ' %}') # remove extra white space, e.g. {% else    %}
+          .gsub(%r{<%\s*end\s*%>}, '{% end %}')
     end
 
     def preserve_loops(html = '')
       html.gsub(%r{<%\s+(.*)(\.each\s+do\s+\|)\s*(\S+)\s*(\|\s+)%>}, '{% for \3 in \1 %}')
           .gsub(%r{<%\s+(.*)(\.each_with_index\s+do\s+\|)\s*(\S+)\s*,\s*(\S+)\s*(\|\s+)%>}, '{% for \3 in \1 %}')
-          .gsub(%r{<%\s+end\s+%>}, '{% endfor %}')
+          .gsub(%r{<%\s*end\s*%>}, '{% end %}')
     end
 
     def preserve_comments(html = '')

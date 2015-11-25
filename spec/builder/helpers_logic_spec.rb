@@ -116,11 +116,11 @@ describe Antwort::LogicHelpers do
     describe "if" do
       it "/ end" do
         h = {
-          '<% if foo %>do something<% end %>'           => '{% if foo %}do something{% endif %}',
-          '<%if foo%>do something<%end%>'               => '{% if foo %}do something{% endif %}',
-          '<% if foo=bar %>do something<% end %>'       => '{% if foo=bar %}do something{% endif %}',
-          '<% if foo = \'bar\' %>do something<% end %>' => '{% if foo = \'bar\' %}do something{% endif %}',
-          '<% if foo = "bar" %>do something<% end %>'   => '{% if foo = "bar" %}do something{% endif %}'
+          '<% if foo %>do something<% end %>'           => '{% if foo %}do something{% end %}',
+          '<%if foo%>do something<%end%>'               => '{% if foo %}do something{% end %}',
+          '<% if foo=bar %>do something<% end %>'       => '{% if foo=bar %}do something{% end %}',
+          '<% if foo = \'bar\' %>do something<% end %>' => '{% if foo = \'bar\' %}do something{% end %}',
+          '<% if foo = "bar" %>do something<% end %>'   => '{% if foo = "bar" %}do something{% end %}'
         }
         h.each do |key, value|
           expect(@helper.preserve_conditionals(key)).to eq(value)
@@ -128,11 +128,11 @@ describe Antwort::LogicHelpers do
       end
 
       it "/ else / end" do
-        expect(@helper.preserve_conditionals('<% if foo %>bar<% else %>cat<% end %>')).to eq('{% if foo %}bar{% else %}cat{% endif %}')
+        expect(@helper.preserve_conditionals('<% if foo %>bar<% else %>cat<% end %>')).to eq('{% if foo %}bar{% else %}cat{% end %}')
       end
 
       it "/ elsif / else / end" do
-        expect(@helper.preserve_conditionals('<% if foo = bar %>bar<% elsif foo = cat %>cat<% else %>dog<% end %>')).to eq('{% if foo = bar %}bar{% elseif foo = cat %}cat{% else %}dog{% endif %}')
+        expect(@helper.preserve_conditionals('<% if foo = bar %>bar<% elsif foo = cat %>cat<% else %>dog<% end %>')).to eq('{% if foo = bar %}bar{% elseif foo = cat %}cat{% else %}dog{% end %}')
       end
     end
 
@@ -151,7 +151,7 @@ describe Antwort::LogicHelpers do
         "<% cats.each do | cat | %>" => "{% for cat in cats %}",
         "<% cats.each_with_index do | cat , i | %>" => "{% for cat in cats %}", # what about index?
         "<% cats.each_with_index do |cat, i| %>" => "{% for cat in cats %}", # what about index?
-        "<% end %>" => "{% endfor %}"
+        "<% end %>" => "{% end %}"
       }
       h.each do |key, value|
         expect(@helper.preserve_loops(key)).to eq(value)
