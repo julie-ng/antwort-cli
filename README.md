@@ -1,7 +1,7 @@
 # Antwort E-Mail Generator
 
 Author: Julie Ng  
-Version 0.0.9 (20 October 2015)
+Version 0.0.10 (15 November 2015)
 
 
 ### Speed up your email design and development workflow:
