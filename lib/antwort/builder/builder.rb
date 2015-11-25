@@ -6,19 +6,22 @@ require 'thor/shell'
 module Antwort
   class Builder
     include Thor::Shell
+    include Antwort::Helpers
     include Antwort::CLIHelpers
     include Antwort::LogicHelpers
     include Antwort::MarkupSanitizers
 
-    attr_reader :template_name, :build_id, :build_dir, :markup_dir, :source_dir, :scss_dir, :asset_server, :css
+    attr_reader :template_name, :build_id, :build_dir, :markup_dir, :source_dir, :scss_dir, :asset_server, :css, :css_style
 
     def initialize(attrs = {})
+      attrs = symbolize_keys!(attrs)
       @template_name = attrs[:email]
-      @build_id      = create_id_from_timestamp
+      @build_id      = attrs[:id]
       @build_dir     = "./build/#{template_name}-#{build_id}"
       @markup_dir    = "#{build_dir}/source"
       @source_dir    = "./emails/#{template_name}"
       @scss_dir      = "./assets/css/#{template_name}"
+      @css_style     = attrs[:'css-style'].to_sym
       @asset_server  = ENV['ASSET_SERVER'] || '/assets'
       post_initialize(attrs)
     end
@@ -55,7 +58,7 @@ module Antwort
       destination_file = attrs[:destination]
 
       if File.file? source_file
-        content = Tilt::ScssTemplate.new(source_file, style: :expanded).render
+        content = Tilt::ScssTemplate.new(source_file, style: @css_style).render
         create_file(content: content, path: destination_file)
       else
         say 'Build failed. ', :red
@@ -81,20 +84,15 @@ module Antwort
       output
     end
 
-    def create_id_from_timestamp
-      stamp = Time.now.to_s
-      stamp.split(' ')[0..1].join.gsub(/(-|:)/, '')
-    end
-
     def flatten_inlined_css(markup)
-      copy = String.new(markup)
+      copy = ''
 
       # loop through lines so we have the line number
       markup.lines.each_with_index do |line, i|
         f = Flattener.new(line).flatten
         if f.flattened?
-          say "    flattened styles on line #{i}: ", :yellow
-          say " #{f.flattened}"
+          say " flattened  CSS #{f.flattened_keys} ", :yellow
+          say "#{i}: #{f.source.strip}"
           copy << f.flattened
         else
           copy << f.source

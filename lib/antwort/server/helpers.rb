@@ -1,20 +1,5 @@
 module Antwort
   module ApplicationHelpers
-    def symbolize_keys!(hash)
-      hash.reduce({}) do |result, (key, value)|
-        new_key = case key
-                  when String then key.to_sym
-                  else key
-                  end
-        new_value = case value
-                    when Hash then symbolize_keys!(value)
-                    when Array then value.map { |v| v.is_a?(Hash) ? symbolize_keys!(v) : v }
-                    else value
-                    end
-        result[new_key] = new_value
-        result
-      end
-    end
 
     def sanitize_param(string)
       string.nil? ? '' : string.gsub(/([^A-Za-z0-9_\/-]+)|(--)/, '_')
@@ -63,7 +48,7 @@ module Antwort
     end
 
     def hash_to_instance_vars(data)
-      data.each { |k, v| instance_variable_set("@#{k}", v) } unless data.empty?
+      data.each { |k, v| instance_variable_set("@#{k}", v) } if data
     end
 
     def image_url_from_path(path)

@@ -106,14 +106,25 @@ module Antwort
                   default: false,
                   aliases: '-p',
                   desc: 'Build partials'
+    method_option :'css-style',
+                  type: :string,
+                  default: 'expanded',
+                  aliases: '-o',
+                  desc: 'Sass output style'
     def build(email_id='')
       require 'antwort'
-      attrs = { email: email_id }
-      email = build_partials? ? Antwort::PartialBuilder.new(attrs) : Antwort::EmailBuilder.new(attrs)
+      attrs = { email: email_id, id: create_id_from_timestamp }.merge(options)
 
+      email = Antwort::EmailBuilder.new(attrs)
       until email.build
         sleep 1
       end
+
+      if build_partials?
+        partials = Antwort::PartialBuilder.new(attrs)
+        sleep 1 until partials.build
+      end
+
       return true
     end
 
@@ -180,12 +191,13 @@ module Antwort
                   File.join('assets', 'css', email_directory)
         directory 'email/images',
                   File.join('assets', 'images', email_directory)
+        create_file File.join('data', "#{email_id}.yml")
         copy_file 'email/email.html.erb',
                   File.join('emails', email_directory, 'index.html.erb')
       end
 
       def remove_email
-        remove_file File.expand_path("./assets/data/#{email_id}.yml")
+        remove_file File.expand_path("./data/#{email_id}.yml")
         remove_dir File.expand_path("./assets/css/#{email_id}/")
         remove_dir File.expand_path("./assets/images/#{email_id}/")
         remove_dir File.expand_path("./emails/#{email_id}/")
@@ -215,6 +227,10 @@ module Antwort
         project_name.downcase.gsub(/([^A-Za-z0-9_\/-]+)|(--)/, '')
       end
 
+      def create_id_from_timestamp
+        stamp = Time.now.to_s
+        stamp.split(' ')[0..1].join.gsub(/(-|:)/, '')
+      end
 
     end
   end

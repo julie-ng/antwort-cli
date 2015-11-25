@@ -6,6 +6,7 @@ Dotenv.load
 module Antwort
 end
 
+require 'antwort/helpers'
 require 'antwort/cli'
 require 'antwort/builder'
 require 'antwort/server'
