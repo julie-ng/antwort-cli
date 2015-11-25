@@ -148,7 +148,9 @@ describe Antwort::LogicHelpers do
     it "preserves each loops as for loops" do
       h = {
         "<% cats.each do |cat| %>" => "{% for cat in cats %}",
-        # "<% cats.each_with_index do |cat, i| %>" => "{% for cat in cats %}", # what about index?
+        "<% cats.each do | cat | %>" => "{% for cat in cats %}",
+        "<% cats.each_with_index do | cat , i | %>" => "{% for cat in cats %}", # what about index?
+        "<% cats.each_with_index do |cat, i| %>" => "{% for cat in cats %}", # what about index?
         "<% end %>" => "{% endfor %}"
       }
       h.each do |key, value|
