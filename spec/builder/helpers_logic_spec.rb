@@ -151,8 +151,6 @@ describe Antwort::LogicHelpers do
       h = {
         "<% cats.each do |cat| %>" => "{% for cat in cats %}",
         "<% cats.each do | cat | %>" => "{% for cat in cats %}",
-        "<% cats.each_with_index do | cat , i | %>" => "{% for cat in cats %}", # what about index?
-        "<% cats.each_with_index do |cat, i| %>" => "{% for cat in cats %}", # what about index?
         "<% end %>" => "{% end %}"
       }
       h.each do |key, value|
@@ -160,7 +158,15 @@ describe Antwort::LogicHelpers do
       end
     end
 
-    it "preserves each_with_index"
+    it "preserves each_with_index" do
+      h = {
+        "<% cats.each_with_index do | cat , i | %>" => "{% for cat in cats %}",
+        "<% cats.each_with_index do |cat, i| %>" => "{% for cat in cats %}"
+      }
+      h.each do |key, value|
+        expect(@helper.preserve_loops(key)).to eq(value)
+      end
+    end
   end
 
 end
