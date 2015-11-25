@@ -15,9 +15,9 @@ describe Antwort::Builder do
   end
 
   describe "Compiles" do
-    it "compiles SCSS"
-    it "compiles inline.scss"
-    it "compiles include.scss"
+    it "SCSS"
+    it "inline.scss"
+    it "include.scss"
   end
 
   describe "Helpers" do
