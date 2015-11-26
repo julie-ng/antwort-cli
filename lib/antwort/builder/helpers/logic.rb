@@ -15,6 +15,7 @@ module Antwort
       html = preserve_loops(html)
       html = preserve_variables(html)
       html = preserve_assignments(html)
+      html = preserve_leftover_statements(html) # must be last
       html
     end
 
@@ -48,6 +49,10 @@ module Antwort
     def preserve_assignments(html = '')
       html.gsub(%r{<%\s+([A-Za-z0-9_]+)\s*(\|\|=)\s*(.*)\s+%>}, '{% set \1 = \1 || \3 %}')
           .gsub(%r{<%\s+([A-Za-z0-9_]+)\s*(=)\s*(.*)\s+%>}, '{% set \1 = \3 %}')
+    end
+
+    def preserve_leftover_statements(html = '')
+      html.gsub(%r{<%\s*(.*?)?%>}, '{% \1%}') # no trailing space because group captures it
     end
 
     def restore_variables_in_links(html = '')

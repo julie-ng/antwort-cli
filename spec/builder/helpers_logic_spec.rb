@@ -20,6 +20,12 @@ describe Antwort::LogicHelpers do
     end
   end
 
+  describe "statements" do
+    it "preserves erb markup" do
+      expect(@helper.preserve_erb_code('<% user.merge!({clear: true}) %>')).to eq('{% user.merge!({clear: true}) %}')
+    end
+  end
+
   #-- Comments --
 
   describe "comments" do
