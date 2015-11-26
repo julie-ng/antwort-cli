@@ -24,6 +24,7 @@ module Antwort
       source      = File.read(source_file)
       markup      = preserve_erb_code(source)
       markup      = preserve_nbsps(markup)
+      markup      = preserve_operators_from_nokogiri(markup)
       inlined     = inline(markup)
       inlined     = restore_nbsps(inlined)
       inlined     = flatten_inlined_css(inlined)
@@ -76,5 +77,9 @@ module Antwort
           .gsub(%r{</div>(\s*)<!--/#valid-dom-tree-->}, '')
     end
 
+    def preserve_operators_from_nokogiri(html = '')
+      html.gsub(%r{{%\s*if(.*?)<(.*?)%}}, '{%\1&lt;\2%}')
+          .gsub(%r{{%\s*if(.*?)>(.*?)%}}, '{%\1&gt;\2%}')
+    end
   end
 end
