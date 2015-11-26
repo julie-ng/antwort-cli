@@ -21,12 +21,12 @@ module Antwort
     end
 
     def preserve_conditionals(html = '')
-      html.gsub(%r{<%\s*if (.*?)%>}, '{% if \1 %}') # if
+      html.gsub(%r{<%\s*if (.*?)%>}, '{% if \1 %}')         # if
           .gsub(%r{<%\s*unless (.*?)%>}, '{% if !( \1) %}') # unless
-          .gsub(%r{<%\s*elsif(.*?)%>}, '{% elseif\1%}') # now match conditionals in between
-          .gsub(%r{<%\s*else\s*%>}, '{% else %}')
-          .gsub(/[ \t]{2,}%}/, ' %}') # remove extra white space, e.g. {% else    %}
-          .gsub(%r{<%\s*end\s*%>}, '{% end %}')
+          .gsub(%r{<%\s*elsif(.*?)%>}, '{% elseif\1%}')     # elsif
+          .gsub(%r{<%\s*else\s*%>}, '{% else %}')           # else
+          .gsub(%r{<%\s*end\s*%>}, '{% end %}')             # end
+          .gsub(/[ \t]{2,}%}/, ' %}')                       # remove extra white space, e.g. {% else    %}
     end
 
     def preserve_loops(html = '')
@@ -37,7 +37,7 @@ module Antwort
 
     def preserve_comments(html = '')
       html.gsub(%r{<%[ \t]*#(.*)%>},'{#\1#}')
-          .gsub(/{#([^=\s])/, '{# \1')          # {#foo #} ->{# foo #}
+          .gsub(/{#([^=\s])/, '{# \1')      # {#foo #} ->{# foo #}
     end
 
     def preserve_variables(html = '')
