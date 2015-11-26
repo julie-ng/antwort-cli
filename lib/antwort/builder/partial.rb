@@ -32,11 +32,16 @@ module Antwort
     end
 
     def inline(markup)
-      document = Roadie::Document.new markup
+      # Force a complete DOM tree before inlining for nokogiri
+      # Otherwise we have random <p> at beginning of document
+      html = add_nokogiri_wrapper(markup)
+
+      document = Roadie::Document.new html
       document.add_css(css)
       inlined  = document.transform
       inlined  = cleanup(inlined)
-      inlined
+
+      remove_nokogiri_wrapper(inlined)
     end
 
     def adjust_filename(filename)
@@ -58,5 +63,18 @@ module Antwort
       say 'Partials do not have access to the full DOM tree. Therefore, nested CSS selectors, e.g. ".layout td",'
       say 'may not be matched for inlining. Always double check your code before use in production!'
     end
+
+    private
+
+    def add_nokogiri_wrapper(html = '')
+      html = '<div id="valid-dom-tree">' + html + '</div><!--/#valid-dom-tree-->'
+      html
+    end
+
+    def remove_nokogiri_wrapper(html = '')
+      html.gsub('<div id="valid-dom-tree">', '')
+          .gsub(%r{</div>(\s*)<!--/#valid-dom-tree-->}, '')
+    end
+
   end
 end
