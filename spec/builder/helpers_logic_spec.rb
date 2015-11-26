@@ -181,4 +181,20 @@ describe Antwort::LogicHelpers do
     end
   end
 
+  #-- Partials --
+
+  describe "partials are converted to friendlier include syntax" do
+    it "with locals" do
+      expect(@helper.convert_partials_to_includes("{{ partial :'foo', locals: bar }}")).to eq("{% include 'foo' with: bar %}")
+      expect(@helper.convert_partials_to_includes("{{ partial :'foo', locals:bar }}")).to eq("{% include 'foo' with:bar %}")
+      expect(@helper.convert_partials_to_includes("{{ partial :'foo', locals: {cat: cat} }}")).to eq("{% include 'foo' with: {cat: cat} %}")
+
+    end
+
+    it "without locals" do
+      expect(@helper.convert_partials_to_includes("{{ partial :'foo' }}")).to eq("{% include 'foo' %}")
+      expect(@helper.convert_partials_to_includes("{{ partial :foo }}")).to eq("{% include foo %}")
+    end
+  end
+
 end

@@ -15,6 +15,7 @@ module Antwort
       html = preserve_loops(html)
       html = preserve_variables(html)
       html = preserve_assignments(html)
+      html = convert_partials_to_includes(html)
       html = preserve_leftover_statements(html) # must be last
       html
     end
@@ -58,6 +59,11 @@ module Antwort
     def restore_variables_in_links(html = '')
       html.gsub('%7B%7B%20','{{ ')
           .gsub('%20%7D%7D',' }}')
+    end
+
+    def convert_partials_to_includes(html = '')
+      html.gsub(%r{{{ partial :(.+?) }}}, '{% include \1 %}')
+          .gsub(%r{{% include (.+),\s+locals:(.+?)%}}, '{% include \1 with:\2%}')
     end
 
     def cleanup_logic(html = '')
