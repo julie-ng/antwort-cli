@@ -197,4 +197,16 @@ describe Antwort::LogicHelpers do
     end
   end
 
+  describe "multiple statements on one line" do
+    it "does not match too early" do
+      h = {
+        "<% if %>this<% else %>that<%end%>" => "{% if %}this{% else %}that{% end %}",
+        "<% if i==0 %><%= partial :foo %><% else %><%= partial :bar %><% end %>" => "{% if i==0 %}{% include foo %}{% else %}{% include bar %}{% end %}"
+      }
+      h.each do |key, value|
+        expect(@helper.preserve_erb_code(key)).to eq(value)
+      end
+    end
+  end
+
 end
