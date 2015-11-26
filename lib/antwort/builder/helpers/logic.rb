@@ -67,11 +67,9 @@ module Antwort
     end
 
     def cleanup_logic(html = '')
-      html.gsub(/&gt;=/, '>=')
-          .gsub(/&lt;=/, '<=')
-          .gsub(/&gt;=/, '>=')
+      html.gsub(%r{({%|{{)(.*?)(&lt;)(.*?)(}}|%})}, '\1\2<\4 \5') # <
+          .gsub(%r{({%|{{)(.*?)(&gt;)(.*?)(}}|%})}, '\1\2>\4 \5') # >
           .gsub(/&amp;&amp;/, '&&')
     end
-
   end
 end
