@@ -31,7 +31,7 @@ module Antwort
 
     def preserve_loops(html = '')
       html.gsub(%r{<%\s+(.*)(\.each\s+do\s+\|)\s*(\S+)\s*(\|\s+)%>}, '{% for \3 in \1 %}')
-          .gsub(%r{<%\s+(.*)(\.each_with_index\s+do\s+\|)\s*(\S+)\s*,\s*(\S+)\s*(\|\s+)%>}, '{% for \3 in \1 %}')
+          .gsub(%r{<%\s+(.*)(\.each_with_index\s+do\s+\|)\s*(\S+)\s*,\s*(\S+)\s*(\|\s+)%>}, '{% for \3 in \1 with: {@index: \4} %}')
           .gsub(%r{<%\s*end\s*%>}, '{% end %}')
     end
 
