@@ -19,7 +19,8 @@ module Antwort
     end
 
     def preserve_conditionals(html = '')
-      html.gsub(%r{<%\s*if (.*?)%>}, '{% if \1 %}') # opening if and closing end
+      html.gsub(%r{<%\s*if (.*?)%>}, '{% if \1 %}') # if
+          .gsub(%r{<%\s*unless (.*?)%>}, '{% if !( \1) %}') # unless
           .gsub(%r{<%\s*elsif(.*?)%>}, '{% elseif\1%}') # now match conditionals in between
           .gsub(%r{<%\s*else\s*%>}, '{% else %}')
           .gsub(/[ \t]{2,}%}/, ' %}') # remove extra white space, e.g. {% else    %}

@@ -139,8 +139,14 @@ describe Antwort::LogicHelpers do
     end
 
     describe "unless" do
-      it "/ end"
-      it "/ else / end"
+      it "/ end" do
+        expect(@helper.preserve_conditionals('<% unless foo %>')).to eq('{% if !( foo ) %}')
+        expect(@helper.preserve_conditionals('<% unless foo == bar - 1 %>')).to eq('{% if !( foo == bar - 1 ) %}')
+      end
+
+      it "/ else / end" do
+        expect(@helper.preserve_conditionals('<% unless foo == bar %>this<% else %>that<% end %>')).to eq('{% if !( foo == bar ) %}this{% else %}that{% end %}')
+      end
     end
   end
 
