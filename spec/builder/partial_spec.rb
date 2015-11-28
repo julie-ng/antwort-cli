@@ -8,7 +8,7 @@ describe Antwort::PartialBuilder do
 
   before :each do
     allow($stdout).to receive(:write) # Ignore warnings
-    @builder = Antwort::PartialBuilder.new({id: 'foo', 'css-style': 'expanded'})
+    @builder = Antwort::PartialBuilder.new({id: '1-demo', 'css-style': 'expanded'})
   end
 
   describe "Builds" do
@@ -39,8 +39,17 @@ describe Antwort::PartialBuilder do
         expect(@builder.send(:remove_nokogiri_wrapper, start + 'foo' + "</div>\n<!--/#valid-dom-tree-->")).to eq('foo')
       end
 
-      it "adds wrapper before inlining"
-      it "removes wrapper after inlining"
+      # TODO: These specs don't work because PartialBuilder cannot find matching CSS
+
+      it "adds wrapper before inlining", skip: true do
+        @builder.inline('foo')
+        expect(@builder).to receive(:add_nokogiri_wrapper)
+      end
+
+      it "removes wrapper after inlining", skip: true do
+        @builder.inline('foo')
+        expect(@builder).to receive(:remove_nokogiri_wrapper)
+      end
     end
 
     describe "Clean up" do
