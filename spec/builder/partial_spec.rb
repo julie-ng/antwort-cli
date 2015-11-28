@@ -17,8 +17,31 @@ describe Antwort::PartialBuilder do
   end
 
   describe "Helpers" do
-    it "removes extra DOM from nokogiri"
-    it "adjusts filename as necssary (make sure it ends with .html)"
+    it "adjusts filename as necssary (make sure it ends with .html)" do
+      expect(@builder.adjust_filename('foo.html.erb')).to eq('foo.html')
+      expect(@builder.adjust_filename('_foo.html.erb')).to eq('_foo.html')
+      expect(@builder.adjust_filename('foo.erb')).to eq('foo.html')
+      expect(@builder.adjust_filename('_foo.erb')).to eq('_foo.html')
+      expect(@builder.adjust_filename('_foo.html')).to eq('_foo.html')
+    end
+
+    describe "save from Nokogiri" do
+      let (:start) { '<div id="valid-dom-tree">' }
+      let (:ende)  {'</div><!--/#valid-dom-tree-->' }
+
+      it "can add nokogiri wrapper" do
+        expect(@builder.send(:add_nokogiri_wrapper, 'foo')).to eq(start + 'foo' + ende)
+      end
+
+      it "can remove nokogiri wrapper" do
+        expect(@builder.send(:remove_nokogiri_wrapper, start + 'foo' + ende)).to eq('foo')
+        expect(@builder.send(:remove_nokogiri_wrapper, start + 'foo' + "</div>  <!--/#valid-dom-tree-->")).to eq('foo')
+        expect(@builder.send(:remove_nokogiri_wrapper, start + 'foo' + "</div>\n<!--/#valid-dom-tree-->")).to eq('foo')
+      end
+
+      it "adds wrapper before inlining"
+      it "removes wrapper after inlining"
+    end
 
     describe "Clean up" do
       it "can convert logic html entities back to operators" do
