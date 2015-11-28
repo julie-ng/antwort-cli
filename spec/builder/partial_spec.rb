@@ -17,12 +17,23 @@ describe Antwort::PartialBuilder do
   end
 
   describe "Helpers" do
-    it "adjusts filename as necssary (make sure it ends with .html)" do
-      expect(@builder.adjust_filename('foo.html.erb')).to eq('foo.html')
-      expect(@builder.adjust_filename('_foo.html.erb')).to eq('_foo.html')
-      expect(@builder.adjust_filename('foo.erb')).to eq('foo.html')
-      expect(@builder.adjust_filename('_foo.erb')).to eq('_foo.html')
-      expect(@builder.adjust_filename('_foo.html')).to eq('_foo.html')
+    describe "adjusts filename as necssary (make sure it ends with .html)" do
+
+      it "always starts with _" do
+        expect(@builder.adjust_filename('foo.erb')).to eq('_foo.html')
+        expect(@builder.adjust_filename('foo.html')).to eq('_foo.html')
+        expect(@builder.adjust_filename('foo.html.erb')).to eq('_foo.html')
+      end
+
+      it "always ends with .html" do
+        expect(@builder.adjust_filename('_foo.html.erb')).to eq('_foo.html')
+        expect(@builder.adjust_filename('_foo.erb')).to eq('_foo.html')
+        expect(@builder.adjust_filename('_foo.html')).to eq('_foo.html')
+      end
+
+      it "uses template name instead of _index" do
+        expect(@builder.adjust_filename('index.html.erb')).to eq('_1-demo.html')
+      end
     end
 
     describe "save from Nokogiri" do

@@ -3,7 +3,7 @@ module Antwort
     attr_reader :templates
 
     def post_initialize(*)
-      @templates = list_partials(source_dir) # try Antwort::CLIHelpers::list_partials later
+      @templates = list_partials(source_dir).push('index.html.erb')
       if templates.length < 1
         say 'Error: ', :red
         puts "No partials found in #{template_name} folder."
@@ -46,8 +46,11 @@ module Antwort
     end
 
     def adjust_filename(filename)
+      filename = @template_name if filename == 'index.html.erb'
+
       name = filename.gsub('.erb', '')
       name << '.html' unless name[-5, 5] == '.html'
+      name = '_' << name unless name[0] == '_'
       name
     end
 
