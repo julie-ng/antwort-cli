@@ -1,5 +1,28 @@
 # Change Log
 
+## 0.0.11
+
+Released: ?? November 2015
+
+In this release, Partial Inlining was updated, not just to add and fix missing logic, but more importantly to establish syntax patterns.
+
+__Added__
+
+* `each_with_index` loops are also now preserved. Example conversion: `cats.each_with_index do |cat, i|` becomes `{% for cat in cats with: {@index: i} %}`
+* Locals passed to partials are now referenced using a more generic `with` instead of ruby-esqe `locals` like so: {% partial 'foo' with: {size: 1} %}
+* ERB's `unless` is  now converted to `if !(condition)` 
+* ERB Statements without output or conditionals are also now preserved. Example: `<% product.merge({featured: false}) %>`
+
+__Fixed__
+
+* Inlining partials no longer results in extra `<p>` tags. They were added by Nokogiri to create complete DOM trees should be addressed.
+* Fixed edge cases where conditionals using a less than `<` operator resulted in large chunks of missing code. Nokogiri, interpreted it as the start of an HTML tag, often chopping off parts until it found the next orphaned `>`, often in another conditional.
+
+__Updated__
+
+* Closing logic tags are now simply `{% end %}`, deviating from Twig's `{% endif %}` and `{% endfor %}`, which cannot reliably be captured using regular expressions. We're choosing consistency and reliability over strict adherence to Twig syntax.
+* Updated some specs to test conversion of ERB logic to Twig-style logic.
+
 ## 0.0.10
 
 Released: 15 November 2015
