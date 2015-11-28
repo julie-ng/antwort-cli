@@ -8,7 +8,7 @@ describe Antwort::PartialBuilder do
 
   before :each do
     allow($stdout).to receive(:write) # Ignore warnings
-    @builder = Antwort::PartialBuilder.new({id: '1-demo', 'css-style': 'expanded'})
+    @builder = Antwort::PartialBuilder.new({email: '1-demo', id: '123', 'css-style': 'expanded'})
   end
 
   describe "Builds" do
