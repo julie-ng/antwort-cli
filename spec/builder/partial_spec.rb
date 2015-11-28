@@ -21,11 +21,12 @@ describe Antwort::PartialBuilder do
     it "adjusts filename as necssary (make sure it ends with .html)"
 
     describe "Clean up" do
-      it "# can clean up logic mangled by html entities" do
-        # and preserves spaces
+      it "can convert logic html entities back to operators" do
         h = {
-          " &lt;= " => " <= ",
-          " &gt;= " => " >= ",
+          "{% &lt;= %}" => "{% <= %}",  # only convert operators within logic
+          "{{ &lt;= }}" => "{{ <= }}",  # leave operators in content
+          "{% &gt;= %}" => "{% >= %}",
+          "{{ &gt;= }}" => "{{ >= }}",
           " &amp;&amp; " => " && "
         }
         h.each do |key, value|
