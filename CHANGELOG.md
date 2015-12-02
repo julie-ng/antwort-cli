@@ -2,7 +2,7 @@
 
 ## 0.0.11
 
-Released: ?? November 2015
+Released: 2 December 2015
 
 In this release, Partial Inlining was updated, not just to add and fix missing logic, but more importantly to establish syntax patterns.
 
