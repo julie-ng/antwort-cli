@@ -8,6 +8,7 @@ In this release, Partial Inlining was updated, not just to add and fix missing l
 
 __Added__
 
+* New `--all` flag to `build` command, which will build all emails.
 * `each_with_index` loops are also now preserved. Example conversion: `cats.each_with_index do |cat, i|` becomes `{% for cat in cats with: {@index: i} %}`
 * Locals passed to partials are now referenced using a more generic `with` instead of ruby-esqe `locals` like so: {% partial 'foo' with: {size: 1} %}
 * ERB's `unless` is  now converted to `if !(condition)` 

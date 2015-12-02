@@ -117,6 +117,11 @@ module Antwort
 
     desc 'build [email_id]', 'Builds email markup and inlines CSS from source'
     method_option aliases: 'b'
+    method_option :all,
+                  type: :boolean,
+                  default: false,
+                  aliases: '-a',
+                  desc: 'Build all templates'
     method_option :partials,
                   type: :boolean,
                   default: false,
@@ -129,16 +134,19 @@ module Antwort
                   desc: 'Sass output style'
     def build(email_id='')
       require 'antwort'
-      attrs = { email: email_id, id: create_id_from_timestamp }.merge(options)
 
-      email = Antwort::EmailBuilder.new(attrs)
-      until email.build
-        sleep 1
-      end
+      emails = options[:all] ? available_emails : Array.new.push(email_id)
+      emails.each do |email_id|
+        attrs = { email: email_id, id: create_id_from_timestamp }.merge(options)
+        email = Antwort::EmailBuilder.new(attrs)
+        until email.build
+          sleep 1
+        end
 
-      if build_partials?
-        partials = Antwort::PartialBuilder.new(attrs)
-        sleep 1 until partials.build
+        if build_partials?
+          partials = Antwort::PartialBuilder.new(attrs)
+          sleep 1 until partials.build
+        end
       end
 
       return true
@@ -253,7 +261,6 @@ module Antwort
         stamp = Time.now.to_s
         stamp.split(' ')[0..1].join.gsub(/(-|:)/, '')
       end
-
     end
   end
 end
