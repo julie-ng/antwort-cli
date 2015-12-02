@@ -18,7 +18,7 @@ module Antwort
     end
 
     def last_build_by_id(email_id)
-      built_emails.select { |f| f.include? email_id }.sort.last
+      built_emails.select { |f| f.split('-')[0..-2].join('-') == email_id }.sort.last
     end
 
     def list_folders(folder_name)

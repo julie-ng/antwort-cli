@@ -42,6 +42,7 @@ describe Antwort::CLIHelpers do
       expect(@helper.last_build_by_id 'foo').to eq('foo-1')
       expect(@helper.last_build_by_id 'demo').to eq('demo-123457')
       expect(@helper.last_build_by_id 'demo').not_to eq('demo-123456')
+      expect(@helper.last_build_by_id 'demo').not_to eq('demo-bar-123')
     end
 
     it '#list_folders' do

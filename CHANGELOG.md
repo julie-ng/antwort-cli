@@ -17,6 +17,7 @@ __Fixed__
 
 * Inlining partials no longer results in extra `<p>` tags. They were added by Nokogiri to create complete DOM trees should be addressed.
 * Fixed edge cases where conditionals using a less than `<` operator resulted in large chunks of missing code. Nokogiri, interpreted it as the start of an HTML tag, often chopping off parts until it found the next orphaned `>`, often in another conditional.
+* Antwort now always sends the correct email by matching `email_id`s exactly (#45).
 
 __Updated__
 
