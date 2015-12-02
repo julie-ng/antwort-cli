@@ -16,7 +16,6 @@ module Antwort
     def build
       @css = load_css
       templates.each { |t| build_html t }
-      show_accuracy_warning
     end
 
     def build_html(partial_name)
@@ -59,13 +58,6 @@ module Antwort
       code = cleanup_logic(code)
       code = restore_variables_in_links(code)
       code
-    end
-
-    def show_accuracy_warning
-      say ''
-      say '** NOTE: Accuracy of Inlinied Partials **', :yellow
-      say 'Partials do not have access to the full DOM tree. Therefore, nested CSS selectors, e.g. ".layout td",'
-      say 'may not be matched for inlining. Always double check your code before use in production!'
     end
 
     private

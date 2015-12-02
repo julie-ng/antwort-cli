@@ -136,6 +136,7 @@ module Antwort
       require 'antwort'
 
       emails = options[:all] ? available_emails : Array.new.push(email_id)
+
       emails.each do |email_id|
         attrs = { email: email_id, id: create_id_from_timestamp }.merge(options)
         email = Antwort::EmailBuilder.new(attrs)
@@ -148,6 +149,8 @@ module Antwort
           sleep 1 until partials.build
         end
       end
+
+      show_accuracy_warning if build_partials?
 
       return true
     end
@@ -260,6 +263,13 @@ module Antwort
       def create_id_from_timestamp
         stamp = Time.now.to_s
         stamp.split(' ')[0..1].join.gsub(/(-|:)/, '')
+      end
+
+      def show_accuracy_warning
+        say ''
+        say '** NOTE: Accuracy of Inlinied Partials **', :yellow
+        say 'Partials do not have access to the full DOM tree. Therefore, nested CSS selectors, e.g. ".layout td",'
+        say 'may not be matched for inlining. Always double check your code before use in production!'
       end
     end
   end
