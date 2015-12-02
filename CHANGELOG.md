@@ -13,7 +13,7 @@ __Added__
 * Locals passed to partials are now referenced using a more generic `with` instead of ruby-esqe `locals` like so: {% partial 'foo' with: {size: 1} %}
 * ERB's `unless` is  now converted to `if !(condition)` 
 * ERB Statements without output or conditionals are also now preserved. Example: `<% product.merge({featured: false}) %>`
-* Button and image_tag helpers are converted to use statement `{% … %}` syntax, not `{{ … }}` output syntax
+* `button` and `image_tag` helpers are converted to use statement `{% … %}` syntax, not `{{ … }}` output syntax
 
 __Fixed__
 
