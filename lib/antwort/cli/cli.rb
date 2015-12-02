@@ -10,6 +10,8 @@ module Antwort
       File.expand_path('../../../template', File.dirname(__FILE__))
     end
 
+    #-- init
+
     desc 'init [project_name]', 'Initializes a new Antwort Email project'
     method_option :user,
                   type: :string,
@@ -25,15 +27,19 @@ module Antwort
                   type: :boolean,
                   default: true,
                   desc: 'Runs bundle command in new repo'
+
     def init(project_name)
       @project_name = project_name
-      @user = options[:user] if options[:user]
-      @key = options[:key] if options[:key]
+      @user         = options[:user] if options[:user]
+      @key          = options[:key] if options[:key]
+
       copy_project
       initialize_git_repo if options[:git]
       run_bundler if options[:bundle]
       say "New project initialized in: ./#{project_directory}/", :green
     end
+
+    #-- new
 
     desc 'new [email_id]', 'Creates a new email template'
     method_option aliases: 'n'
@@ -42,11 +48,15 @@ module Antwort
       copy_email
     end
 
+    #-- list
+
     desc 'list', 'Lists all emails in the ./emails directory by id'
     method_option aliases: 'l'
     def list
       list_folders('./emails').each { |e| puts "- #{e}" }
     end
+
+    #-- upload
 
     desc 'upload', 'Uploads email assets to AWS S3'
     method_option :force,
@@ -58,6 +68,8 @@ module Antwort
     def upload(email_id)
       Upload.new(email_id, options[:force]).upload
     end
+
+    #-- send
 
     desc 'send [email_id]', 'Sends built email via SMTP'
     method_option :from,
@@ -88,6 +100,8 @@ module Antwort
       Send.new(build, options).send
     end
 
+    #-- server
+
     desc 'server', 'Starts http://localhost:9292 server for coding and previewing emails'
     method_option :port,
                   type: :string,
@@ -98,6 +112,8 @@ module Antwort
       require 'antwort'
       Antwort::Server.run!(port: options[:port])
     end
+
+    #-- build
 
     desc 'build [email_id]', 'Builds email markup and inlines CSS from source'
     method_option aliases: 'b'
@@ -128,6 +144,8 @@ module Antwort
       return true
     end
 
+    #-- prune
+
     desc 'prune', 'Removes all files in the ./build directory'
     method_option :force,
               type: :boolean,
@@ -148,6 +166,8 @@ module Antwort
       end
     end
 
+    #-- remove
+
     desc 'remove [email_id]', 'Removes an email, incl. its assets, styles and data'
     method_option :force,
               type: :boolean,
@@ -162,6 +182,8 @@ module Antwort
         say "Remove aborted."
       end
     end
+
+    #-- version
 
     desc 'version','Ouputs version number'
     def version
