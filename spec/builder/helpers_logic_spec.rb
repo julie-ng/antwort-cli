@@ -182,6 +182,20 @@ describe Antwort::LogicHelpers do
     end
   end
 
+  #-- Helpers --
+
+  describe "Helpers use statements syntax, not output" do
+    it "includes button" do
+      expect(@helper.preserve_erb_code("<%= button 'foo', '#' %>")).to eq("{% button 'foo', '#' %}")
+      expect(@helper.preserve_erb_code("<%= button 'foo', '#', color: 'blue' %>")).to eq("{% button 'foo', '#', color: 'blue' %}")
+    end
+
+    it "includes image_tag" do
+      expect(@helper.preserve_erb_code("<%= image_tag 'photo.jpg', width: 100, alt: 'caption' %>")).to eq("{% image_tag 'photo.jpg', width: 100, alt: 'caption' %}")
+      expect(@helper.preserve_erb_code('<%= image_tag "#{user}-photo.jpg", width: 100, alt: "caption" %>')).to eq('{% image_tag "#{user}-photo.jpg", width: 100, alt: "caption" %}')
+    end
+  end
+
   #-- Partials --
 
   describe "partials are converted to friendlier include syntax" do

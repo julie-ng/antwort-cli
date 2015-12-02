@@ -16,6 +16,7 @@ module Antwort
       html = preserve_variables(html)
       html = preserve_assignments(html)
       html = convert_partials_to_includes(html)
+      html = convert_helper_wrappers(html)
       html = preserve_leftover_statements(html) # must be last
       html
     end
@@ -64,6 +65,11 @@ module Antwort
     def convert_partials_to_includes(html = '')
       html.gsub(%r{{{ partial :(.+?) }}}, '{% include \1 %}')
           .gsub(%r{{% include (.+),\s+locals:(.+?)%}}, '{% include \1 with:\2%}')
+    end
+
+    def convert_helper_wrappers(html = '')
+      html.gsub(%r{{{ button(.+?)}}}, '{% button\1%}')
+          .gsub(%r{{{ image_tag(.+?)}}}, '{% image_tag\1%}')
     end
 
     def cleanup_logic(html = '')
