@@ -8,8 +8,8 @@ module Antwort
 
     def add_included_css(markup = '')
       css = File.read("#{markup_dir}/include.css")
-      css_markup = "<style type=\"text/css\">\n" + css + "</style>\n" + "</head>\n"
-      markup.gsub(%r{((\r|\n)*)</head>}i, css_markup)
+      css_markup = "</title>\n<style type=\"text/css\">\n" + css + "</style>\n"
+      markup.gsub(%r{</title>}i, css_markup)
     end
 
     def remove_roadie_flags(markup = '')
