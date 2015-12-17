@@ -12,6 +12,10 @@ module Antwort
       markup.gsub(%r{((\r|\n)*)</head>}i, css_markup)
     end
 
+    def remove_roadie_flags(markup = '')
+      markup.gsub(' data-roadie-ignore', '')
+    end
+
     def remove_excessive_newlines(markup = '')
       markup.gsub(/^([ \t]*\n){3,}/m, "\n\n")
     end
