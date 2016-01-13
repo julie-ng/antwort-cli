@@ -130,8 +130,8 @@ module Antwort
     method_option :'css-style',
                   type: :string,
                   default: 'expanded',
-                  aliases: '-o',
-                  desc: 'Sass output style'
+                  aliases: '-c',
+                  desc: 'CSS output style'
     def build(email_id='')
       require 'antwort'
 
