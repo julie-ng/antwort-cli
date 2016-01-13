@@ -206,6 +206,23 @@ describe Antwort::LogicHelpers do
 
     end
 
+    it "including multiline" do
+      markup = %q(
+        <%= partial :'user', locals: {
+          name: 'foo',
+          size: bar
+        } %>
+      )
+      result = %q(
+        {% include 'user' with: {
+          name: 'foo',
+          size: bar
+        } %}
+      )
+
+      expect(@helper.preserve_logic(markup)).to eq(result)
+    end
+
     it "without locals" do
       expect(@helper.preserve_logic("{{ partial :'foo' }}")).to eq("{% include 'foo' %}")
       expect(@helper.preserve_logic("{{ partial :foo }}")).to eq("{% include foo %}")

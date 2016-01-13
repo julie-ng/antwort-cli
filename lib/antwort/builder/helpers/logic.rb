@@ -65,6 +65,7 @@ module Antwort
     def convert_partials_to_includes(html = '')
       html.gsub(%r{{{ partial :(.+?) }}}, '{% include \1 %}')
           .gsub(%r{{% include (.+),\s+locals:(.+?)%}}, '{% include \1 with:\2%}')
+          .gsub(%r{(<%=\s+?partial\s+?:)(.+?),(.+?)(locals:)((.|\n)+?)(%>)}, '{% include \2 with:\5%}') # multiline partials not caught in presumably leftover variable
     end
 
     def convert_helper_wrappers(html = '')
