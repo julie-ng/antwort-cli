@@ -22,7 +22,7 @@ describe Antwort::LogicHelpers do
 
   describe "statements" do
     it "preserves erb markup" do
-      expect(@helper.preserve_erb_code('<% user.merge!({clear: true}) %>')).to eq('{% user.merge!({clear: true}) %}')
+      expect(@helper.preserve_logic('<% user.merge!({clear: true}) %>')).to eq('{% user.merge!({clear: true}) %}')
     end
   end
 
@@ -186,13 +186,13 @@ describe Antwort::LogicHelpers do
 
   describe "Helpers use statements syntax, not output" do
     it "includes button" do
-      expect(@helper.preserve_erb_code("<%= button 'foo', '#' %>")).to eq("{% button 'foo', '#' %}")
-      expect(@helper.preserve_erb_code("<%= button 'foo', '#', color: 'blue' %>")).to eq("{% button 'foo', '#', color: 'blue' %}")
+      expect(@helper.preserve_logic("<%= button 'foo', '#' %>")).to eq("{% button 'foo', '#' %}")
+      expect(@helper.preserve_logic("<%= button 'foo', '#', color: 'blue' %>")).to eq("{% button 'foo', '#', color: 'blue' %}")
     end
 
     it "includes image_tag" do
-      expect(@helper.preserve_erb_code("<%= image_tag 'photo.jpg', width: 100, alt: 'caption' %>")).to eq("{% image_tag 'photo.jpg', width: 100, alt: 'caption' %}")
-      expect(@helper.preserve_erb_code('<%= image_tag "#{user}-photo.jpg", width: 100, alt: "caption" %>')).to eq('{% image_tag "#{user}-photo.jpg", width: 100, alt: "caption" %}')
+      expect(@helper.preserve_logic("<%= image_tag 'photo.jpg', width: 100, alt: 'caption' %>")).to eq("{% image_tag 'photo.jpg', width: 100, alt: 'caption' %}")
+      expect(@helper.preserve_logic('<%= image_tag "#{user}-photo.jpg", width: 100, alt: "caption" %>')).to eq('{% image_tag "#{user}-photo.jpg", width: 100, alt: "caption" %}')
     end
   end
 
@@ -219,7 +219,7 @@ describe Antwort::LogicHelpers do
         "<% if i==0 %><%= partial :foo %><% else %><%= partial :bar %><% end %>" => "{% if i==0 %}{% include foo %}{% else %}{% include bar %}{% end %}"
       }
       h.each do |key, value|
-        expect(@helper.preserve_erb_code(key)).to eq(value)
+        expect(@helper.preserve_logic(key)).to eq(value)
       end
     end
   end

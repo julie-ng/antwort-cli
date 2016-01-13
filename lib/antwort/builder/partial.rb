@@ -21,7 +21,7 @@ module Antwort
     def build_html(partial_name)
       source_file = "#{source_dir}/#{partial_name}"
       source      = File.read(source_file)
-      markup      = preserve_erb_code(source)
+      markup      = preserve_logic(source)
       markup      = preserve_nbsps(markup)
       markup      = preserve_operators_from_nokogiri(markup)
       inlined     = inline(markup)

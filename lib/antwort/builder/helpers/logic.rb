@@ -9,7 +9,7 @@ module Antwort
       html.gsub(/%nbspace%/, '&nbsp;')
     end
 
-    def preserve_erb_code(html = '')
+    def preserve_logic(html = '')
       html = preserve_comments(html)
       html = preserve_conditionals(html) # conditionals before loops, in case we have them inside loops
       html = preserve_loops(html)
