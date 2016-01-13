@@ -38,12 +38,12 @@ describe Antwort::LogicHelpers do
         "<%# foo bar == cat %>" => "{# foo bar == cat #}"
       }
       h.each do |key, value|
-        expect(@helper.preserve_comments(key)).to eq(value)
+        expect(@helper.preserve_logic(key)).to eq(value)
       end
     end
 
     it "preserves comments despite leading/trailing spaces" do
-      expect(@helper.preserve_comments('<% # foo %>')).to eq('{# foo #}')
+      expect(@helper.preserve_logic('<% # foo %>')).to eq('{# foo #}')
     end
   end
 
@@ -51,20 +51,20 @@ describe Antwort::LogicHelpers do
 
   describe "variable outputs" do
     it "preserves interpolated strings" do
-      expect(@helper.preserve_variables('<%= "color: #{foo};" %>')).to eq('{{ "color: #{foo};" }}')
+      expect(@helper.preserve_logic('<%= "color: #{foo};" %>')).to eq('{{ "color: #{foo};" }}')
     end
 
     context "hashes" do
       it "preserves nested" do
-        expect(@helper.preserve_variables('<%= foo[:bar] %>')).to eq('{{ foo.bar }}')
-        expect(@helper.preserve_variables('<%= foo[:bar][:cat] %>')).to eq('{{ foo.bar.cat }}')
+        expect(@helper.preserve_logic('<%= foo[:bar] %>')).to eq('{{ foo.bar }}')
+        expect(@helper.preserve_logic('<%= foo[:bar][:cat] %>')).to eq('{{ foo.bar.cat }}')
       end
 
       it "preseves string keys" do
-        expect(@helper.preserve_variables("<%= foo['bar'] %>")).to eq('{{ foo.bar }}')
-        expect(@helper.preserve_variables("<%= foo['bar']['cat'] %>")).to eq('{{ foo.bar.cat }}')
-        expect(@helper.preserve_variables('<%= foo["bar"] %>')).to eq('{{ foo.bar }}')
-        expect(@helper.preserve_variables('<%= foo["bar"]["cat"] %>')).to eq('{{ foo.bar.cat }}')
+        expect(@helper.preserve_logic("<%= foo['bar'] %>")).to eq('{{ foo.bar }}')
+        expect(@helper.preserve_logic("<%= foo['bar']['cat'] %>")).to eq('{{ foo.bar.cat }}')
+        expect(@helper.preserve_logic('<%= foo["bar"] %>')).to eq('{{ foo.bar }}')
+        expect(@helper.preserve_logic('<%= foo["bar"]["cat"] %>')).to eq('{{ foo.bar.cat }}')
       end
     end
   end
@@ -75,24 +75,24 @@ describe Antwort::LogicHelpers do
 
     describe "incl. variables" do
       it "well-formatted code" do
-        expect(@helper.preserve_assignments("<% foo = bar %>")).to eq("{% set foo = bar %}")
+        expect(@helper.preserve_logic("<% foo = bar %>")).to eq("{% set foo = bar %}")
       end
 
       it "not well-formatted code" do
-        expect(@helper.preserve_assignments("<% foo=bar %>")).to eq("{% set foo = bar %}")
-        expect(@helper.preserve_assignments("<% foo =bar %>")).to eq("{% set foo = bar %}")
-        expect(@helper.preserve_assignments("<% foo=bar %>")).to eq("{% set foo = bar %}")
+        expect(@helper.preserve_logic("<% foo=bar %>")).to eq("{% set foo = bar %}")
+        expect(@helper.preserve_logic("<% foo =bar %>")).to eq("{% set foo = bar %}")
+        expect(@helper.preserve_logic("<% foo=bar %>")).to eq("{% set foo = bar %}")
       end
     end
 
     it "incl. strings" do
-      expect(@helper.preserve_assignments('<% foo = "bar" %>')).to eq('{% set foo = "bar" %}')
-      expect(@helper.preserve_assignments("<% foo = 'bar' %>")).to eq("{% set foo = 'bar' %}")
+      expect(@helper.preserve_logic('<% foo = "bar" %>')).to eq('{% set foo = "bar" %}')
+      expect(@helper.preserve_logic("<% foo = 'bar' %>")).to eq("{% set foo = 'bar' %}")
     end
 
     it "incl. integers" do
-      expect(@helper.preserve_assignments('<% foo = 1 %>')).to eq('{% set foo = 1 %}')
-      expect(@helper.preserve_assignments('<% foo=1 %>')).to eq('{% set foo = 1 %}')
+      expect(@helper.preserve_logic('<% foo = 1 %>')).to eq('{% set foo = 1 %}')
+      expect(@helper.preserve_logic('<% foo=1 %>')).to eq('{% set foo = 1 %}')
     end
 
     it "incl. arrays" do
@@ -103,16 +103,16 @@ describe Antwort::LogicHelpers do
         "<% foo = [1, 2, 3] %>" => "{% set foo = [1, 2, 3] %}"
       }
       h.each do |key, value|
-        expect(@helper.preserve_assignments(key)).to eq(value)
+        expect(@helper.preserve_logic(key)).to eq(value)
       end
     end
 
     it "incl. objects/hashes" do
-      expect(@helper.preserve_assignments('<% foo =  { key: val } %>')).to eq('{% set foo = { key: val } %}')
+      expect(@helper.preserve_logic('<% foo =  { key: val } %>')).to eq('{% set foo = { key: val } %}')
     end
 
     it "respects memoized assignemnts" do
-      expect(@helper.preserve_assignments('<% foo ||= "bar" %>')).to eq('{% set foo = foo || "bar" %}')
+      expect(@helper.preserve_logic('<% foo ||= "bar" %>')).to eq('{% set foo = foo || "bar" %}')
     end
   end
 
@@ -131,27 +131,27 @@ describe Antwort::LogicHelpers do
           '<% if i<@config.products.length-1 %>'    => '{% if i<@config.products.length-1 %}'
         }
         h.each do |key, value|
-          expect(@helper.preserve_conditionals(key)).to eq(value)
+          expect(@helper.preserve_logic(key)).to eq(value)
         end
       end
 
       it "/ else / end" do
-        expect(@helper.preserve_conditionals('<% if foo %>bar<% else %>cat<% end %>')).to eq('{% if foo %}bar{% else %}cat{% end %}')
+        expect(@helper.preserve_logic('<% if foo %>bar<% else %>cat<% end %>')).to eq('{% if foo %}bar{% else %}cat{% end %}')
       end
 
       it "/ elsif / else / end" do
-        expect(@helper.preserve_conditionals('<% if foo = bar %>bar<% elsif foo = cat %>cat<% else %>dog<% end %>')).to eq('{% if foo = bar %}bar{% elseif foo = cat %}cat{% else %}dog{% end %}')
+        expect(@helper.preserve_logic('<% if foo = bar %>bar<% elsif foo = cat %>cat<% else %>dog<% end %>')).to eq('{% if foo = bar %}bar{% elseif foo = cat %}cat{% else %}dog{% end %}')
       end
     end
 
     describe "unless" do
       it "/ end" do
-        expect(@helper.preserve_conditionals('<% unless foo %>')).to eq('{% if !( foo ) %}')
-        expect(@helper.preserve_conditionals('<% unless foo == bar - 1 %>')).to eq('{% if !( foo == bar - 1 ) %}')
+        expect(@helper.preserve_logic('<% unless foo %>')).to eq('{% if !( foo ) %}')
+        expect(@helper.preserve_logic('<% unless foo == bar - 1 %>')).to eq('{% if !( foo == bar - 1 ) %}')
       end
 
       it "/ else / end" do
-        expect(@helper.preserve_conditionals('<% unless foo == bar %>this<% else %>that<% end %>')).to eq('{% if !( foo == bar ) %}this{% else %}that{% end %}')
+        expect(@helper.preserve_logic('<% unless foo == bar %>this<% else %>that<% end %>')).to eq('{% if !( foo == bar ) %}this{% else %}that{% end %}')
       end
     end
   end
@@ -166,7 +166,7 @@ describe Antwort::LogicHelpers do
         "<% end %>" => "{% end %}"
       }
       h.each do |key, value|
-        expect(@helper.preserve_loops(key)).to eq(value)
+        expect(@helper.preserve_logic(key)).to eq(value)
       end
     end
 
@@ -177,7 +177,7 @@ describe Antwort::LogicHelpers do
         "<% cats.each_with_index do |cat,i| %>" => "{% for cat in cats with: {@index: i} %}"
       }
       h.each do |key, value|
-        expect(@helper.preserve_loops(key)).to eq(value)
+        expect(@helper.preserve_logic(key)).to eq(value)
       end
     end
   end
@@ -200,15 +200,15 @@ describe Antwort::LogicHelpers do
 
   describe "partials are converted to friendlier include syntax" do
     it "with locals" do
-      expect(@helper.convert_partials_to_includes("{{ partial :'foo', locals: bar }}")).to eq("{% include 'foo' with: bar %}")
-      expect(@helper.convert_partials_to_includes("{{ partial :'foo', locals:bar }}")).to eq("{% include 'foo' with:bar %}")
-      expect(@helper.convert_partials_to_includes("{{ partial :'foo', locals: {cat: cat} }}")).to eq("{% include 'foo' with: {cat: cat} %}")
+      expect(@helper.preserve_logic("{{ partial :'foo', locals: bar }}")).to eq("{% include 'foo' with: bar %}")
+      expect(@helper.preserve_logic("{{ partial :'foo', locals:bar }}")).to eq("{% include 'foo' with:bar %}")
+      expect(@helper.preserve_logic("{{ partial :'foo', locals: {cat: cat} }}")).to eq("{% include 'foo' with: {cat: cat} %}")
 
     end
 
     it "without locals" do
-      expect(@helper.convert_partials_to_includes("{{ partial :'foo' }}")).to eq("{% include 'foo' %}")
-      expect(@helper.convert_partials_to_includes("{{ partial :foo }}")).to eq("{% include foo %}")
+      expect(@helper.preserve_logic("{{ partial :'foo' }}")).to eq("{% include 'foo' %}")
+      expect(@helper.preserve_logic("{{ partial :foo }}")).to eq("{% include foo %}")
     end
   end
 
