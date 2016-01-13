@@ -5,7 +5,7 @@ module Antwort
   class CLI
     class Send
       include Thor::Shell
-      attr_reader :build_id, :to, :from, :subject
+      attr_reader :build_id, :sender, :recipient, :subject
 
       Mail.defaults do
         delivery_method :smtp,
@@ -19,11 +19,48 @@ module Antwort
       end
 
       def initialize(build_id, options={})
-        @build_id = build_id
-        @to       = options[:recipient]
-        @from     = options[:from]
-        @subject  = options[:subject]
+        @build_id  = build_id
+        @html_body = File.open("#{build_folder}/#{template_name}.html").read
+
+        @recipient = options[:recipient]
+        @sender    = options[:from] || ENV['SEND_FROM']
+        @subject   = options[:subject] || "[Test] " << extract_title(@html_body)
       end
+
+      def send
+        # because scope changes inside mail DSL
+        mail_from    = @sender
+        mail_to      = @recipient
+        mail_subject = @subject
+
+        # setup email
+        mail = Mail.new do
+          from     mail_from
+          to       mail_to
+          subject  mail_subject
+
+          text_part do
+            body 'This is plain text'
+          end
+
+          html_part do
+            content_type 'text/html; charset=UTF-8'
+            body @html_body
+          end
+        end
+
+        # send email
+        if mail.deliver!
+          say "Sent Email \"#{template_name}\" at #{Time.now.strftime('%d.%m.%Y %H:%M')}", :green
+          say "  to:      #{@recipient}"
+          say "  subject: #{@subject}"
+          say "  html:    #{build_id}/#{template_name}.html"
+        else
+          say "Error sending #{build_id}/#{template_name} at #{Time.now.strftime('%d.%m.%Y %H:%M')}", :red
+        end
+      end
+
+      private
 
       def template_name
         @build_id.split('-')[0...-1].join('-') # removes timestamp ID
@@ -33,34 +70,10 @@ module Antwort
         "build/#{@build_id}"
       end
 
-      def send
-        mail_from    = from
-        mail_to      = to
-        mail_subject = subject
-        html_body    = File.open("#{build_folder}/#{template_name}.html").read
-
-        mail = Mail.new do
-          from    mail_from
-          to      mail_to
-          subject mail_subject
-
-          text_part do
-            body 'This is plain text'
-          end
-
-          html_part do
-            content_type 'text/html; charset=UTF-8'
-            body html_body
-          end
-        end
-
-        if mail.deliver!
-          puts mail.inspect
-          say "Sent #{build_id} at #{Time.now.strftime('%d.%m.%Y %H:%M')}", :green
-        else
-          say "Error sending #{build_id} at #{Time.now.strftime('%d.%m.%Y %H:%M')}", :red
-        end
+      def extract_title(body = '')
+        body.scan(%r{<title>(.*?)</title>}).first.first
       end
+
     end
   end
 end

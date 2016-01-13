@@ -84,9 +84,8 @@ module Antwort
                   desc: 'Email address of receipient'
     method_option :subject,
                   type: :string,
-                  default: 'Test Email',
                   aliases: '-s',
-                  desc: 'Email Subject'
+                  desc: 'Email Subject. Defaults to <title> value if blank.'
     def send(email_id)
       build = last_build_by_id(email_id)
 
