@@ -1,5 +1,23 @@
 # Change Log
 
+## 0.0.12
+
+Released: ? March 2015
+
+__Fixed__
+
+* Preserve multiline partials
+* Fixed typo in image tag markup. It should be `style=""`.
+
+__Updated__
+
+* Sending a test email now uses the email's `<title>` as the subject line, prefixed by "[test] "
+* Change CSS output style short flag to -c, more logical than -o
+* Our `include.scss` is now added after `<title>` instead of just before `</head>`, so we do not accidentlly override email specific included CSS.
+* `data-roadie-` attributes are removed after inlining.
+* Updated some templates used when initializing a new project
+
+
 ## 0.0.11
 
 Released: 2 December 2015
