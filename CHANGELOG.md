@@ -2,7 +2,7 @@
 
 ## 0.0.12
 
-Released: ? March 2015
+Released: 14 March 2016
 
 __Fixed__
 
