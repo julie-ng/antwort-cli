@@ -70,7 +70,7 @@ To create a new email template, for example `newsletter`, simply run: `bundle ex
 Commands:
   antwort build EMAIL_ID               # Builds email markup and inlines CSS from source
   antwort help [COMMAND]               # Describe available commands or one specific command
-  antwort init PROJECT_NAME --key=KEY  # Initializes a new Antwort Email project
+  antwort init PROJECT_NAME            # Initializes a new Antwort Email project
   antwort list                         # Lists all emails in the ./emails directory by id
   antwort new EMAIL_ID                 # Creates a new email template
   antwort prune                        # Removes all files in the ./build directory
@@ -82,8 +82,7 @@ Commands:
 
 __Notes__ 
 
-- You should run the commands prefixed with `bundle exec` to make sure the correct version of gems are youed.
-- `--key` refers to API key to private gem server
+- You should run the commands prefixed with `bundle exec` to make sure the correct version of gems are used.
 
 
 ## License (MIT)
