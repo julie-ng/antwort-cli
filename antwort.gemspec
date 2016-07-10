@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.description = 'E-Mail development, build and test system.'
   s.authors     = ['Julie Ng']
   s.email       = 'hello@antwort.co'
-  s.homepage    = 'https://antwort.co'
+  s.homepage    = 'https://antwort.co/gem'
   s.license     = 'MIT'
 
   s.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
