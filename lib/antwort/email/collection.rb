@@ -25,7 +25,7 @@ module Antwort
 
       folders.each do |f|
         @list.push f
-        @templates.push Antwort::EmailTemplate.new(f)
+        @templates.push Antwort::EmailTemplate.new(f, root: @source)
       end
     end
 

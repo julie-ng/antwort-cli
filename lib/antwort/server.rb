@@ -1,8 +1,6 @@
 require 'antwort/server/assets'
 require 'antwort/helpers/server_helper'
 require 'antwort/helpers/markup_helper'
-require 'antwort/email/template'
-require 'antwort/email/data'
 require 'sinatra/base'
 require 'sinatra/partial'
 require 'sinatra/content_for'
@@ -26,7 +24,6 @@ module Antwort
       set :root, Dir.pwd
       set :root, Dir.pwd + '/spec/fixtures/' if ENV['RACK_ENV'] == 'test'
       set :views, settings.root
-      set :templates_dir, settings.root + '/emails'
       set :partial_template_engine, :erb
       enable :partial_underscores
       set :port, 9292
@@ -35,29 +32,17 @@ module Antwort
     register Sinatra::Assets # after we set root
 
     get '/' do
-      pages = Dir.entries(settings.templates_dir)
-      pages.delete_if { |page| page.to_s[0] == '.' }
-      @pages = Array.new
-      pages.each do |p|
-        path = p.split('.').first
-        @pages.push({
-          path: path,
-          title: get_page_title(path)
-        })
-      end
+      @emails = Antwort::EmailCollection.new(source: settings.root)
       erb :'views/index', layout: :'views/server'
     end
 
     get '/template/:template' do
-      @config   = OpenStruct.new(fetch_data_yaml('config'))
-      @template = sanitize_param params[:template]
+      name     = sanitize_param params[:template]
+      @config  = Antwort::EmailData.new(name: 'config').data
+      template = Antwort::EmailTemplate.new(name, root: settings.root)
 
-      if template_exists? @template
-        content = read_template @template
-        hash_to_instance_vars content[:metadata]
-        hash_to_instance_vars fetch_data_yaml(@template)
-        layout = @layout.nil? ? :'views/layout' : @layout
-        erb content[:body], layout: layout
+      if template.exists?
+        erb template.body, layout: template.layout
       else
         status 404
       end

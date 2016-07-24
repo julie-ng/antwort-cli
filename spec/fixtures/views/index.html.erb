@@ -1,14 +1,11 @@
-
-  <% if @pages.length == 0 %>
-    No emails found
-  <% else %>
-    <ul>
-      <% @pages.each do |page| %>
-      <li>
-        <a href="template/<%= page[:path] %>">
-          <%= page[:title] %>
-        </a>
-      </li>
-      <% end %>
-    </ul>
-  <% end %>
+<% if @emails.empty? %>
+  No emails found
+<% else %>
+  <ul>
+    <% @emails.templates.each do |t| %>
+    <li>
+      <a href="<%= t.url %>"><%= t.title %></a>
+    </li>
+    <% end %>
+  </ul>
+<% end %>
