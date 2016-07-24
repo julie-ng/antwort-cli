@@ -1,9 +1,4 @@
-<% if @user %>
-source 'https://<%= @user %>:<%= @key %>@offsides-gems.herokuapp.com/'
-<% else %>
-# Forgot credentials? Contact support@antwort.co.
-# source 'https://USERNAME:KEY@offsides-gems.herokuapp.com/'
-<% end %>
 source 'https://rubygems.org'
+
 
 gem 'antwort'
