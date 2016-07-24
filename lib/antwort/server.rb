@@ -1,6 +1,6 @@
 require 'antwort/server/assets'
 require 'antwort/helpers/server_helper'
-require 'antwort/server/markup'
+require 'antwort/helpers/markup_helper'
 require 'sinatra/base'
 require 'sinatra/partial'
 require 'sinatra/content_for'
