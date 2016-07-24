@@ -9,6 +9,7 @@ pkg
 
 # Environment variables
 .env
+.ruby-version
 
 # Mac Finder file
 .DS_Store
