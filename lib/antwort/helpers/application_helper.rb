@@ -15,5 +15,14 @@ module Antwort
         result
       end
     end
+
+    def load_yaml_data(file='')
+      data = {}
+      if File.file? file
+        data = YAML.load_file(file)
+        data = symbolize_keys! data if data
+      end
+      data
+    end
   end
 end

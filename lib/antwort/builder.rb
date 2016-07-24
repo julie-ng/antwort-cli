@@ -1,8 +1,9 @@
-require 'antwort/builder/helpers/logic'
-require 'antwort/builder/helpers/sanitizers'
+require 'antwort/helpers/cli_helper'
+require 'antwort/helpers/logic_helper'
+require 'antwort/helpers/sanitizers_helper'
+
 require 'antwort/builder/builder'
 require 'antwort/builder/email'
 require 'antwort/builder/partial'
 require 'antwort/builder/flattener'
 require 'antwort/builder/style'
-require 'antwort/cli/helpers'

@@ -1,5 +1,5 @@
 require 'antwort/server/assets'
-require 'antwort/server/helpers'
+require 'antwort/helpers/server_helper'
 require 'antwort/server/markup'
 require 'sinatra/base'
 require 'sinatra/partial'
