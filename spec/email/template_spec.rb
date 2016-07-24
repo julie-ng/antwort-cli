@@ -67,4 +67,8 @@ describe Antwort::EmailTemplate do
       expect(Antwort::EmailTemplate.new('2-no-layout', root: @fixtures_path).layout).to be false
     end
   end
+
+  it "has a url helper" do
+    expect(@template.url).to eq('/template/1-demo')
+  end
 end

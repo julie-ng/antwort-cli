@@ -22,6 +22,10 @@ module Antwort
       File.file? @file
     end
 
+    def url
+      "/template/#{@name}"
+    end
+
     private
 
     def read_template
