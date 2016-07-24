@@ -1,5 +1,5 @@
 module Antwort
-  class TemplateModel
+  class EmailTemplate
     include Antwort::Helpers
 
     attr_reader :name, :path, :file, :body, :data, :metadata, :title, :layout
@@ -10,12 +10,19 @@ module Antwort
       @path = "#{@root}/emails/#{@name}"
       @file = "#{@path}/index.html.erb"
 
-      read_template
-
-      @data   = get_data
-      @title  = @metadata[:title] || 'Untitled'
-      @layout = @metadata[:layout].nil? ? 'views/layout' : @metadata[:layout]
+      if exists?
+        read_template
+        @data   = load_data
+        @title  = @metadata[:title] || 'Untitled'
+        @layout = @metadata[:layout].nil? ? 'views/layout' : @metadata[:layout]
+      end
     end
+
+    def exists?
+      File.file? @file
+    end
+
+    private
 
     def read_template
       contents = File.read(@file)
@@ -30,14 +37,9 @@ module Antwort
       end
     end
 
-    def get_data
-      data = {}
-      data_file = "#{@root}/data/#{@name}.yml"
-      if File.file? data_file
-        data = YAML.load_file(data_file)
-        data = symbolize_keys! data if data
-      end
-      data
+    def load_data
+      file = "#{@root}/data/#{@name}.yml"
+      Antwort::EmailData.new(file: file).data
     end
   end
 end
