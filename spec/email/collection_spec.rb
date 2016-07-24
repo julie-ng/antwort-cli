@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Antwort::EmailCollection do
   before :all do
-    @fixtures = "#{Dir.pwd}/spec/fixtures/emails"
+    @fixtures = "#{Dir.pwd}/spec/fixtures"
     @c = Antwort::EmailCollection.new(source: @fixtures)
   end
 
@@ -32,6 +32,20 @@ describe Antwort::EmailCollection do
 
       it "excludes the shared folder" do
         expect(@c.list).not_to include('shared')
+      end
+    end
+
+    describe "has a empty? method" do
+      context "has no templates" do
+        it "returns true" do
+          c = Antwort::EmailCollection.new(source: '/foo/bar')
+          expect(c.empty?).to be true
+        end
+      end
+      context "has templates" do
+        it "returns false" do
+          expect(@c.empty?).to be false
+        end
       end
     end
   end

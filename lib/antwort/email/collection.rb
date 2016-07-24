@@ -5,16 +5,22 @@ module Antwort
     attr_reader :source, :templates, :list
 
     def initialize(opts={})
-      @source = opts[:source] || "#{Dir.pwd}/emails"
+      @source = opts[:source] || Dir.pwd
       @templates = []
       @list = []
-      set_collection
+
+      dir = "#{@source}/emails"
+      set_collection(dir) if Dir.exists? dir
+    end
+
+    def empty?
+      @templates.length === 0
     end
 
     private
 
-    def set_collection
-      folders = Dir.entries(@source)
+    def set_collection(dir)
+      folders = Dir.entries(dir)
       folders = filter_templates(folders)
 
       folders.each do |f|
