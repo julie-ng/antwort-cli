@@ -20,13 +20,20 @@ describe Antwort::EmailTemplate do
     it "has a the index file" do
       expect(@template.file).to eq("#{@fixtures_path}/emails/1-demo/index.html.erb")
     end
+  end
 
-    it "has a body" do
-      result = <<~HEREDOC
-        <h1>Hello World</h1>
-        <p>This is email one.</p>
-      HEREDOC
-      expect(@template.body).to eq(result)
+  describe "body attribute" do
+    context "with YAML front matter" do
+      it "ignores front matter" do
+        four = '<p>Email four has a custom layout.</p>'
+        expect(Antwort::EmailTemplate.new('4-custom-layout', @attrs).body).to eq(four)
+      end
+    end
+    context "without YAML front matter" do
+      it "receives file as body" do
+        three = '<h1>Hello Three</h1>'
+        expect(Antwort::EmailTemplate.new('3-no-title', @attrs).body).to eq(three)
+      end
     end
   end
 
