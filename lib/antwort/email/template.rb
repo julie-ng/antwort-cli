@@ -13,8 +13,8 @@ module Antwort
       if exists?
         read_template
         @data   = load_data
+        @layout = set_layout
         @title  = @metadata[:title] || 'Untitled'
-        @layout = @metadata[:layout].nil? ? 'views/layout' : @metadata[:layout]
       end
     end
 
@@ -44,6 +44,19 @@ module Antwort
     def load_data
       file = "#{@root}/data/#{@name}.yml"
       Antwort::EmailData.new(file: file).data
+    end
+
+    def set_layout
+      mdl = @metadata[:layout]
+      layout = case
+        when mdl == false
+          false
+        when mdl.nil?
+          :'views/layout'
+        else
+          mdl.to_sym
+      end
+      layout
     end
   end
 end

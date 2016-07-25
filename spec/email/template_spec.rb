@@ -59,10 +59,15 @@ describe Antwort::EmailTemplate do
     end
   end
 
-  describe "layout" do
-    it "defaults to views/layout" do
-      expect(Antwort::EmailTemplate.new('1-demo', root: @fixtures_path).layout).to eq('views/layout')
+  describe "layout", focus: true do
+    it "defaults to :'views/layout'" do
+      expect(Antwort::EmailTemplate.new('1-demo', root: @fixtures_path).layout).to eq(:'views/layout')
     end
+
+    it "can be a custom layout" do
+       expect(Antwort::EmailTemplate.new('4-custom-layout', root: @fixtures_path).layout).to eq(:'emails/4-custom-layout/layout')
+    end
+
     it "can be false (i.e. has no layout)" do
       expect(Antwort::EmailTemplate.new('2-no-layout', root: @fixtures_path).layout).to be false
     end
