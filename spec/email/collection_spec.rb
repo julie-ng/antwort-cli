@@ -20,7 +20,7 @@ describe Antwort::EmailCollection do
     end
 
     it "loads emails by directory names" do
-      result = ['1-demo', '2-no-layout', '3-no-title']
+      result = ['1-demo', '2-no-layout', '3-no-title', '4-custom-layout']
       expect(@c.list).to eq(result)
     end
 

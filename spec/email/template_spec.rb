@@ -4,7 +4,8 @@ describe Antwort::EmailTemplate do
 
   before :all do
     @fixtures_path = "#{Dir.pwd}/spec/fixtures"
-    @template = Antwort::EmailTemplate.new('1-demo', root: @fixtures_path)
+    @attrs = {root: @fixtures_path}
+    @template = Antwort::EmailTemplate.new('1-demo', @attrs)
   end
 
   describe "Initialization" do
@@ -38,7 +39,7 @@ describe Antwort::EmailTemplate do
 
     context "without a title" do
       it "defaults to 'Untitled'" do
-        expect(Antwort::EmailTemplate.new('3-no-title', root: @fixtures_path).title).to eq('Untitled')
+        expect(Antwort::EmailTemplate.new('3-no-title', @attrs).title).to eq('Untitled')
       end
     end
   end
@@ -54,22 +55,22 @@ describe Antwort::EmailTemplate do
 
     context "without a YAML file" do
       it "defaults to empty hash" do
-        expect(Antwort::EmailTemplate.new('3-no-title', root: @fixtures_path).data).to eq({})
+        expect(Antwort::EmailTemplate.new('3-no-title', @attrs).data).to eq({})
       end
     end
   end
 
-  describe "layout", focus: true do
+  describe "layout" do
     it "defaults to :'views/layout'" do
-      expect(Antwort::EmailTemplate.new('1-demo', root: @fixtures_path).layout).to eq(:'views/layout')
+      expect(Antwort::EmailTemplate.new('1-demo', @attrs).layout).to eq(:'views/layout')
     end
 
     it "can be a custom layout" do
-       expect(Antwort::EmailTemplate.new('4-custom-layout', root: @fixtures_path).layout).to eq(:'emails/4-custom-layout/layout')
+       expect(Antwort::EmailTemplate.new('4-custom-layout', @attrs).layout).to eq(:'emails/4-custom-layout/layout')
     end
 
     it "can be false (i.e. has no layout)" do
-      expect(Antwort::EmailTemplate.new('2-no-layout', root: @fixtures_path).layout).to be false
+      expect(Antwort::EmailTemplate.new('2-no-layout', @attrs).layout).to be false
     end
   end
 
