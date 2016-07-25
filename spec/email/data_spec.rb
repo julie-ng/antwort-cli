@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Antwort::EmailTemplate do
+describe Antwort::EmailData do
   before :all do
     @fixtures_data = "#{Dir.pwd}/spec/fixtures/data"
     @data = Antwort::EmailData.new(name: '1-demo', path: @fixtures_data)
