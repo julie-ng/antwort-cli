@@ -39,6 +39,7 @@ module Antwort
     get '/template/:template' do
       name     = sanitize_param params[:template]
       @template = Antwort::EmailTemplate.new(name, root: settings.root)
+      hash_to_instance_vars @template.data
 
       if @template.exists?
         erb @template.body, layout: @template.layout

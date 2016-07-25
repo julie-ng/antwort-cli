@@ -3,3 +3,7 @@ title: Email One
 ---
 <h1>Hello World</h1>
 <p>This is email one.</p>
+
+<% @foo.each do |f| %>
+  <%= f[:title] %>
+<% end %>
