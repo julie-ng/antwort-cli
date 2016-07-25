@@ -38,7 +38,6 @@ module Antwort
 
     get '/template/:template' do
       name     = sanitize_param params[:template]
-      @config  = Antwort::EmailData.new(name: 'config').data
       @template = Antwort::EmailTemplate.new(name, root: settings.root)
 
       if @template.exists?
