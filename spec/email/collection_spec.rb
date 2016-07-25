@@ -2,12 +2,11 @@ require "spec_helper"
 
 describe Antwort::EmailCollection do
   before :all do
-    @fixtures = "#{Dir.pwd}/spec/fixtures"
-    @c = Antwort::EmailCollection.new(source: @fixtures)
+    @c = Antwort::EmailCollection.new(source: fixtures_root)
   end
 
   it "has a source attribute" do
-    expect(@c.source).to eq(@fixtures)
+    expect(@c.source).to eq(fixtures_root)
   end
 
   describe "has a templates attribute" do

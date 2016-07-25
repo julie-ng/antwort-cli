@@ -3,8 +3,7 @@ require "spec_helper"
 describe Antwort::EmailTemplate do
 
   before :all do
-    @fixtures_path = "#{Dir.pwd}/spec/fixtures"
-    @attrs = {root: @fixtures_path}
+    @attrs = {root: fixtures_root}
     @template = Antwort::EmailTemplate.new('1-demo', @attrs)
   end
 
@@ -14,11 +13,11 @@ describe Antwort::EmailTemplate do
     end
 
     it "has a the path" do
-      expect(@template.path).to eq("#{@fixtures_path}/emails/1-demo")
+      expect(@template.path).to eq("#{fixtures_root}/emails/1-demo")
     end
 
     it "has a the index file" do
-      expect(@template.file).to eq("#{@fixtures_path}/emails/1-demo/index.html.erb")
+      expect(@template.file).to eq("#{fixtures_root}/emails/1-demo/index.html.erb")
     end
   end
 
