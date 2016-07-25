@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe Antwort::EmailData do
   before :all do
-    @fixtures_data = "#{Dir.pwd}/spec/fixtures/data"
-    @data = Antwort::EmailData.new(name: '1-demo', path: @fixtures_data)
+    #@fixtures_root = fixtures_root# "#{Dir.pwd}/spec/fixtures/"
+    @data = Antwort::EmailData.new(name: '1-demo', path: fixtures_root)
   end
 
   describe "on Initialization" do
@@ -12,8 +12,8 @@ describe Antwort::EmailData do
     end
 
     describe "has a path attribute, which" do
-      it "can be set via constructor" do
-        expect(@data.path).to eq(@fixtures_data)
+      it "has /data appended" do
+        expect(@data.path).to eq(fixtures_root + '/data')
       end
 
       it "defaults to pwd/data" do
@@ -28,7 +28,8 @@ describe Antwort::EmailData do
       end
 
       it "defaults to pwd/data" do
-        expect(@data.file).to eq("#{@fixtures_data}/1-demo.yml")
+        a = Antwort::EmailData.new(name: '1-demo')
+        expect(a.file).to eq("#{Dir.pwd}/data/1-demo.yml")
       end
     end
 

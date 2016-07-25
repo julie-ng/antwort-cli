@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Antwort
   class EmailData
     include Antwort::Helpers
@@ -6,7 +8,7 @@ module Antwort
 
     def initialize(opts={})
       @name = opts[:name] || ''
-      @path = opts[:path] || "#{Dir.pwd}/data"
+      @path = (opts[:path] || Dir.pwd) + "/data"
       @file = opts[:file] || "#{@path}/#{@name}.yml"
       @data = load_yaml_data
     end
