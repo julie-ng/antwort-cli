@@ -6,7 +6,7 @@ describe Antwort::EmailTemplate do
     @data = Antwort::EmailData.new(name: '1-demo', path: @fixtures_data)
   end
 
-  describe "On initialization" do
+  describe "on Initialization" do
     it "has a name attribute" do
       expect(@data.name).to eq('1-demo')
     end
