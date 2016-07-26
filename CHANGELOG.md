@@ -28,7 +28,7 @@ __Added__
 
 * New `--all` flag to `build` command, which will build all emails.
 * `each_with_index` loops are also now preserved. Example conversion: `cats.each_with_index do |cat, i|` becomes `{% for cat in cats with: {@index: i} %}`
-* Locals passed to partials are now referenced using a more generic `with` instead of ruby-esqe `locals` like so: {% partial 'foo' with: {size: 1} %}
+* Locals passed to partials are now referenced using a more generic `with` instead of ruby-esqe `locals` like so: `{% partial 'foo' with: {size: 1} %}`
 * ERB's `unless` is  now converted to `if !(condition)` 
 * ERB Statements without output or conditionals are also now preserved. Example: `<% product.merge({featured: false}) %>`
 * `button` and `image_tag` helpers are converted to use statement `{% … %}` syntax, not `{{ … }}` output syntax
