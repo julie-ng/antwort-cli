@@ -5,7 +5,7 @@ module Antwort
   class CLI
     class Send
       include Thor::Shell
-      attr_reader :build_id, :sender, :recipient, :subject
+      attr_reader :build_id, :sender, :recipient, :subject, :html_body, :mail
 
       Mail.defaults do
         delivery_method :smtp,
@@ -34,7 +34,7 @@ module Antwort
         mail_subject = @subject
 
         # setup email
-        mail = Mail.new do
+        @mail = Mail.new do
           from     mail_from
           to       mail_to
           subject  mail_subject
@@ -50,7 +50,7 @@ module Antwort
         end
 
         # send email
-        if mail.deliver!
+        if @mail.deliver!
           say "Sent Email \"#{template_name}\" at #{Time.now.strftime('%d.%m.%Y %H:%M')}", :green
           say "  to:      #{@recipient}"
           say "  subject: #{@subject}"
@@ -64,10 +64,6 @@ module Antwort
 
       def template_name
         @build_id.split('-')[0...-1].join('-') # removes timestamp ID
-      end
-
-      def build_folder
-        "build/#{@build_id}"
       end
 
       def extract_title(body = '')

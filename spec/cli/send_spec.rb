@@ -44,10 +44,13 @@ describe Antwort::CLI::Send do
       expect(@sent.subject).to eq('[Test] Fixture Demo')
     end
 
-    xit 'has an HTML body, that is pulled from build index.html' do
+    it 'has an HTML body, that is pulled from build index.html' do
       # comes back as empty string in testing?
-      # puts @sent.body.inspect
-      expect(@sent.html_part.body.to_s).not_to eq ''
+      # expect(@sent.html_part.body.to_s).not_to eq ''
+      # puts @sent.to_s.inspect
+
+      contents = File.open("build/demo-20160101/demo.html").read
+      expect(@a.html_body).to eq(contents)
     end
   end
 
