@@ -6,8 +6,7 @@ module Antwort
 
     def initialize(template_name, opts = {})
       @name = template_name
-      @root = opts[:root] || Dir.pwd
-      @path = "#{@root}/emails/#{@name}"
+      @path = "emails/#{@name}"
       @file = "#{@path}/index.html.erb"
 
       if exists?
@@ -42,7 +41,7 @@ module Antwort
     end
 
     def load_data
-      file = "#{@root}/data/#{@name}.yml"
+      file = "data/#{@name}.yml"
       Antwort::EmailData.new(file: file).data
     end
 

@@ -2,14 +2,13 @@ module Antwort
   class EmailCollection
     include Antwort::Helpers
 
-    attr_reader :source, :templates, :list
+    attr_reader :templates, :list
 
     def initialize(opts={})
-      @source = opts[:source] || Dir.pwd
       @templates = []
       @list = []
 
-      dir = "#{@source}/emails"
+      dir = "./emails"
       set_collection(dir) if Dir.exists? dir
     end
 
@@ -25,7 +24,7 @@ module Antwort
 
       folders.each do |f|
         @list.push f
-        @templates.push Antwort::EmailTemplate.new(f, root: @source)
+        @templates.push Antwort::EmailTemplate.new(f)
       end
     end
 
