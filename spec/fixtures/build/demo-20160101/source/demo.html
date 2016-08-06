@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- So that mobile will display zoomed in -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- enable media queries for windows phone 8 -->
+   <meta name="format-detection" content="telephone=no"> <!-- disable auto telephone linking in iOS -->
+  <title>Email Title</title>
+  <link rel="stylesheet" type="text/css" href="inline.css">
+  <link rel="stylesheet" type="text/css" href="include.css">
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<!-- 100% wrapper (grey background) -->
+<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top">
+
+      <br>
+
+      <!-- 600px container (white background) -->
+      <table border="0" width="600" cellpadding="0" cellspacing="0" class="container">
+        <tr>
+          <td class="content container-padding">
+            <br>
+
+<div class="title">Using Antwort Generator</div>
+<br>
+
+<div class="body-text">
+  This is a demo email to get you started. The ID is 'demo', based on the file name.
+  <br><br>
+
+  Make sure your body text is always wrapped with a <code>.body-text</code> class, if not within a <code>td</code> then as least within a <code>div</code>.
+  <br><br>
+
+  <strong>Loading YAML Data</strong><br>
+  If you have a YAML file with the same name as your email-template name, for example a <code>demo.yml</code> for the <code>demo</code> email, you can load data like this:
+  <br><br>
+
+  
+    &bull; Peter<br>
+  
+    &bull; Paul<br>
+  
+    &bull; Mary<br>
+  
+  <br><br>
+
+  <strong>Image Tag Helper</strong><br>
+
+  Adding images in email requires a lot of extra markup. To dry up the code, we have an <code>image_tag</code> helper, which you can use like this:<br>
+  <img src="/assets/shared/placeholder.png" border="0" alt="Placeholder" width="50" height="50" class="foo" hspace="0" vspace="0">
+  <br><br>
+
+
+  <strong>Button Helper</strong><br>
+  This is how you use the <code>button</code> helper:
+  <br><br>
+  <table border="0" cellspacing="0" cellpadding="0" class="button">
+  <tr>
+    <td align="center"><a href="/"><!--[if mso]>&nbsp;<![endif]-->Default Button &rarr;<!--[if mso]>&nbsp;<![endif]--></a></td>
+  </tr>
+</table>
+<br>
+  <table border="0" cellspacing="0" cellpadding="0" class="button green">
+  <tr>
+    <td align="center"><a href="/"><!--[if mso]>&nbsp;<![endif]-->A green button &rarr;<!--[if mso]>&nbsp;<![endif]--></a></td>
+  </tr>
+</table>
+
+  <br><br>
+
+  To create additional button styles, make sure you add the appropriate CSS class definitions. See <code>_base.scss</code> for an example.
+  <br><br>
+</div>
+
+
+<div class="body-text">
+  <strong>Using Partials</strong>
+  <br><br>
+
+  You can use the <code>partial</code> helper to include external files. Note: partial filenames <em>must</em> begin with an underscore '_'. Use the optional <code>locals</code> attribute to pass data to the partial.
+</div>
+<br>
+
+<table border="0" cellspacing="0" cellpadding="0" class="table">
+  <tr>
+  
+    <td width="200" align="center" class="body-text">
+      <em>Hello Peter</em><br>
+    </td>
+  
+    <td width="200" align="center" class="body-text">
+      <em>Hello Paul</em><br>
+    </td>
+  
+    <td width="200" align="center" class="body-text">
+      <em>Hello Mary</em><br>
+    </td>
+  
+  </tr>
+</table>
+<br><br>
+
+          </td>
+        </tr>
+      </table>
+      <!--/600px container -->
+
+    </td>
+  </tr>
+</table>
+<!--/100% wrapper-->
+
+</body>
+</html>

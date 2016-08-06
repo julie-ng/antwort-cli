@@ -18,8 +18,8 @@ describe Antwort::CLIHelpers do
 
     it '#built_emails' do
       b = @helper.built_emails
-      expect(b).to include('demo-123456')
-      expect(b).not_to include('2-no-layout')
+      expect(b).to include('demo-20160101')
+      expect(b).to include('demo-20160102')
     end
 
     it '#available_emails - lists all available emails' do
@@ -40,9 +40,8 @@ describe Antwort::CLIHelpers do
 
     it '#last_build_by_id' do
       expect(@helper.last_build_by_id 'foo').to eq('foo-1')
-      expect(@helper.last_build_by_id 'demo').to eq('demo-123457')
-      expect(@helper.last_build_by_id 'demo').not_to eq('demo-123456')
-      expect(@helper.last_build_by_id 'demo').not_to eq('demo-bar-123')
+      expect(@helper.last_build_by_id 'demo').to eq('demo-20160102')
+      expect(@helper.last_build_by_id 'demo').not_to eq('demo-20160101')
     end
 
     it '#list_folders' do
