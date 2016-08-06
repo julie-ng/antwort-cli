@@ -29,10 +29,17 @@ RSpec.configure do |config|
     ENV['AWS_ACCESS_KEY_ID'] ||= 'MY_TEST_ACCESS_KEY'
     ENV['AWS_SECRET_ACCESS_KEY'] ||= 'MY_TEST_SECRET_ACCESS_KEY'
     ENV['AWS_BUCKET'] ||= 'MY_TEST_BUCKET'
+
+    ENV['SEND_FROM']='TEST_ENV_SEND_FROM'
+    ENV['SEND_TO']='TEST_ENV_SEND_TO'
   end
 
   def fixtures_root
     File.join(File.dirname(__FILE__), "fixtures")
   end
 
+end
+
+Mail.defaults do
+  delivery_method :test
 end

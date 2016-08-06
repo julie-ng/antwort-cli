@@ -81,7 +81,7 @@ module Antwort
                   type: :string,
                   default: ENV['SEND_TO'],
                   aliases: '-r',
-                  desc: 'Email address of receipient'
+                  desc: 'Email address of receipient(s). Split multiple recipients with a comma.'
     method_option :subject,
                   type: :string,
                   aliases: '-s',

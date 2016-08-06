@@ -20,9 +20,9 @@ module Antwort
 
       def initialize(build_id, options={})
         @build_id  = build_id
-        @html_body = File.open("#{build_folder}/#{template_name}.html").read
+        @html_body = File.open("build/#{build_id}/#{template_name}.html").read
 
-        @recipient = options[:recipient]
+        @recipient = (options[:recipient] || ENV['SEND_TO']).split(',')
         @sender    = options[:from] || ENV['SEND_FROM']
         @subject   = options[:subject] || "[Test] " << extract_title(@html_body)
       end
@@ -44,7 +44,7 @@ module Antwort
           end
 
           html_part do
-            content_type 'text/html; charset=UTF-8'
+            content_type 'text/html'
             body @html_body
           end
         end
