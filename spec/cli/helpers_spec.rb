@@ -10,10 +10,6 @@ describe Antwort::CLIHelpers do
     @helper.extend(Antwort::CLIHelpers)
   end
 
-  before :all do
-    Dir.chdir(fixtures_root)
-  end
-
   describe 'CLI Helpers' do
 
     it '#built_emails' do

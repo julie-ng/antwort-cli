@@ -2,10 +2,6 @@ require "spec_helper"
 
 describe Antwort::EmailTemplate do
 
-  before :all do
-    Dir.chdir(fixtures_root)
-  end
-
   let(:template) { Antwort::EmailTemplate.new('1-demo') }
 
   describe "Initialization" do

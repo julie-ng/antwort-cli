@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe Antwort::CLI::Send do
 
-  before :all do
-    Dir.chdir(fixtures_root)
-  end
-
   after :each do
     Mail::TestMailer.deliveries.clear
   end

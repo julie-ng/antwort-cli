@@ -32,13 +32,14 @@ module Antwort
     register Sinatra::Assets # after we set root
 
     get '/' do
-      @emails = Antwort::EmailCollection.new(source: settings.root)
+      @emails = Antwort::EmailCollection.new
       erb :'views/index', layout: :'views/server'
     end
 
     get '/template/:template' do
       name     = sanitize_param params[:template]
-      @template = Antwort::EmailTemplate.new(name, root: settings.root)
+
+      @template = Antwort::EmailTemplate.new(name)
       hash_to_instance_vars @template.data
 
       if @template.exists?

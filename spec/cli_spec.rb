@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe Antwort::CLI do
 
-  before :all do
-    Dir.chdir(fixtures_root)
-  end
-
   describe '#upload' do
     let(:output) { capture(:stdout) { subject.upload('newsletter') } }
 

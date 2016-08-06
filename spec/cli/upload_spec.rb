@@ -4,10 +4,6 @@ describe Antwort::CLI::Upload do
 
   subject { described_class.new('newsletter') }
 
-  before :all do
-    Dir.chdir(fixtures_root)
-  end
-
   before(:each) do
     allow($stdout).to receive(:write)
     Fog.mock!

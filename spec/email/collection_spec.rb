@@ -2,10 +2,6 @@ require "spec_helper"
 
 describe Antwort::EmailCollection do
 
-  before :all do
-    Dir.chdir(fixtures_root)
-  end
-
   let(:collection) { Antwort::EmailCollection.new }
 
   describe "has a templates attribute" do
@@ -44,6 +40,9 @@ describe Antwort::EmailCollection do
           Dir.chdir("#{fixtures_root}/emails")
           c = Antwort::EmailCollection.new
           expect(c.empty?).to be true
+
+          # Go back or randomized specs fail
+          Dir.chdir(fixtures_root)
         end
       end
     end

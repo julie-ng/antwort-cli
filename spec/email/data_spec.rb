@@ -1,9 +1,6 @@
 require "spec_helper"
 
 describe Antwort::EmailData do
-  before :all do
-    Dir.chdir(fixtures_root)
-  end
 
   let(:data) { Antwort::EmailData.new(name: '1-demo') }
 
