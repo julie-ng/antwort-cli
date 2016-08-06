@@ -134,24 +134,30 @@ module Antwort
     def build(email_id='')
       require 'antwort'
 
-      emails = options[:all] ? available_emails : Array.new.push(email_id)
+      if (email_id.empty?)
+        say 'Error: ', :red
+        say 'build which email?'
+        list
+      else
+        emails = options[:all] ? available_emails : Array.new.push(email_id)
 
-      emails.each do |email_id|
-        attrs = { email: email_id, id: create_id_from_timestamp }.merge(options)
-        email = Antwort::EmailBuilder.new(attrs)
-        until email.build
-          sleep 1
+        emails.each do |email_id|
+          attrs = { email: email_id, id: create_id_from_timestamp }.merge(options)
+          email = Antwort::EmailBuilder.new(attrs)
+          until email.build
+            sleep 1
+          end
+
+          if build_partials?
+            partials = Antwort::PartialBuilder.new(attrs)
+            sleep 1 until partials.build
+          end
         end
 
-        if build_partials?
-          partials = Antwort::PartialBuilder.new(attrs)
-          sleep 1 until partials.build
-        end
+        show_accuracy_warning if build_partials?
+
+        return true
       end
-
-      show_accuracy_warning if build_partials?
-
-      return true
     end
 
     #-- prune
