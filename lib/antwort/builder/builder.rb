@@ -62,7 +62,7 @@ module Antwort
 
       if File.file? source_file
         content = Tilt::ScssTemplate.new(source_file, style: @css_style).render
-        create_file(content: content, path: destination_file)
+        create_file!(content: content, path: destination_file)
       else
         say 'Build failed. ', :red
         say "#{source_file}.scss for #{template.name} not found."

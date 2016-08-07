@@ -210,7 +210,7 @@ module Antwort
                   File.join('assets', 'css', email_directory)
         directory 'email/images',
                   File.join('assets', 'images', email_directory)
-        create_file File.join('data', "#{email_id}.yml")
+        create_file! File.join('data', "#{email_id}.yml")
         copy_file 'email/email.html.erb',
                   File.join('emails', email_directory, 'index.html.erb')
       end
