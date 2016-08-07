@@ -86,6 +86,7 @@ module Antwort
                   aliases: '-s',
                   desc: 'Email Subject. Defaults to <title> value if blank.'
     def send(email_id)
+      require 'send'
       build = last_build_by_id(email_id)
 
       if build.nil?
