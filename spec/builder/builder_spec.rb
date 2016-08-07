@@ -1,9 +1,8 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Antwort::Builder do
-  before :each do
-    @builder = Antwort::Builder.new
-  end
+
+  let(:build) { Antwort::Builder.new }
 
   describe "Initialize" do
     it "has a template_name"
@@ -21,10 +20,7 @@ describe Antwort::Builder do
   end
 
   describe "Helpers" do
-    it "creates files"
-    it "creates IDs from Timestamps"
     it "changes relative assets URLs to use asset server"
     it "preserves `&nbsp;`s"
   end
-
 end
