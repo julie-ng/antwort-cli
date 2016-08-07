@@ -53,7 +53,9 @@ module Antwort
     desc 'list', 'Lists all emails in the ./emails directory by id'
     method_option aliases: 'l'
     def list
-      list_folders('./emails').each { |e| puts "- #{e}" }
+      EmailCollection.new.list.each do |email_id|
+        puts "- #{email_id}"
+      end
     end
 
     #-- upload
