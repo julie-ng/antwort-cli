@@ -69,18 +69,6 @@ module Antwort
       end
     end
 
-    def create_file(attrs)
-      content = attrs[:content]
-      path    = attrs[:path]
-
-      file = File.new(path, 'w')
-      file.write(content)
-      file.close
-      say '    create  ', :green
-      say path.gsub(/\A.\//, '')
-      file
-    end
-
     def use_asset_server(markup = '')
       replaced = "#{asset_server}/"
       output = markup.gsub('/assets/', replaced)
