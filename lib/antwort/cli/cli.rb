@@ -1,7 +1,7 @@
 module Antwort
   class CLI < Thor
     include Thor::Actions
-    include Antwort::CLIHelpers
+    include Antwort::FileHelpers
 
     class_option :version, type: :boolean
 

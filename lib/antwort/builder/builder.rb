@@ -7,22 +7,25 @@ module Antwort
   class Builder
     include Thor::Shell
     include Antwort::Helpers
-    include Antwort::CLIHelpers
+    include Antwort::FileHelpers
     include Antwort::LogicHelpers
     include Antwort::MarkupSanitizers
 
-    attr_reader :template_name, :build_id, :build_dir, :markup_dir, :source_dir, :scss_dir, :asset_server, :css, :css_style
+    # attr_reader :template, :build_id, :build_dir, :markup_dir, :source_dir, :scss_dir, :asset_server, :css, :css_style
+    attr_reader :template, :build_id
 
     def initialize(attrs = {})
       attrs = symbolize_keys!(attrs)
-      @template_name = attrs[:email]
-      @build_id      = attrs[:id]
-      @build_dir     = "./build/#{template_name}-#{build_id}"
+
+      @build_dir     = "./build/#{template.name}-#{build_id}"
       @markup_dir    = "#{build_dir}/source"
-      @source_dir    = "./emails/#{template_name}"
-      @scss_dir      = "./assets/css/#{template_name}"
+      @source_dir    = "./emails/#{template.name}"
+      @scss_dir      = "./assets/css/#{template.name}"
       @css_style     = attrs[:'css-style'].to_sym
       @asset_server  = ENV['ASSET_SERVER'] || '/assets'
+
+      @template = EmailTemplate.new(attrs[:email])
+      @build_id = attrs[:id]
       post_initialize(attrs)
     end
 

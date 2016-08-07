@@ -1,4 +1,3 @@
-require 'antwort/helpers/cli_helper'
 require 'antwort/helpers/logic_helper'
 require 'antwort/helpers/sanitizers_helper'
 
