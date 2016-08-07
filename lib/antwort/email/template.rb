@@ -45,7 +45,7 @@ module Antwort
     end
 
     def image_path(file_name)
-      path      = "./assets/images/#{@name}/#{file_name}"
+      path      = "assets/images/#{@name}/#{file_name}"
       full_path = File.expand_path(path, Dir.pwd)
       return path if File.exist? full_path
       nil

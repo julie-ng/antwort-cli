@@ -100,7 +100,7 @@ describe Antwort::EmailTemplate do
     end
 
     it "`#image_path` returns path for an image" do
-      expect(demo.image_path('placeholder.png')).to eq './assets/images/1-demo/placeholder.png'
+      expect(demo.image_path('placeholder.png')).to eq 'assets/images/1-demo/placeholder.png'
       expect(demo.image_path('does-not-exist.png')).to be nil
     end
 

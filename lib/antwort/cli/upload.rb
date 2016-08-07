@@ -4,13 +4,14 @@ module Antwort
   class CLI
     class Upload < Thor
       include Thor::Actions
-      include Antwort::CLIHelpers
-      attr_reader :email_id
+      include Antwort::FileHelpers
 
-      def initialize(email_id, force = false)
-        @force      = force
-        @email_id   = email_id
-        @images_dir = images_dir(email_id)
+      attr_reader :email_id, :template
+
+      def initialize(email_id)
+        @email_id = email_id
+        @template = Antwort::EmailTemplate.new(email_id)
+
         check_credentials
       end
 
@@ -33,10 +34,11 @@ module Antwort
         end
 
         def upload
-          count = count_files @images_dir
-          abort "No images in #{@images_dir} to upload." if count === 0
+          unless @template.has_images?
+            abort "#{@template.name} has no images to upload."
+          end
 
-          if confirms_upload?(count)
+          if confirms_upload?
             do_upload
           else
             say 'Upload aborted. ', :red
@@ -44,21 +46,21 @@ module Antwort
           end
         end
 
-        def confirms_upload?(count)
-          yes?("Upload #{count} images and overwrite '#{email_id}' folder on assets server? (y/n)")
+        def confirms_upload?
+          yes?("Upload #{@template.images.length} images and overwrite '#{@template.name}' folder on assets server? (y/n)")
         end
 
         def do_upload
           clean_directory!
-          Dir.foreach(@images_dir) do |f|
-            next if f.to_s[0] == '.'
+
+          @template.images.each do |f|
             directory.files.create(
-              key: "#{email_id}/#{f}",
-              body: File.open(File.join(@images_dir, f)),
+              key: upload_path(f),
+              body: File.open(@template.image_path(f)),
               public: true
             )
             say '    create   ', :green
-            say "#{ENV['ASSET_SERVER']}/#{email_id}/#{f}"
+            say "#{ENV['ASSET_SERVER']}/#{upload_path(f)}"
           end
         end
 
@@ -76,7 +78,11 @@ module Antwort
           return @directory if defined?(@directory)
 
           @directory ||=
-            connection.directories.get(ENV['AWS_BUCKET'], prefix: email_id)
+            connection.directories.get(ENV['AWS_BUCKET'], prefix: @template.name)
+        end
+
+        def upload_path(file)
+          "#{@template.name}/#{file}"
         end
 
         def clean_directory!

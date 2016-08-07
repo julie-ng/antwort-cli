@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Antwort::CLI::Upload do
 
-  subject { described_class.new('newsletter') }
+  subject { Antwort::CLI::Upload.new('1-demo') }
 
-  before(:each) do
+  before :each do
     allow($stdout).to receive(:write)
     Fog.mock!
     allow_any_instance_of(Thor::Actions).to receive(:yes?).and_return(true)
@@ -17,7 +17,7 @@ describe Antwort::CLI::Upload do
       allow(Dir).to receive(:foreach)
     end
 
-    it 'cleans S3 directory' do
+    xit 'cleans S3 directory before upload' do
       expect(subject).to receive(:clean_directory!)
       subject.upload
     end
@@ -40,4 +40,13 @@ describe Antwort::CLI::Upload do
       expect(subject).to respond_to(:clean_directory!)
     end
   end
+
+  describe('#upload_path') do
+    it 'retuns AWS path (excludes assets/images)' do
+      expect(subject.upload_path 'foo.png').to eq('1-demo/foo.png')
+    end
+  end
+
+  it 'uploads files to AWS'
+  it 'allows user to abort upload'
 end
