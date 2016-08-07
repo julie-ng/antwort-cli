@@ -139,24 +139,9 @@ module Antwort
         say 'build which email?'
         list
       else
-        emails = options[:all] ? available_emails : Array.new.push(email_id)
-
-        emails.each do |email_id|
-          attrs = { email: email_id, id: create_id_from_timestamp }.merge(options)
-          email = Antwort::EmailBuilder.new(attrs)
-          until email.build
-            sleep 1
-          end
-
-          if build_partials?
-            partials = Antwort::PartialBuilder.new(attrs)
-            sleep 1 until partials.build
-          end
-        end
-
-        show_accuracy_warning if build_partials?
-
-        return true
+        to_build = options[:all] ? EmailCollection.new.list : email_id
+        Build.new(to_build, options).create!
+        show_accuracy_warning if options[:partials]
       end
     end
 
@@ -211,10 +196,6 @@ module Antwort
     attr_reader :project_name, :email_id
 
     no_commands do
-
-      def build_partials?
-        options[:partials]
-      end
 
       def confirms_prune?
         options[:force] || yes?('Are you sure you want to delete all folders in the ./build directory? (y/n)')
