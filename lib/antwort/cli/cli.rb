@@ -61,14 +61,11 @@ module Antwort
     #-- upload
 
     desc 'upload', 'Uploads email assets to AWS S3'
-    method_option :force,
-                  type: :boolean,
-                  default: false,
-                  aliases: '-f',
-                  desc: 'Overwrites existing files on the server'
     method_option aliases: 'u'
+
     def upload(email_id)
-      Upload.new(email_id, options[:force]).upload
+      require 'upload'
+      Upload.new(email_id).upload
     end
 
     #-- send
