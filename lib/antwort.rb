@@ -1,6 +1,6 @@
 require 'thor'
 require 'dotenv'
-Dotenv.load
+Dotenv.load unless ENV['RACK_ENV'] == 'test'
 
 # Namespace
 module Antwort

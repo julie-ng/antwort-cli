@@ -34,6 +34,7 @@ RSpec.configure do |config|
     ENV['AWS_BUCKET']             ||= 'MY_TEST_BUCKET'
     ENV['SEND_FROM']              ||= 'TEST_ENV_SEND_FROM'
     ENV['SEND_TO']                ||= 'TEST_ENV_SEND_TO'
+    ENV['ASSET_SERVER']           ||= ''
 
     Dir.chdir(fixtures_root)
   end
