@@ -5,36 +5,34 @@ module Antwort
     def post_initialize(*)
       app     ||= Antwort::Server.new
       mock    ||= Rack::MockRequest.new(app)
+      @request  = mock.get("/template/#{template.name}")
 
-      request = mock.get("/template/#{template_name}")
-      if request.status == 200
-        create_build_directories
-        @html_markup  = remove_livereload(request.body)
-        @inlined_file = "#{build_dir}/#{template_name}.html"
+      if template_exists?
+        create_build_directories!
+        @html_markup  = remove_livereload(@request.body)
+        @inlined_file = "#{build_dir}/#{template.name}.html"
       else
         say 'Error: ', :red
-        say "Template '#{template_name}' not found."
+        say "Template '#{template.name}' not found."
       end
     end
 
-    def build
+    def build!
       unless html_markup.nil?
         build_css
         build_html
         inline_css
       end
 
-      until File.exist?(@inlined_file)
-        sleep 1
-      end
+      sleep 1 until File.exist?(@inlined_file)
       return true
     end
 
     def build_html
       markup = html_markup
-      markup = markup.gsub("/assets/#{template_name}/inline.css", 'inline.css')
-                     .gsub("/assets/#{template_name}/include.css", 'include.css')
-      create_file(content: markup, path: "#{markup_dir}/#{template_name}.html")
+      markup = markup.gsub("/assets/#{template.name}/inline.css", 'inline.css')
+                     .gsub("/assets/#{template.name}/include.css", 'include.css')
+      create_file!(content: markup, path: "#{markup_dir}/#{template.name}.html")
     end
 
     def inline_css
@@ -49,13 +47,19 @@ module Antwort
       lnlined = remove_roadie_flags(inlined)
       inlined = remove_excessive_newlines(inlined)
       inlined = flatten_inlined_css(inlined)
-      create_file(content: inlined, path: @inlined_file)
+      create_file!(content: inlined, path: @inlined_file)
     end
 
     def cleanup_markup(markup)
       content = use_asset_server(markup)
       content = add_included_css(content)
       content
+    end
+
+    private
+
+    def template_exists?
+      @request.status == 200
     end
   end
 end
