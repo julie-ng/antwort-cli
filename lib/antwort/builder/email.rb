@@ -19,23 +19,23 @@ module Antwort
 
     def build!
       unless html_markup.nil?
-        build_css
-        build_html
-        inline_css
+        build_css!
+        build_html!
+        inline_css!
       end
 
       sleep 1 until File.exist?(@inlined_file)
       return true
     end
 
-    def build_html
+    def build_html!
       markup = html_markup
       markup = markup.gsub("/assets/#{template.name}/inline.css", 'inline.css')
                      .gsub("/assets/#{template.name}/include.css", 'include.css')
       create_file!(content: markup, path: "#{markup_dir}/#{template.name}.html")
     end
 
-    def inline_css
+    def inline_css!
       markup   = preserve_nbsps(html_markup)
       document = Roadie::Document.new(markup)
 

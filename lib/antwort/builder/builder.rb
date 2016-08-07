@@ -50,7 +50,7 @@ module Antwort
       css
     end
 
-    def build_css
+    def build_css!
       compile_scss(source: "#{scss_dir}/inline.scss", destination: "#{markup_dir}/inline.css")
       compile_scss(source: "#{scss_dir}/include.scss", destination: "#{markup_dir}/include.css")
       @css = load_css
