@@ -1,6 +1,7 @@
 module Antwort
   class EmailCollection
     include Antwort::Helpers
+    include Antwort::FileHelpers
 
     attr_reader :templates, :list
 
@@ -14,6 +15,10 @@ module Antwort
 
     def empty?
       @templates.length === 0
+    end
+
+    def total
+      @templates.length
     end
 
     private

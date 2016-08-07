@@ -1,8 +1,13 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Antwort::EmailCollection do
 
   let(:collection) { Antwort::EmailCollection.new }
+  let(:fixtures_email_list) { ['1-demo', '2-no-layout', '3-no-title', '4-custom-layout', 'demo', 'no-images'] }
+
+  before :each do
+    allow($stdout).to receive(:write)
+  end
 
   describe "has a templates attribute" do
     it "is an array" do
@@ -14,7 +19,7 @@ describe Antwort::EmailCollection do
     end
 
     it "loads emails by directory names" do
-      result = ['1-demo', '2-no-layout', '3-no-title', '4-custom-layout']
+      result = fixtures_email_list
       expect(collection.list).to eq(result)
     end
 
@@ -29,22 +34,29 @@ describe Antwort::EmailCollection do
       end
     end
 
-    describe "has a empty? method" do
-      context "has templates" do
-        it "returns false" do
-          expect(collection.empty?).to be false
+    describe "API" do
+      describe "`#empty?`" do
+        context "has templates" do
+          it "returns false" do
+            expect(collection.empty?).to be false
+          end
+        end
+        context "has no templates" do
+          it "returns true" do
+            Dir.chdir("#{fixtures_root}/emails")
+            c = Antwort::EmailCollection.new
+            expect(c.empty?).to be true
+
+            # Go back or randomized specs fail
+            Dir.chdir(fixtures_root)
+          end
         end
       end
-      context "has no templates" do
-        it "returns true" do
-          Dir.chdir("#{fixtures_root}/emails")
-          c = Antwort::EmailCollection.new
-          expect(c.empty?).to be true
 
-          # Go back or randomized specs fail
-          Dir.chdir(fixtures_root)
-        end
+      it "#total" do
+        expect(collection.total).to eq fixtures_email_list.length
       end
     end
+
   end
 end
