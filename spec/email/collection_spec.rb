@@ -5,10 +5,6 @@ describe Antwort::EmailCollection do
   let(:collection) { Antwort::EmailCollection.new }
   let(:fixtures_email_list) { ['1-demo', '2-no-layout', '3-no-title', '4-custom-layout', 'demo', 'no-images'] }
 
-  before :each do
-    allow($stdout).to receive(:write)
-  end
-
   describe "has a templates attribute" do
     it "is an array" do
       expect(collection.templates).to be_kind_of(Array)

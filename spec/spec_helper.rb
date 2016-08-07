@@ -37,6 +37,10 @@ RSpec.configure do |config|
 
     Dir.chdir(fixtures_root)
   end
+
+  config.before :each do
+    allow($stdout).to receive(:write)
+  end
 end
 
 Mail.defaults do

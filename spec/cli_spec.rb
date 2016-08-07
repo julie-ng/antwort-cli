@@ -5,10 +5,6 @@ describe Antwort::CLI do
   describe '#upload' do
     let(:output) { capture(:stdout) { subject.upload('newsletter') } }
 
-    before :each do
-      allow($stdout).to receive(:write)
-    end
-
     context 'user confirms upload' do
       before :each do
         allow_any_instance_of(Thor::Actions).to receive(:yes?).and_return(true)

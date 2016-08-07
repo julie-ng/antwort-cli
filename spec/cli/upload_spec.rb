@@ -5,7 +5,6 @@ describe Antwort::CLI::Upload do
   subject { Antwort::CLI::Upload.new('1-demo') }
 
   before :each do
-    allow($stdout).to receive(:write)
     Fog.mock!
     allow_any_instance_of(Thor::Actions).to receive(:yes?).and_return(true)
   end
