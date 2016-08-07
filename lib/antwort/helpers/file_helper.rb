@@ -14,5 +14,13 @@ module Antwort
       name.split('-')[0..-2].join('-')
     end
 
+    def create_file!(path, content)
+      file = File.new(path, 'w')
+      file.write(content)
+      file.close
+      say '    create  ', :green
+      say path.gsub(/\A.\//, '')
+      file
+    end
   end
 end
