@@ -7,6 +7,7 @@ module Antwort
 end
 
 require 'antwort/helpers/helper'
+require 'antwort/helpers/file_helper'
 require 'antwort/email/collection'
 require 'antwort/email/template'
 require 'antwort/email/data'

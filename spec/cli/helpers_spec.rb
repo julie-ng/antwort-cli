@@ -29,27 +29,10 @@ describe Antwort::CLIHelpers do
       expect(@helper.images_dir('foo')).to eq './assets/images/foo'
     end
 
-    it '#count_files' do
-      expect(@helper.count_files './assets/images/shared').to be(2)
-      expect(@helper.count_files './assets/images/1-demo').to be(1)
-    end
-
     it '#last_build_by_id' do
       expect(@helper.last_build_by_id 'foo').to eq('foo-1')
       expect(@helper.last_build_by_id 'demo').to eq('demo-20160102')
       expect(@helper.last_build_by_id 'demo').not_to eq('demo-20160101')
     end
-
-    it '#list_folders' do
-      a = @helper.list_folders '.'
-      expect(a).to include('assets')
-      expect(a).to include('build')
-      expect(a).to include('data')
-      expect(a).to include('emails')
-      expect(a).to include('views')
-      expect(a).not_to include('support')
-      expect(a).not_to include('lib')
-    end
-
   end
 end
