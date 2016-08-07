@@ -1,21 +1,22 @@
 module Antwort
   class PartialBuilder < Builder
-    attr_reader :templates
+    attr_reader :partials
 
     def post_initialize(*)
-      @templates = list_partials(source_dir).push('index.html.erb')
-      if templates.length < 1
+      @partials = @template.partials.push('index.html.erb')
+
+      if partials.length < 1
         say 'Error: ', :red
-        puts "No partials found in #{template_name} folder."
+        puts "No partials found in #{template.name} folder."
         return
       else
-        create_build_directories
+        create_build_directories!
       end
     end
 
-    def build
+    def build!
       @css = load_css
-      templates.each { |t| build_html t }
+      partials.each { |t| build_html t }
     end
 
     def build_html(partial_name)
@@ -28,7 +29,7 @@ module Antwort
       inlined     = restore_nbsps(inlined)
       inlined     = flatten_inlined_css(inlined)
       filename    = adjust_filename(partial_name)
-      create_file(content: inlined, path: "#{build_dir}/#{filename}")
+      create_file!(content: inlined, path: "#{build_dir}/#{filename}")
     end
 
     def inline(markup)
@@ -45,7 +46,7 @@ module Antwort
     end
 
     def adjust_filename(filename)
-      filename = @template_name if filename == 'index.html.erb'
+      filename = @template.name if filename == 'index.html.erb'
 
       name = filename.gsub('.erb', '')
       name << '.html' unless name[-5, 5] == '.html'

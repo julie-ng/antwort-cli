@@ -11,11 +11,13 @@ module Antwort
     include Antwort::LogicHelpers
     include Antwort::MarkupSanitizers
 
-    # attr_reader :template, :build_id, :build_dir, :markup_dir, :source_dir, :scss_dir, :asset_server, :css, :css_style
-    attr_reader :template, :build_id
+    attr_reader :template, :build_id, :build_dir, :markup_dir, :source_dir, :scss_dir, :asset_server, :css, :css_style
 
     def initialize(attrs = {})
       attrs = symbolize_keys!(attrs)
+
+      @build_id = attrs[:id]
+      @template = EmailTemplate.new(attrs[:email])
 
       @build_dir     = "./build/#{template.name}-#{build_id}"
       @markup_dir    = "#{build_dir}/source"
@@ -24,8 +26,6 @@ module Antwort
       @css_style     = attrs[:'css-style'].to_sym
       @asset_server  = ENV['ASSET_SERVER'] || '/assets'
 
-      @template = EmailTemplate.new(attrs[:email])
-      @build_id = attrs[:id]
       post_initialize(attrs)
     end
 
@@ -33,7 +33,7 @@ module Antwort
       nil
     end
 
-    def create_build_directories
+    def create_build_directories!
       return if Dir.exist? build_dir
       Dir.mkdir "build" unless Dir.exist? "./build"
       Dir.mkdir(build_dir)
@@ -65,7 +65,7 @@ module Antwort
         create_file(content: content, path: destination_file)
       else
         say 'Build failed. ', :red
-        say "#{source_file}.scss for #{template_name} not found."
+        say "#{source_file}.scss for #{template.name} not found."
       end
     end
 
