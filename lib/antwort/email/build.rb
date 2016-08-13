@@ -9,12 +9,12 @@ module Antwort
 
     def initialize(emails, opts={})
       @id      = new_timestamp_id
-      @emails  = emails.is_a? Array ? emails : Array.new.push(emails)
+      @emails  = emails.is_a?(Array) ? emails : Array.new.push(emails)
       @options = opts
     end
 
     def create!
-      emails.each do |email_id|
+      @emails.each do |email_id|
         attrs = { email: email_id, id: @id }.merge(@options)
         build_email(attrs)
         build_partials(attrs) if @options[:partials]
@@ -24,13 +24,13 @@ module Antwort
     private
 
     def build_email(attrs)
-      email = EmailBuilder.new(attrs)
-      sleep 1 until email.build
+      email = Antwort::EmailBuilder.new(attrs)
+      sleep 1 until email.build!
     end
 
-    def build_partials
-      partials = PartialBuilder.new(attrs)
-      sleep 1 until partials.build
+    def build_partials(attrs)
+      partials = Antwort::PartialBuilder.new(attrs)
+      sleep 1 until partials.build!
     end
 
     def new_timestamp_id

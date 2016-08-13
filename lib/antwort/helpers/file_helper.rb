@@ -14,7 +14,9 @@ module Antwort
       name.split('-')[0..-2].join('-')
     end
 
-    def create_file!(path, content)
+    def create_file!(opts)
+      path = opts[:path]
+      content = opts[:content]
       file = File.new(path, 'w')
       file.write(content)
       file.close
