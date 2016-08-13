@@ -64,7 +64,7 @@ module Antwort
     method_option aliases: 'u'
 
     def upload(email_id)
-      require 'upload'
+      require 'antwort/cli/upload'
       Upload.new(email_id).upload
     end
 
@@ -86,7 +86,7 @@ module Antwort
                   aliases: '-s',
                   desc: 'Email Subject. Defaults to <title> value if blank.'
     def send(email_id)
-      require 'send'
+      require 'antwort/cli/send'
       build = last_build_by_id(email_id)
 
       if build.nil?
@@ -132,8 +132,6 @@ module Antwort
                   aliases: '-c',
                   desc: 'CSS output style'
     def build(email_id='')
-      require 'antwort'
-
       if (email_id.empty?)
         say 'Error: ', :red
         say 'build which email?'
