@@ -4,12 +4,17 @@ describe Antwort::CLI::Upload do
 
   subject { Antwort::CLI::Upload.new('1-demo') }
 
-  before :each do
+  before :all do
     Fog.mock!
-    allow_any_instance_of(Thor::Actions).to receive(:yes?).and_return(true)
   end
 
-  after(:each) {  Fog.unmock! }
+  after :all do
+    Fog.unmock!
+  end
+
+  before :each do
+    allow_any_instance_of(Thor::Actions).to receive(:yes?).and_return(true)
+  end
 
   describe '#upload' do
     before :each do
