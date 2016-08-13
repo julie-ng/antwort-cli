@@ -1,18 +1,16 @@
 <div class="container">
-
   <h3>Emails</h3>
-  <% if @pages.length == 0 %>
+  <% if @emails.templates.length == 0 %>
     <p>Oops, no emails found. Run <code>antwort new [name]</code> to create one.</p>
   <% else %>
     <ul class="emails-list">
-      <% @pages.each do |page| %>
+      <% @emails.templates.each do |template| %>
       <li>
-        <a href="template/<%= page[:path] %>">
-          <%= page[:title] %>
+        <a href="<%= template.url %>">
+          <%= template.title %>
         </a>
       </li>
       <% end %>
     </ul>
   <% end %>
-
 </div>
