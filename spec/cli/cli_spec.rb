@@ -3,9 +3,17 @@ require 'spec_helper'
 describe Antwort::CLI do
 
   describe '#upload' do
-    let(:output) { capture(:stdout) { subject.upload('newsletter') } }
+    before :all do
+      Fog.mock!
+    end
 
-    context 'user confirms upload' do
+    after :all do
+      Fog.unmock!
+    end
+
+    let(:output) { capture(:stdout) { subject.upload('1-demo') } }
+
+    context 'user confirms upload', skip: true do
       before :each do
         allow_any_instance_of(Thor::Actions).to receive(:yes?).and_return(true)
       end
