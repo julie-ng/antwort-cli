@@ -7,13 +7,12 @@ module Antwort
       mock    ||= Rack::MockRequest.new(app)
       @request  = mock.get("/template/#{template.name}")
 
-      if template_exists?
+      if template_is_valid?
         create_build_directories!
         @html_markup  = remove_livereload(@request.body)
         @inlined_file = "#{build_dir}/#{template.name}.html"
       else
-        say 'Error: ', :red
-        say "Template '#{template.name}' not found."
+        show_error_message
       end
     end
 
@@ -58,8 +57,30 @@ module Antwort
 
     private
 
-    def template_exists?
+    def show_error_message
+      if template_not_found?
+        msg = "Template '#{template.name}' not found."
+      elsif template_has_error?
+        msg = "Template '#{template.name}' is not rendering succesfully. Verify with `antwort server` that the template functional and try again."
+      else
+        msg = "Error building #{template.name}."
+      end
+
+      say 'Error: ', :red
+      say msg
+      exit
+    end
+
+    def template_is_valid?
       @request.status == 200
+    end
+
+    def template_not_found?
+      @request.status == 404
+    end
+
+    def template_has_error?
+      @request.status == 500
     end
   end
 end
