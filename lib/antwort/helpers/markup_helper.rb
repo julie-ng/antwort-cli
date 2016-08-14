@@ -15,17 +15,6 @@ module Antwort
       partial('views/markup/button', locals: options)
     end
 
-    def wrapper_table(args = {}, &block)
-      options = {
-        width: '100%',
-        cell_align: 'center',
-        cell_valign: 'top',
-        content: capture_html(&block)
-      }.merge(args)
-
-      concat_content partial('views/markup/table_wrapper', locals: options)
-    end
-
     def counter_classes(index)
       # 0 index based
       klass = ''
