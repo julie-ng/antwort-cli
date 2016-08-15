@@ -24,6 +24,7 @@ module Antwort
       set :root, Dir.pwd
       set :root, Dir.pwd + '/spec/fixtures/' if ENV['RACK_ENV'] == 'test'
       set :views, settings.root
+      set :server_views, File.expand_path(File.dirname(__FILE__)) + '/views'
       set :partial_template_engine, :erb
       enable :partial_underscores
       set :port, 9292
@@ -31,14 +32,17 @@ module Antwort
 
     register Sinatra::Assets # after we set root
 
+    @server_index  ||= File.read(settings.server_views + '/index.html.erb')
+    @server_404    ||= File.read(settings.server_views + '/404.html.erb')
+    @server_layout ||= File.read(settings.server_views + '/server.erb')
+
     get '/' do
       @emails = Antwort::EmailCollection.new
-      erb :'views/index', layout: :'views/server'
+      erb :server_index, layout: :server_layout
     end
 
     get '/template/:template' do
-      name     = sanitize_param params[:template]
-
+      name      = sanitize_param params[:template]
       @template = Antwort::EmailTemplate.new(name)
       hash_to_instance_vars @template.data
 
@@ -51,8 +55,19 @@ module Antwort
 
     not_found do
       content_type 'text/html'
-      erb :'views/404', layout: :'views/server'
+      erb :server_404, layout: :server_layout
     end
 
+    template :server_index do
+      @server_index
+    end
+
+    template :server_404 do
+      @server_404
+    end
+
+    template :server_layout do
+      @server_layout
+    end
   end
 end
