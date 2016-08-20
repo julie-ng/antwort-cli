@@ -16,21 +16,17 @@ module Antwort
       end
 
       no_commands do
-
         def check_credentials
           failed = false
-          vars = ['ASSET_SERVER', 'AWS_BUCKET', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY']
+          vars = %w(ASSET_SERVER AWS_BUCKET AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY)
           vars.each do |var|
-            if ENV[var].nil?
-              say "Error ", :red
-              say "#{var} not set."
-              failed = true
-            end
+            next unless ENV[var].nil?
+            say 'Error ', :red
+            say "#{var} not set."
+            failed = true
           end
 
-          if failed
-            abort "Please fix your .env config file and try again."
-          end
+          abort 'Please fix your .env config file and try again.' if failed
         end
 
         def upload
@@ -88,7 +84,6 @@ module Antwort
         def clean_directory!
           directory.files.each(&:destroy)
         end
-
       end
     end
   end

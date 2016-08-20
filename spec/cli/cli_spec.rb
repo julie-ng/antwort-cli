@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Antwort::CLI do
-
   describe '#upload' do
     before :all do
       Fog.mock!

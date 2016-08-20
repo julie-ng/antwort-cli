@@ -3,7 +3,7 @@ module Antwort
     attr_reader :keys, :duplicate_keys, :flattened, :original
 
     def initialize(style = '')
-      @style         = style
+      @style          = style
       @keys           = []
       @duplicate_keys = []
       @flattened      = []
@@ -23,37 +23,36 @@ module Antwort
     end
 
     def duplicates?
-      @duplicate_keys.length > 0
+      !@duplicate_keys.empty?
     end
 
     private
 
-      def convert_to_hash
-        str  = String.new(@style)
-        h    = Hash.new
-        keys = Array.new
+    def convert_to_hash
+      str  = String.new(@style)
+      h    = {}
 
-        str.split(';').each do |s|
-          key = s.split(':').first.strip
-          val = s.split(':').last.strip
-          h[key] = val
-          @original << { key => val }
+      str.split(';').each do |s|
+        key = s.split(':').first.strip
+        val = s.split(':').last.strip
+        h[key] = val
+        @original << { key => val }
 
-          if @keys.include? key
-            @duplicate_keys << key
-          else
-            @keys << key
-          end
+        if @keys.include? key
+          @duplicate_keys << key
+        else
+          @keys << key
         end
-        @flattened = h
       end
+      @flattened = h
+    end
 
-      # convert our flatted styles hash back into a string
-      def hash_to_str(hash)
-        str = ''
-        hash.each { |k,v| str << "#{k}:#{v};" }
-        str.chop! if str[-1] == ';' # remove trailing ';'
-        str
-      end
+    # convert our flatted styles hash back into a string
+    def hash_to_str(hash)
+      str = ''
+      hash.each { |k, v| str << "#{k}:#{v};" }
+      str.chop! if str[-1] == ';' # remove trailing ';'
+      str
+    end
   end
 end

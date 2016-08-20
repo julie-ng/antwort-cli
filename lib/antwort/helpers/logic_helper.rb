@@ -1,6 +1,5 @@
 module Antwort
   module LogicHelpers
-
     def preserve_nbsps(html = '')
       html.gsub(/&nbsp;/, '%nbspace%')
     end
@@ -22,22 +21,22 @@ module Antwort
     end
 
     def preserve_conditionals(html = '')
-      html.gsub(%r{<%\s*if (.*?)%>}, '{% if \1 %}')         # if
-          .gsub(%r{<%\s*unless (.*?)%>}, '{% if !( \1) %}') # unless
-          .gsub(%r{<%\s*elsif(.*?)%>}, '{% elseif\1%}')     # elsif
-          .gsub(%r{<%\s*else\s*%>}, '{% else %}')           # else
-          .gsub(%r{<%\s*end\s*%>}, '{% end %}')             # end
-          .gsub(/[ \t]{2,}%}/, ' %}')                       # remove extra white space, e.g. {% else    %}
+      html.gsub(/<%\s*if (.*?)%>/, '{% if \1 %}')         # if
+          .gsub(/<%\s*unless (.*?)%>/, '{% if !( \1) %}') # unless
+          .gsub(/<%\s*elsif(.*?)%>/, '{% elseif\1%}')     # elsif
+          .gsub(/<%\s*else\s*%>/, '{% else %}')           # else
+          .gsub(/<%\s*end\s*%>/, '{% end %}')             # end
+          .gsub(/[ \t]{2,}%}/, ' %}') # remove extra white space, e.g. {% else    %}
     end
 
     def preserve_loops(html = '')
-      html.gsub(%r{<%\s+(.*)(\.each\s+do\s+\|)\s*(\S+)\s*(\|\s+)%>}, '{% for \3 in \1 %}')
-          .gsub(%r{<%\s+(.*)(\.each_with_index\s+do\s+\|)\s*(\S+)\s*,\s*(\S+)\s*(\|\s+)%>}, '{% for \3 in \1 with: {@index: \4} %}')
-          .gsub(%r{<%\s*end\s*%>}, '{% end %}')
+      html.gsub(/<%\s+(.*)(\.each\s+do\s+\|)\s*(\S+)\s*(\|\s+)%>/, '{% for \3 in \1 %}')
+          .gsub(/<%\s+(.*)(\.each_with_index\s+do\s+\|)\s*(\S+)\s*,\s*(\S+)\s*(\|\s+)%>/, '{% for \3 in \1 with: {@index: \4} %}')
+          .gsub(/<%\s*end\s*%>/, '{% end %}')
     end
 
     def preserve_comments(html = '')
-      html.gsub(%r{<%[ \t]*#(.*)%>},'{#\1#}')
+      html.gsub(/<%[ \t]*#(.*)%>/, '{#\1#}')
           .gsub(/{#([^=\s])/, '{# \1')      # {#foo #} ->{# foo #}
     end
 
@@ -45,37 +44,37 @@ module Antwort
       html.gsub(/\[:(.*?)\]/, '.\1')        # a[:b][:c] -> a.b.c
           .gsub(/\['(.*?)'\]/, '.\1')       # a['b'] -> a.b
           .gsub(/\["(.*?)"\]/, '.\1')       # a["b"] -> a.b
-          .gsub(%r{<%=(.*?)%>}, '{{\1}}')   # assume leftover erb output are variables
+          .gsub(/<%=(.*?)%>/, '{{\1}}') # assume leftover erb output are variables
     end
 
     def preserve_assignments(html = '')
-      html.gsub(%r{<%\s+([A-Za-z0-9_]+)\s*(\|\|=)\s*(.*)\s+%>}, '{% set \1 = \1 || \3 %}')
-          .gsub(%r{<%\s+([A-Za-z0-9_]+)\s*(=)\s*(.*)\s+%>}, '{% set \1 = \3 %}')
+      html.gsub(/<%\s+([A-Za-z0-9_]+)\s*(\|\|=)\s*(.*)\s+%>/, '{% set \1 = \1 || \3 %}')
+          .gsub(/<%\s+([A-Za-z0-9_]+)\s*(=)\s*(.*)\s+%>/, '{% set \1 = \3 %}')
     end
 
     def preserve_leftover_statements(html = '')
-      html.gsub(%r{<%\s*(.*?)?%>}, '{% \1%}') # no trailing space because group captures it
+      html.gsub(/<%\s*(.*?)?%>/, '{% \1%}') # no trailing space because group captures it
     end
 
     def restore_variables_in_links(html = '')
-      html.gsub('%7B%7B%20','{{ ')
-          .gsub('%20%7D%7D',' }}')
+      html.gsub('%7B%7B%20', '{{ ')
+          .gsub('%20%7D%7D', ' }}')
     end
 
     def convert_partials_to_includes(html = '')
-      html.gsub(%r{{{ partial :(.+?) }}}, '{% include \1 %}')
-          .gsub(%r{{% include (.+),\s+locals:(.+?)%}}, '{% include \1 with:\2%}')
-          .gsub(%r{(<%=\s+?partial\s+?:)(.+?),(.+?)(locals:)((.|\n)+?)(%>)}, '{% include \2 with:\5%}') # multiline partials not caught in presumably leftover variable
+      html.gsub(/{{ partial :(.+?) }}/, '{% include \1 %}')
+          .gsub(/{% include (.+),\s+locals:(.+?)%}/, '{% include \1 with:\2%}')
+          .gsub(/(<%=\s+?partial\s+?:)(.+?),(.+?)(locals:)((.|\n)+?)(%>)/, '{% include \2 with:\5%}') # multiline partials not caught in presumably leftover variable
     end
 
     def convert_helper_wrappers(html = '')
-      html.gsub(%r{{{ button(.+?)}}}, '{% button\1%}')
-          .gsub(%r{{{ image_tag(.+?)}}}, '{% image_tag\1%}')
+      html.gsub(/{{ button(.+?)}}/, '{% button\1%}')
+          .gsub(/{{ image_tag(.+?)}}/, '{% image_tag\1%}')
     end
 
     def cleanup_logic(html = '')
-      html.gsub(%r{({%|{{)(.*?)(&lt;)(.*?)(}}|%})}, '\1\2<\4\5') # <
-          .gsub(%r{({%|{{)(.*?)(&gt;)(.*?)(}}|%})}, '\1\2>\4\5') # >
+      html.gsub(/({%|{{)(.*?)(&lt;)(.*?)(}}|%})/, '\1\2<\4\5') # <
+          .gsub(/({%|{{)(.*?)(&gt;)(.*?)(}}|%})/, '\1\2>\4\5') # >
           .gsub(/&amp;&amp;/, '&&')
     end
   end

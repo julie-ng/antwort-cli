@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Antwort::CLI::Upload do
-
   subject { Antwort::CLI::Upload.new('1-demo') }
 
   before :all do
@@ -47,7 +46,7 @@ describe Antwort::CLI::Upload do
 
   describe('#upload_path') do
     it 'retuns AWS path (excludes assets/images)' do
-      expect(subject.upload_path 'foo.png').to eq('1-demo/foo.png')
+      expect(subject.upload_path('foo.png')).to eq('1-demo/foo.png')
     end
   end
 

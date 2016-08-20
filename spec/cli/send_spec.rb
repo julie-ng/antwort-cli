@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Antwort::CLI::Send do
-
   after :each do
     Mail::TestMailer.deliveries.clear
   end
@@ -45,18 +44,19 @@ describe Antwort::CLI::Send do
       # expect(@sent.html_part.body.to_s).not_to eq ''
       # puts @sent.to_s.inspect
 
-      contents = File.open("build/demo-20160101/demo.html").read
+      contents = File.open('build/demo-20160101/demo.html').read
       expect(@a.html_body).to eq(contents)
     end
   end
 
   describe 'Optional Arguments' do
     before :each do
-      Antwort::CLI::Send.new('demo-20160101', {
+      Antwort::CLI::Send.new(
+        'demo-20160101',
         from: 'CUSTOM_FROM',
         recipient: 'CUSTOM_TO',
         subject: 'MY SUBJECT'
-      }).send
+      ).send
       @sent = Mail::TestMailer.deliveries.last
     end
 
@@ -70,7 +70,7 @@ describe Antwort::CLI::Send do
 
     it 'accepts multiple recipients' do
       Antwort::CLI::Send.new('demo-20160101', recipient: 'one, two').send
-      expect(Mail::TestMailer.deliveries.last.to).to eq(['one', 'two'])
+      expect(Mail::TestMailer.deliveries.last.to).to eq(%w(one two))
     end
 
     it 'accepts a title argument' do

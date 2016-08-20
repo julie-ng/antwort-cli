@@ -24,7 +24,7 @@ module Antwort
       end
 
       sleep 1 until File.exist?(@inlined_file)
-      return true
+      true
     end
 
     def build_html!
@@ -43,7 +43,7 @@ module Antwort
 
       inlined = restore_nbsps(document.transform)
       inlined = cleanup_markup(inlined)
-      lnlined = remove_roadie_flags(inlined)
+      inlined = remove_roadie_flags(inlined)
       inlined = remove_excessive_newlines(inlined)
       inlined = flatten_inlined_css(inlined)
       create_file!(content: inlined, path: @inlined_file)
@@ -58,13 +58,13 @@ module Antwort
     private
 
     def show_error_message
-      if template_not_found?
-        msg = "Template '#{template.name}' not found."
-      elsif template_has_error?
-        msg = "Template '#{template.name}' is not rendering succesfully. Verify with `antwort server` that the template functional and try again."
-      else
-        msg = "Error building #{template.name}."
-      end
+      msg = if template_not_found?
+              "Template '#{template.name}' not found."
+            elsif template_has_error?
+              "Template '#{template.name}' is not rendering succesfully. Verify with `antwort server` that the template functional and try again."
+            else
+              "Error building #{template.name}."
+            end
 
       say 'Error: ', :red
       say msg

@@ -1,9 +1,8 @@
 module Antwort
   class Flattener
-
     attr_reader :source, :styles, :flattened, :flattened_keys
 
-    def initialize(source='')
+    def initialize(source = '')
       @source = source
       @styles = find_styles
       @flattened_keys = []
@@ -23,15 +22,15 @@ module Antwort
     end
 
     def flattened?
-      @flattened_keys.length > 0
+      !@flattened_keys.empty?
     end
 
     private
 
-      def find_styles
-        a = []
-        @source.scan(/style="(.+?)"/).each { |match| a.push(match.first) } # first is regex group `(.+?)`
-        a
-      end
+    def find_styles
+      a = []
+      @source.scan(/style="(.+?)"/).each { |match| a.push(match.first) } # first is regex group `(.+?)`
+      a
+    end
   end
 end

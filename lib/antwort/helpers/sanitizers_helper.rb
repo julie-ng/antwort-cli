@@ -1,8 +1,7 @@
 module Antwort
   module MarkupSanitizers
-
     def remove_livereload(markup = '')
-      markup.gsub(/<script.*?>(\s|\S)*<\/script>/i, '')
+      markup.gsub(%r{<script.*?>(\s|\S)*<\/script>}i, '')
             .gsub(/(<head.*?>\n)(\s*\n)*/i, '\1')
     end
 
@@ -24,6 +23,5 @@ module Antwort
       html.gsub(/\<!(.*)\<body.*?\>/im, '')
           .gsub(%r{</body>.*?</html>}im, '')
     end
-
   end
 end

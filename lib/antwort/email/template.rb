@@ -5,7 +5,7 @@ module Antwort
 
     attr_reader :name, :path, :file, :body, :data, :metadata, :title, :layout
 
-    def initialize(template_name, opts = {})
+    def initialize(template_name)
       @name = template_name
       @path = "emails/#{@name}"
       @file = "#{@path}/index.html.erb"
@@ -27,7 +27,7 @@ module Antwort
     end
 
     def partials
-      Dir.entries(@path).select { |f| f[0]== '_' && f[-4,4] == '.erb' }
+      Dir.entries(@path).select { |f| f[0] == '_' && f[-4, 4] == '.erb' }
     end
 
     def last_build
@@ -37,12 +37,14 @@ module Antwort
 
     def images
       dir = "./assets/images/#{@name}"
-      Dir.entries(dir).select { |file| file[0] !='.' }
+      Dir.entries(dir).select { |file| file[0] != '.' }
     end
 
+    # rubocop:disable Style/PredicateName
     def has_images?
-      images.length > 0
+      !images.empty?
     end
+    # rubocop:enable Style/PredicateName
 
     def image_path(file_name)
       path      = "assets/images/#{@name}/#{file_name}"
@@ -73,14 +75,13 @@ module Antwort
 
     def set_layout
       mdl = @metadata[:layout]
-      layout = case
-        when mdl == false
-          false
-        when mdl.nil?
-          :'emails/shared/layout'
-        else
-          :"emails/#{mdl}"
-      end
+      layout = if mdl == false
+                 false
+               elsif mdl.nil?
+                 :'emails/shared/layout'
+               else
+                 :"emails/#{mdl}"
+               end
       layout
     end
   end

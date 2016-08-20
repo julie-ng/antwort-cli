@@ -1,6 +1,5 @@
 module Antwort
   module FileHelpers
-
     def count_files(dir)
       Dir[File.join(dir, '**', '*')].count { |f| File.file? f }
     end
@@ -21,7 +20,7 @@ module Antwort
       file.write(content)
       file.close
       say '    create  ', :green
-      say path.gsub(/\A.\//, '')
+      say path.gsub(%r{\A./}, '')
       file
     end
   end

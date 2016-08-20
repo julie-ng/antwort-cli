@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Antwort::Build do
-
   describe 'Attributes' do
     it 'has a timestamp id'
     it 'accepts single or many emails'

@@ -7,9 +7,9 @@ module Antwort
 
     attr_reader :id
 
-    def initialize(emails, opts={})
+    def initialize(emails, opts = {})
       @id      = new_timestamp_id
-      @emails  = emails.is_a?(Array) ? emails : Array.new.push(emails)
+      @emails  = emails.is_a?(Array) ? emails : [].push(emails)
       @options = opts
     end
 

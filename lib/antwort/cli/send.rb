@@ -18,15 +18,16 @@ module Antwort
                         return_response: true
       end
 
-      def initialize(build_id, options={})
+      def initialize(build_id, options = {})
         @build_id  = build_id
         @html_body = File.open("build/#{build_id}/#{template_name}.html").read
 
         @recipient = (options[:recipient] || ENV['SEND_TO']).split(',')
         @sender    = options[:from] || ENV['SEND_FROM']
-        @subject   = options[:subject] || "[Test] " << extract_title(@html_body)
+        @subject   = options[:subject] || '[Test] ' << extract_title(@html_body)
       end
 
+      # rubocop:disable Metrics/MethodLength
       def send
         # because scope changes inside mail DSL
         mail_from    = @sender
@@ -59,6 +60,7 @@ module Antwort
           say "Error sending #{build_id}/#{template_name} at #{Time.now.strftime('%d.%m.%Y %H:%M')}", :red
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       private
 
@@ -69,7 +71,6 @@ module Antwort
       def extract_title(body = '')
         body.scan(%r{<title>(.*?)</title>}).first.first
       end
-
     end
   end
 end

@@ -4,12 +4,11 @@ class Dummy
 end
 
 describe Antwort::FileHelpers do
-
   let(:helper) { Dummy.new.extend(Antwort::FileHelpers) }
 
   it '#count_files' do
-    expect(helper.count_files './assets/images/shared').to be(2)
-    expect(helper.count_files './assets/images/1-demo').to be(1)
+    expect(helper.count_files('./assets/images/shared')).to be(2)
+    expect(helper.count_files('./assets/images/1-demo')).to be(1)
   end
 
   it '#list_folders' do
@@ -22,7 +21,7 @@ describe Antwort::FileHelpers do
     expect(a).not_to include('lib')
   end
 
-  it "#email_id_from_folder_name" do
+  it '#email_id_from_folder_name' do
     expect(helper.email_id_from_folder_name('foo-123')).to eq('foo')
     expect(helper.email_id_from_folder_name('foo-bar-123')).to eq('foo-bar')
     expect(helper.email_id_from_folder_name('foo_bar-123')).to eq('foo_bar')

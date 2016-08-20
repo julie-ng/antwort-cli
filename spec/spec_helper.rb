@@ -5,7 +5,7 @@ require 'antwort'
 require 'rspec'
 require 'rack/test'
 
-Pathname.glob(Pathname(__dir__) + 'support' '**/*.rb').each { |f| require f }
+Pathname.glob(Pathname(__dir__) + 'support**/*.rb').each { |f| require f }
 
 RSpec.configure do |config|
   # Run specs in random order to surface order dependencies. If you find an
@@ -25,7 +25,7 @@ RSpec.configure do |config|
   end
 
   def fixtures_root
-    File.join(File.dirname(__FILE__), "fixtures")
+    File.join(File.dirname(__FILE__), 'fixtures')
   end
 
   config.before :suite do

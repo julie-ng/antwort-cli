@@ -4,7 +4,7 @@ module Antwort
       locals = {
         source: image_url_from_path(path)
       }.merge!(opts)
-      render_markup('image_tag', locals).gsub(/\n/, '')
+      render_markup('image_tag', locals).delete("\n")
     end
 
     def button(text, url, opts = {})
@@ -27,13 +27,11 @@ module Antwort
     def counter_classes(index)
       # 0 index based
       klass = ''
-      klass += index.even?      ? ' is-2n' : ''
-      klass += (index % 3 == 0) ? ' is-3n' : ''
-      klass += (index % 4 == 0) ? ' is-4n' : ''
-      klass += (index % 6 == 0) ? ' is-6n' : ''
+      klass += index.even? ? ' is-2n' : ''
+      klass += (index % 3).zero? ? ' is-3n' : ''
+      klass += (index % 4).zero? ? ' is-4n' : ''
+      klass += (index % 6).zero? ? ' is-6n' : ''
       klass
     end
   end
 end
-
-

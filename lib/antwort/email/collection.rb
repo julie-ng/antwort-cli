@@ -5,16 +5,16 @@ module Antwort
 
     attr_reader :templates, :list
 
-    def initialize(opts={})
+    def initialize
       @templates = []
       @list = []
 
-      dir = "./emails"
-      set_collection(dir) if Dir.exists? dir
+      dir = './emails'
+      find_templates(dir) if Dir.exist? dir
     end
 
     def empty?
-      @templates.length === 0
+      @templates.empty?
     end
 
     def total
@@ -23,7 +23,7 @@ module Antwort
 
     private
 
-    def set_collection(dir)
+    def find_templates(dir)
       folders = Dir.entries(dir)
       folders = filter_templates(folders)
 
@@ -33,7 +33,7 @@ module Antwort
       end
     end
 
-    def filter_templates(arry=[])
+    def filter_templates(arry = [])
       arry.delete_if { |name| name.to_s[0] == '.' }
       arry.delete_if { |name| name.to_s == 'shared' }
     end

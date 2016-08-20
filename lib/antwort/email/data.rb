@@ -6,9 +6,9 @@ module Antwort
 
     attr_reader :name, :file, :path, :data
 
-    def initialize(opts={})
+    def initialize(opts = {})
       @name = opts[:name] || ''
-      @path = (opts[:path] || Dir.pwd) + "/data"
+      @path = (opts[:path] || Dir.pwd) + '/data'
       @file = opts[:file] || "#{@path}/#{@name}.yml"
       @data = load_yaml_data
     end

@@ -1,7 +1,7 @@
 module Antwort
   module Helpers
     def symbolize_keys!(hash)
-      hash.reduce({}) do |result, (key, value)|
+      hash.each_with_object({}) do |(key, value), result|
         new_key = case key
                   when String then key.to_sym
                   else key

@@ -1,8 +1,7 @@
 module Antwort
   module ApplicationHelpers
-
     def sanitize_param(string)
-      string.nil? ? '' : string.gsub(/([^A-Za-z0-9_\/-]+)|(--)/, '_')
+      string.nil? ? '' : string.gsub(%r{([^A-Za-z0-9_/-]+)|(--)}, '_')
     end
 
     def template_exists?(template_name)
@@ -19,7 +18,7 @@ module Antwort
 
     def image_url_from_path(path)
       p = path.split(':')[0]
-      if (p == 'http' || p == 'https')
+      if p == 'http' || p == 'https'
         url = path
       else
         a = [path]

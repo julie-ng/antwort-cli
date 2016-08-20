@@ -5,7 +5,7 @@ module Antwort
     def post_initialize(*)
       @partials = @template.partials.push('index.html.erb')
 
-      if partials.length < 1
+      if partials.empty?
         say 'Error: ', :red
         puts "No partials found in #{template.name} folder."
         return
@@ -74,8 +74,8 @@ module Antwort
     end
 
     def preserve_operators_from_nokogiri(html = '')
-      html.gsub(%r{{%\s*if(.*?)<(.*?)%}}, '{%\1&lt;\2%}')
-          .gsub(%r{{%\s*if(.*?)>(.*?)%}}, '{%\1&gt;\2%}')
+      html.gsub(/{%\s*if(.*?)<(.*?)%}/, '{%\1&lt;\2%}')
+          .gsub(/{%\s*if(.*?)>(.*?)%}/, '{%\1&gt;\2%}')
     end
   end
 end
