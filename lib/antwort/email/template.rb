@@ -77,9 +77,9 @@ module Antwort
         when mdl == false
           false
         when mdl.nil?
-          :'views/layout'
+          :'emails/shared/layout'
         else
-          mdl.to_sym
+          :"emails/#{mdl}"
       end
       layout
     end

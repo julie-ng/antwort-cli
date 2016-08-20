@@ -68,8 +68,8 @@ describe Antwort::EmailTemplate do
   end
 
   describe "layout" do
-    it "defaults to :'views/layout'" do
-      expect(demo.layout).to eq(:'views/layout')
+    it "defaults to :'emails/shared/layout'" do
+      expect(demo.layout).to eq(:'emails/shared/layout')
     end
 
     it "can be a custom layout" do

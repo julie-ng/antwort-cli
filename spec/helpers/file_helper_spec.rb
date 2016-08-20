@@ -18,7 +18,6 @@ describe Antwort::FileHelpers do
     expect(a).to include('build')
     expect(a).to include('data')
     expect(a).to include('emails')
-    expect(a).to include('views')
     expect(a).not_to include('support')
     expect(a).not_to include('lib')
   end

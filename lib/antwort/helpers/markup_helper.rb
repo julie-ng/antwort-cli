@@ -1,18 +1,27 @@
 module Antwort
   module MarkupHelpers
-    def image_tag(path, options = {})
-      options[:source] = image_url_from_path(path)
-      options[:alt] ||= ''
-      partial('views/markup/image_tag', locals: options)
-        .gsub(/\n/, '')
+    def image_tag(path, opts = {})
+      locals = {
+        source: image_url_from_path(path)
+      }.merge!(opts)
+      render_markup('image_tag', locals).gsub(/\n/, '')
     end
 
-    def button(text, url, args = {})
-      options = {
+    def button(text, url, opts = {})
+      locals = {
         text: text,
         url: url
-      }.merge(args)
-      partial('views/markup/button', locals: options)
+      }.merge(opts)
+      render_markup('button', locals)
+    end
+
+    def markup_views
+      File.expand_path('../server/views/markup', File.dirname(__FILE__))
+    end
+
+    def render_markup(template, locals)
+      scope = OpenStruct.new
+      Tilt::ERBTemplate.new("#{markup_views}/#{template}.html.erb").render(scope, locals)
     end
 
     def counter_classes(index)
@@ -26,3 +35,5 @@ module Antwort
     end
   end
 end
+
+
