@@ -61,7 +61,7 @@ module Antwort
       msg = if template_not_found?
               "Template '#{template.name}' not found."
             elsif template_has_error?
-              "Template '#{template.name}' is not rendering succesfully. Verify with `antwort server` that the template functional and try again."
+              "Template '#{template.name}' is not rendering succesfully. Verify with `antwort server` that the template is valid and try again."
             else
               "Error building #{template.name}."
             end
