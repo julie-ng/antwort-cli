@@ -19,7 +19,7 @@ module Antwort
       file = File.new(path, 'w')
       file.write(content)
       file.close
-      say '    create  ', :green
+      say '      create  ', :green
       say path.gsub(%r{\A./}, '')
       file
     end
