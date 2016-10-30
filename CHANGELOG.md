@@ -9,6 +9,7 @@ This release jumped to version 1.0 because it is not compatible with previously 
 __Added__
 
 * Send test emails to multiple recipients.
+* Cannot remove 'shared' folder.
 
 __Refactored__
 

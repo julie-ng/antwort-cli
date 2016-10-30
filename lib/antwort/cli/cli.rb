@@ -175,6 +175,12 @@ module Antwort
                   desc: 'Removes an email, incl. its assets, styles and data'
     def remove(email_id)
       @email_id = email_id
+
+      unless can_remove?
+        say "The '#{email_id}' folder is a project dependency and cannot be removed.", :red
+        return
+      end
+
       if confirms_remove?
         remove_email
       else
@@ -194,6 +200,10 @@ module Antwort
     attr_reader :project_name, :email_id
 
     no_commands do
+      def can_remove?
+        email_id != 'shared'
+      end
+
       def confirms_prune?
         options[:force] || yes?('Are you sure you want to delete all folders in the ./build directory? (y/n)')
       end
