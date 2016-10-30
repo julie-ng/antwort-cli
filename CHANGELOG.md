@@ -1,5 +1,31 @@
 # Change Log
 
+## 1.0.0
+
+Released: 31 October 2016
+
+This release jumped to version 1.0 because it is not compatible with previously generated projects. This update features a great deal of refactoring under the hood:
+
+__Added__
+
+* Send test emails to multiple recipients.
+
+__Refactored__
+
+* Extracted code into models: `EmailCollection`, `EmailData`, `EmailTemplate`.
+* Re-organized CLI code to leverage new classes.
+* Re-organized helpers.
+* Cleaned up and removed unused files.
+* Internalized server code, removing it from project code.
+* Added more spces.
+* Added more ruby conventions to method names, esp. `?` and `!` in method names.
+* Ran code through rubocop.
+
+__Fixed__
+
+* various template bugs, e.g. missing/unused variables.
+
+
 ## 0.0.12
 
 Released: 14 March 2016
