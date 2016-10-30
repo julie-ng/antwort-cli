@@ -14,7 +14,7 @@ module Antwort
       @styles.each do |m|
         style = Antwort::Style.new(m)
         @flattened_keys.concat(style.duplicate_keys) if style.duplicates?
-        copy.sub!(m, style.flattened_str) # flattened_str removes extra spaces and trailing semicolons
+        copy.sub!(m, style.flattened_str)
       end
 
       @flattened = copy
@@ -29,7 +29,7 @@ module Antwort
 
     def find_styles
       a = []
-      @source.scan(/style="(.+?)"/).each { |match| a.push(match.first) } # first is regex group `(.+?)`
+      @source.scan(/style="(.+?)"/).each { |match| a.push(match.first) }
       a
     end
   end
