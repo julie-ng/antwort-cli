@@ -15,6 +15,11 @@ Version 1.0.1 (2 July 2017)
 
 See [CHANGELOG.md](https://github.com/jng5/antwort-generator/blob/master/CHANGELOG.md) for full functionality list.
 
+## Documentation
+
+View the API documentation here:
+https://antwort.co/gem/docs
+
 ## Setup
 
 ### Requirements
@@ -88,7 +93,7 @@ __Notes__
 
 ## License (MIT)
 
-Copyright (c) 2014-2016 Julie Ng.
+Copyright (c) 2014-2017 Julie Ng.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
