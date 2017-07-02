@@ -1,8 +1,9 @@
 # Antwort E-Mail Generator
 
-Author: Julie Ng  
-Version 1.0.0 (31 October 2016)
+[![Build Status](https://travis-ci.org/jng5/antwort-cli.svg?branch=master)](https://travis-ci.org/jng5/antwort-cli)
 
+Author: Julie Ng  
+Version 1.0.1 (2 July 2017)
 
 ### Speed up your email design and development workflow:
 

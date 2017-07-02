@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.0.1
+
+Released: 2 July 2017
+
+__Added__
+
+* Integrated [Travis CI](https://travis-ci.org/).
+
+__Fixed__
+
+* Added missing `rack-test` dependency.
+
 ## 1.0.0
 
 Released: 31 October 2016
