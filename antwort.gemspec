@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'fog'
 
   s.add_development_dependency 'pry'
+  s.add_development_dependency 'rack-test'
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-its'
   s.add_development_dependency 'guard-rspec'
