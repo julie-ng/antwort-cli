@@ -8,15 +8,15 @@ describe Antwort::EmailTemplate do
   let(:no_images)     { Antwort::EmailTemplate.new('no-images') }
 
   describe 'Initialization' do
-    it 'has a the name' do
+    it 'has a name' do
       expect(demo.name).to eq('1-demo')
     end
 
-    it 'has a the path' do
+    it 'has a path' do
       expect(demo.path).to eq('emails/1-demo')
     end
 
-    it 'has a the index file' do
+    it 'has a index file' do
       expect(demo.file).to eq('emails/1-demo/index.html.erb')
     end
   end
