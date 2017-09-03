@@ -1,6 +1,6 @@
 # Antwort E-Mail Generator
 
-[![Build Status](https://travis-ci.org/jng5/antwort-cli.svg?branch=master)](https://travis-ci.org/jng5/antwort-cli) [![Gem Version](https://badge.fury.io/rb/antwort.svg)](https://badge.fury.io/rb/antwort)
+[![Build Status](https://travis-ci.org/julie-ng/antwort-cli.svg?branch=master)](https://travis-ci.org/julie-ng/antwort-cli) [![Gem Version](https://badge.fury.io/rb/antwort.svg)](https://badge.fury.io/rb/antwort)
 
 Author: Julie Ng  
 Version 1.0.1 (2 July 2017)
