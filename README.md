@@ -13,12 +13,12 @@ Version 1.0.1 (2 July 2017)
 - **send email** test via SMTP
 - includes **useful helpers**, e.g. `image_tag` that automatically includes email specific markup.
 
-See [CHANGELOG.md](https://github.com/jng5/antwort-generator/blob/master/CHANGELOG.md) for full functionality list.
+See [CHANGELOG.md](https://github.com/julie-ng/antwort-generator/blob/master/CHANGELOG.md) for full functionality list.
 
 ## Documentation
 
-View the API documentation here:
-https://antwort.co/gem/docs
+View the API documentation in the wiki:
+[https://github.com/julie-ng/antwort-cli/wiki](https://github.com/julie-ng/antwort-cli/wiki)
 
 ## Setup
 
